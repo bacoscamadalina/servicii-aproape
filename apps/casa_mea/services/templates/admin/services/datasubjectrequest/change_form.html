@@ -1,0 +1,9 @@
+{% extends "admin/change_form.html" %}
+{% load admin_urls %}
+
+{% block object-tools-items %}
+  {% if original and original.status != "fulfilled" and original.status != "refused" and perms.services.process_data_subject_request %}
+    <li><a href="{% url 'admin:services_datasubjectrequest_process' original.pk %}" class="historylink">Procesează cererea</a></li>
+  {% endif %}
+  {{ block.super }}
+{% endblock %}

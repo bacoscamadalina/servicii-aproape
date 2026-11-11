@@ -1,0 +1,19 @@
+{% load i18n %}
+{% if work_order %}
+<section class="work-order-summary" aria-label="{% translate 'Lucrarea acceptată' %}">
+  <div>
+    <h3>{% translate "Lucrarea a fost deschisă" %}</h3>
+    <p>{% blocktranslate with revision=work_order.accepted_quote.revision %}Pe baza ofertei acceptate nr. {{ revision }}.{% endblocktranslate %}</p>
+  </div>
+  <div class="work-order-summary-state">
+    <strong>{{ work_order.get_status_display }}</strong>
+    {% if work_order.scheduled_start %}
+      <time datetime="{{ work_order.scheduled_start|date:'c' }}">{{ work_order.scheduled_start|date:"SHORT_DATETIME_FORMAT" }}</time>
+      {% if work_order.scheduled_end %}<span>– <time datetime="{{ work_order.scheduled_end|date:'c' }}">{{ work_order.scheduled_end|date:"SHORT_DATETIME_FORMAT" }}</time> · {% translate "încheiere estimată de firmă" %}</span>{% endif %}
+      {% if work_order.started_at %}<span>{% blocktranslate with started=work_order.started_at|date:"SHORT_DATETIME_FORMAT" %}Începerea confirmată de tehnician: {{ started }}{% endblocktranslate %}</span>{% endif %}
+      {% if work_order.status == "completed" %}<span>{% translate "Finalizată conform înregistrării firmei. Nu a fost emisă automat o factură." %}</span>
+      {% else %}<span>{% translate "Data planificată de firmă pentru execuție; nu este o vizită de constatare." %}</span>{% endif %}
+    {% else %}<span>{% translate "Programarea execuției se stabilește separat. Acesta nu este un document fiscal." %}</span>{% endif %}
+  </div>
+</section>
+{% endif %}

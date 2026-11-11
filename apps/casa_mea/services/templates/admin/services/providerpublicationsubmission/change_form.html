@@ -1,0 +1,9 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_urls %}
+
+{% block object-tools-items %}
+  {% if original.decision == "pending" and not original.superseded_at %}
+    <li><a href="{% url 'admin:services_providerpublicationsubmission_review' original.pk %}">Verifică și activează profilul</a></li>
+  {% endif %}
+  {{ block.super }}
+{% endblock %}

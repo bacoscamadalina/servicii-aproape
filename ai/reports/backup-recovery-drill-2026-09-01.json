@@ -1,0 +1,76 @@
+{
+  "result": "PASS",
+  "backup_verification": {
+    "mode": "read-only Docker verifier with PostgreSQL 17 client",
+    "manifest_schema": 1,
+    "valid": true,
+    "age_seconds_at_verification": 6718,
+    "database_bytes": 80925909,
+    "media_archive_bytes": 1962,
+    "media_regular_files": 2,
+    "media_uncompressed_bytes": 3878,
+    "source_artifacts": 5,
+    "identity_fields_emitted": 0
+  },
+  "new_backup_contract": {
+    "manifest_schema": 2,
+    "pins_media_regular_files": true,
+    "pins_media_uncompressed_bytes": true,
+    "schema_1_backward_compatible": true,
+    "freshness_limit_configurable": true
+  },
+  "restore_drill": {
+    "project": "serviciiaproape-recovery-drill-20260901",
+    "target": "new isolated PostgreSQL and private-media volumes",
+    "restored": true,
+    "migrations_applied": [
+      "services.0018_publicproviderreport",
+      "services.0019_publicproviderreportcase_and_events",
+      "services.0020_alter_publicproviderreport_options_and_more",
+      "services.0021_providerloginthrottle",
+      "services.0022_rename_provider_login_throttle"
+    ],
+    "catalogue_counties": 42,
+    "current_registry_rows": 72880,
+    "internal_preview_counties": 42,
+    "readable_counties_in_production_mode": 0,
+    "django_deployment_check": "PASS",
+    "duplicate_restore_refused": true,
+    "publication_or_visibility_changes": 0
+  },
+  "validation": {
+    "focused_backup_tests": {
+      "tests": 10,
+      "seconds": 0.027,
+      "result": "PASS"
+    },
+    "complete_sqlite_suite": {
+      "tests": 241,
+      "skipped": 10,
+      "seconds": 38.765,
+      "result": "PASS"
+    },
+    "complete_postgresql_suite": {
+      "tests": 241,
+      "skipped": 0,
+      "seconds": 51.271,
+      "result": "PASS"
+    },
+    "production_compose_validation": "PASS",
+    "production_image_build": "PASS",
+    "django_check": "PASS",
+    "migration_source_drift": "NONE"
+  },
+  "cleanup": {
+    "temporary_database_container_removed": true,
+    "temporary_postgresql_volume_removed": true,
+    "temporary_media_volume_removed": true,
+    "temporary_network_removed": true,
+    "source_backup_retained": true,
+    "running_preview_projects_targeted": false
+  },
+  "external_follow_up": {
+    "required": true,
+    "reason": "The selected cloud must schedule export/verification and provide encrypted off-host storage, access control and retention."
+  }
+}

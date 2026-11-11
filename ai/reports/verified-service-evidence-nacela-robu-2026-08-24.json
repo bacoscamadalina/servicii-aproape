@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "state": "active_internal_preview",
+  "recorded_at": "2026-08-24T11:00:00+03:00",
+  "business_legal_name": "NACELA ROBU S.R.L.",
+  "category": "gradinarit",
+  "source": {
+    "title": "Servicii - Nacela Robu",
+    "url": "https://nacelarobu.ro/servicii/",
+    "retrieved_at": "2026-08-24T11:00:00+03:00",
+    "content_sha256": "74b8e2a087467833149abbc4cb156575fc4d5a482673d0cbb71bc7e8a7f405c8"
+  },
+  "evidence": {
+    "identity_linked": true,
+    "service_summary": "Curatare, toaletare si taiere de arbori, defrisari si intretinere de gard viu.",
+    "declared_coverage_counties": [
+      "Bacău",
+      "Iași",
+      "Neamț",
+      "Suceava",
+      "Vaslui"
+    ]
+  },
+  "lifecycle": {
+    "evidence_version": 1,
+    "expires_at": "2027-02-20T23:59:59+02:00",
+    "revocable": true,
+    "public_reader_enabled": false
+  },
+  "validation": {
+    "onrc_authorized_same_category": true,
+    "registered_office_siruta": "124215",
+    "desktop_browser_verified": true,
+    "sensitive_identifiers_exposed_in_card": false
+  }
+}

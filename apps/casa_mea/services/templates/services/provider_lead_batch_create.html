@@ -1,0 +1,144 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{% translate 'Descrie proiectul o singură dată și cere răspunsuri de la toate firmele locale eligibile.' %}">
+  <meta name="robots" content="noindex, nofollow">
+  <title>{% translate "Cere oferte" %} — ServiciiAproape</title>
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260918-2">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body class="provider-lead-body">
+  <a class="skip-link" href="#solicitare-generala">{% translate "Sari la formular" %}</a>
+  <header class="site-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    {% include "services/partials/language_switcher.html" %}
+  </header>
+
+  <main id="solicitare-generala" class="provider-lead-page general-lead-page">
+    <a class="detail-back" href="{% url 'services:home' %}">
+      <svg class="ui-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M17 10H4M9 5l-5 5 5 5"/></svg>
+      {% translate "Înapoi la căutare" %}
+    </a>
+
+    {% if batch_sent %}
+      <section class="provider-lead-success" aria-labelledby="batch-success-title">
+        <svg class="section-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg>
+        <div>
+          <p class="general-lead-kicker">{% translate "Proiect trimis" %}</p>
+          <h1 id="batch-success-title">
+            {% blocktranslate count counter=recipient_count %}Solicitarea a ajuns la o firmă{% plural %}Solicitarea a ajuns la {{ counter }} firme{% endblocktranslate %}
+          </h1>
+          <p>{% translate "Firmele pot răspunde separat, iar tu vei compara toate ofertele în același spațiu privat." %}</p>
+          {% if customer_portal_available %}
+            <p>{% translate "Solicitarea este deja în contul tău. Poți compara răspunsurile fără un link primit prin e-mail." %} <a href="{% url 'services:customer_dashboard' %}">{% translate "Vezi proiectele mele" %}</a></p>
+          {% elif customer_notified %}
+            <p>{% translate "Ți-am trimis prin e-mail linkul privat pentru comparație și conversații. Păstrează-l pentru a reveni la solicitare." %}</p>
+          {% elif customer_access_path %}
+            <div class="provider-lead-recovery" role="status">
+              <p>{% translate "E-mailul nu a putut fi trimis. Deschide acum comparația privată și salvează adresa în browser; acest link este afișat doar aici. Nu îl distribui." %}</p>
+              <p>{% translate "Dacă primești ulterior un link nou prin e-mail, folosește-l pe cel nou." %}</p>
+              <a class="provider-lead-recovery-action" href="{{ customer_access_path }}">{% translate "Deschide comparația privată" %}</a>
+            </div>
+          {% endif %}
+          <a href="{% url 'services:home' %}">{% translate "Înapoi la pagina principală" %}</a>
+        </div>
+      </section>
+    {% else %}
+      <header class="provider-lead-heading general-lead-heading">
+        <div>
+          <p class="general-lead-kicker">{% translate "O singură solicitare. Răspunsuri comparabile." %}</p>
+          <h1>{% translate "Primește oferte pentru aceeași lucrare." %}</h1>
+          <p>{% translate "Alegi exact serviciul și localitatea, descrii proiectul o singură dată, iar firmele cu profil complet îți răspund separat." %}</p>
+        </div>
+        <ol class="general-lead-steps" aria-label="{% translate 'Cum funcționează' %}">
+          <li><span>01</span>{% translate "Definești lucrarea" %}</li>
+          <li><span>02</span>{% translate "Solicitarea ajunge la toate firmele eligibile" %}</li>
+          <li><span>03</span>{% translate "Compari și alegi o singură ofertă" %}</li>
+        </ol>
+      </header>
+
+      <form class="provider-lead-form general-lead-form" method="post" data-submit-guard
+            data-locations-url="{% url 'services:localities' %}"
+            data-locality-all="{% translate 'Alege localitatea' %}"
+            data-locality-none="{% translate 'Nu există localități' %}"
+            data-locality-county-first="{% translate 'Alege întâi județul' %}"
+            data-locality-loading="{% translate 'Se încarcă localitățile…' %}"
+            data-locality-load-error="{% translate 'Localitățile nu au putut fi încărcate' %}"
+            data-locality-retry="{% translate 'Reîncearcă selectarea județului.' %}"
+            data-locality-count-one="{% translate '{count} localitate disponibilă' %}"
+            data-locality-count-many="{% translate '{count} localități disponibile' %}"
+            data-availability-url="{% url 'services:provider_lead_batch_availability' %}"
+            data-availability-incomplete="{% translate 'Alege județul, localitatea și serviciul pentru a vedea câte firme pot primi solicitarea.' %}"
+            data-availability-loading="{% translate 'Verificăm firmele disponibile…' %}"
+            data-availability-zero="{% translate 'Nu există acum firme eligibile pentru această localitate și acest serviciu.' %}"
+            data-availability-one="{% translate 'O firmă poate primi această solicitare.' %}"
+            data-availability-many="{% translate '{count} firme pot primi această solicitare.' %}"
+            data-availability-error="{% translate 'Nu am putut verifica numărul firmelor. Poți încerca din nou schimbând serviciul sau localitatea.' %}"
+            novalidate>
+        {% csrf_token %}
+        <input type="hidden" name="submission_token" value="{{ submission_token }}">
+        <section class="general-lead-section" aria-labelledby="matching-title">
+          <header><span>01</span><div><h2 id="matching-title">{% translate "Unde și pentru ce ai nevoie de ajutor?" %}</h2><p>{% translate "Localitatea și serviciul sunt obligatorii pentru ca solicitarea să ajungă numai la firme potrivite." %}</p></div></header>
+          {% if search_form.non_field_errors %}<div class="form-alert">{{ search_form.non_field_errors }}</div>{% endif %}
+          <div class="provider-lead-fields general-matching-fields">
+            <div class="provider-field"><label for="{{ search_form.county.id_for_label }}">{{ search_form.county.label }}</label>{{ search_form.county }}{% for error in search_form.county.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}</div>
+            <div class="provider-field"><label for="{{ search_form.locality.id_for_label }}">{{ search_form.locality.label }}</label>{{ search_form.locality }}<span class="field-status" id="location-status" aria-live="polite"></span>{% for error in search_form.locality.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}</div>
+            <div class="provider-field provider-lead-field-wide"><label for="{{ search_form.category.id_for_label }}">{{ search_form.category.label }}</label>{{ search_form.category }}{% for error in search_form.category.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}</div>
+          </div>
+          <div class="general-lead-availability" id="lead-availability" role="status" aria-live="polite">
+            {% if matching_provider_count is None %}
+              {% translate "Alege județul, localitatea și serviciul pentru a vedea câte firme pot primi solicitarea." %}
+            {% elif matching_provider_count == 0 %}
+              {% translate "Nu există acum firme eligibile pentru această localitate și acest serviciu." %}
+            {% elif matching_provider_count == 1 %}
+              {% translate "O firmă poate primi această solicitare." %}
+            {% else %}
+              {% blocktranslate with count=matching_provider_count %}{{ count }} firme pot primi această solicitare.{% endblocktranslate %}
+            {% endif %}
+          </div>
+          <p class="general-lead-availability-note">{% translate "Numărul este orientativ; lista firmelor este verificată din nou când trimiți solicitarea." %}</p>
+        </section>
+
+        <section class="general-lead-section" aria-labelledby="project-details-title">
+          <header><span>02</span><div><h2 id="project-details-title">{% translate "Spune firmelor ce vrei să realizezi" %}</h2><p>{% translate "Aceleași informații ajung la toate firmele selectate, astfel încât răspunsurile să poată fi comparate ușor." %}</p></div></header>
+          {% if lead_form.non_field_errors %}<div class="form-alert">{{ lead_form.non_field_errors }}</div>{% endif %}
+          <div class="provider-lead-fields">
+            {% for field in lead_form %}
+              {% if not field.is_hidden %}
+                <div class="provider-field{% if field.name == 'description' or field.name == 'consent' %} provider-lead-field-wide{% endif %}{% if field.name == 'consent' %} provider-consent{% endif %}">
+                  {% if field.name == "consent" %}{{ field }}{% endif %}
+                  <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                  {% if field.name != "consent" %}{{ field }}{% endif %}
+                  {% if field.help_text %}<p class="provider-help">{{ field.help_text }}</p>{% endif %}
+                  {% for error in field.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}
+                </div>
+              {% else %}{{ field }}{% endif %}
+            {% endfor %}
+          </div>
+        </section>
+
+        <footer class="general-lead-submit">
+          <div><strong>{% translate "Datele tale rămân private" %}</strong><p>{% translate "Sunt vizibile numai firmelor care primesc solicitarea și administratorilor autorizați; nu apar în catalog." %} <a href="{% url 'services:privacy' %}">{% translate "Confidențialitate" %}</a></p></div>
+          <div>
+            <button class="provider-submit" type="submit" data-submitting-label="{% translate 'Se trimite solicitarea…' %}">{% translate "Trimite firmelor eligibile" %}</button>
+            <span class="visually-hidden" data-submit-status role="status" aria-live="polite"></span>
+          </div>
+        </footer>
+        <noscript><p class="noscript-note">{% translate "Fără JavaScript: alege județul, trimite formularul, apoi selectează localitatea din lista încărcată." %}</p></noscript>
+      </form>
+    {% endif %}
+  </main>
+  {% include "services/partials/site_footer.html" %}
+  <script src="{% static 'services/locations.js' %}?v=20260914-1" defer></script>
+  <script src="{% static 'services/lead_availability.js' %}?v=20260918-1" defer></script>
+  <script src="{% static 'services/lead_submit.js' %}?v=20260918-2" defer></script>
+</body>
+</html>

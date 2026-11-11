@@ -1,0 +1,71 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'services/admin_operations.css' %}">
+{% endblock %}
+{% block content_title %}{% endblock %}
+
+{% block content %}
+<main class="pilot-dashboard">
+  <p><a href="{% url 'admin:services_providerlead_changelist' %}">← Înapoi la solicitări</a></p>
+  <header class="pilot-dashboard__intro">
+    <h1>Pregătirea lansării locale</h1>
+    <p>Alege un județ și un serviciu. Vezi separat firmele cu profil public, profilurile demonstrative și proiectele trimise recent. Această pagină nu publică date și nu schimbă starea firmelor.</p>
+  </header>
+
+  <form method="get" class="pilot-dashboard__filters" aria-label="Filtrează raportul de lansare locală">
+    <div><label for="pilot-county">Județ</label><select id="pilot-county" name="county">{% for value, label in counties %}<option value="{{ value }}" {% if pilot.county == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+    <div><label for="pilot-category">Serviciu</label><select id="pilot-category" name="category">{% for value, label in categories %}<option value="{{ value }}" {% if pilot.category == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+    <div><label for="pilot-days">Intervalul cererilor</label><select id="pilot-days" name="days">{% for value in window_choices %}<option value="{{ value }}" {% if days == value %}selected{% endif %}>Ultimele {{ value }} zile</option>{% endfor %}</select></div>
+    <button type="submit">Actualizează raportul</button>
+  </form>
+
+  <section class="pilot-dashboard__status" aria-labelledby="pilot-status-title">
+    <div>
+      <h2 id="pilot-status-title">Este pregătită lansarea locală?</h2>
+      <p>Catalogul ONRC pentru județ: <strong>{{ pilot.source_state }}</strong>. {% if pilot.source_public %}Sursa și aprobarea ei trec verificările curente.{% else %}Publicarea reală nu trece încă verificările sursei și aprobării ei.{% endif %}</p>
+    </div>
+    <strong class="pilot-dashboard__verdict">{% if pilot.source_public and pilot.public_providers %}Sursă și ofertă publică disponibile{% else %}Nu este pregătit pentru lansare publică{% endif %}</strong>
+  </section>
+
+  <dl class="pilot-dashboard__metrics" aria-label="Indicatorii lansării locale">
+    <div><dt>Firme cu profil public</dt><dd>{{ pilot.public_providers }}</dd></div>
+    <div><dt>Profiluri demonstrative</dt><dd>{{ pilot.preview_providers }}</dd></div>
+    <div><dt>Proiecte trimise</dt><dd>{{ pilot.projects }}</dd></div>
+    <div><dt>Localități fără răspuns la cereri</dt><dd>{{ pilot.unanswered_areas }}</dd></div>
+  </dl>
+
+  <section class="pilot-dashboard__section pilot-dashboard__journey" aria-labelledby="pilot-journey-title">
+    <div class="pilot-dashboard__section-heading"><h2 id="pilot-journey-title">Ce se întâmplă după trimitere</h2><p>Urmărim proiectele create în intervalul selectat și starea ofertelor lor la momentul afișării raportului. O cerere către mai multe firme rămâne un singur proiect.</p></div>
+    <ol class="pilot-dashboard__journey-steps">
+      <li><strong>{{ pilot.projects }}</strong><span>Proiecte trimise</span></li>
+      <li><strong>{{ pilot.quoted_projects }}</strong><span>Cu cel puțin o ofertă</span></li>
+      <li><strong>{{ pilot.awarded_projects }}</strong><span>Cu ofertă acceptată</span></li>
+    </ol>
+    <p class="pilot-dashboard__journey-time">Timp mediu până la prima ofertă: <strong>{% if pilot.first_quote_hours is not None %}{{ pilot.first_quote_hours|floatformat:1 }} ore{% else %}—{% endif %}</strong><small>Calculat numai pentru proiectele care au primit o ofertă; „—” înseamnă că nu există încă date.</small></p>
+  </section>
+
+  <section class="pilot-dashboard__section" aria-labelledby="pilot-priorities-title">
+    <h2 id="pilot-priorities-title">Ce necesită atenție</h2>
+    <ul>
+      {% if not pilot.source_public %}<li>Verifică versiunea exactă a catalogului din {{ pilot.county }} și aprobarea ei de publicare. Previzualizarea internă nu echivalează cu lansarea.</li>{% endif %}
+      {% if not pilot.public_providers %}<li>Nu există încă un profil public eligibil pentru acest serviciu în județ. Revizuiește profilurile, acoperirea declarată și abonamentele active.</li>{% endif %}
+      {% if pilot.unanswered_areas %}<li>În {{ pilot.unanswered_areas }} localități au existat proiecte trimise, dar nicio ofertă de la firme în intervalul selectat.</li>{% endif %}
+      {% if pilot.source_public and pilot.public_providers and not pilot.unanswered_areas %}<li>Nu apare un blocaj în acești indicatori. Confirmă separat verificările operaționale și legale înainte de lansare.</li>{% endif %}
+    </ul>
+  </section>
+
+  <section class="pilot-dashboard__section" aria-labelledby="pilot-areas-title">
+    <div class="pilot-dashboard__section-heading"><h2 id="pilot-areas-title">Acoperire și cerere pe localitate</h2><p>Acoperirea provine numai din profiluri aprobate care trec verificările curente de vizibilitate, nu din sediile firmelor ONRC. Cererile sunt proiecte trimise, nu căutări.</p></div>
+    {% if pilot.areas %}
+    <div class="pilot-dashboard__table-wrap"><table aria-labelledby="pilot-areas-title">
+      <thead><tr><th scope="col">Localitate</th><th scope="col">Profiluri publice</th><th scope="col">Previzualizări</th><th scope="col">Proiecte</th><th scope="col">Livrări</th><th scope="col">Cu ofertă</th></tr></thead>
+      <tbody>{% for area in pilot.areas %}<tr><th scope="row">{{ area.locality }} <small>SIRUTA {{ area.siruta_code }}</small></th><td>{{ area.public_providers }}</td><td>{{ area.preview_providers }}</td><td>{{ area.projects }}</td><td>{{ area.deliveries }}</td><td>{{ area.responses }}</td></tr>{% endfor %}</tbody>
+    </table></div>
+    {% else %}<p class="pilot-dashboard__empty">Nu există încă profiluri vizibile sau cereri trimise pentru combinația selectată.</p>{% endif %}
+  </section>
+  <p class="pilot-dashboard__note">„Cu ofertă” numără livrările către firme care au primit cel puțin o ofertă; nu reprezintă numărul de proiecte distincte rezolvate. Raportul este orientativ și nu înlocuiește auditul de pregătire a producției.</p>
+</main>
+{% endblock %}

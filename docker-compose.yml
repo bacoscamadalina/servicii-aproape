@@ -1,0 +1,52 @@
+# Complete development stack: persistent PostgreSQL, accounts, claims and portfolios.
+name: serviciiaproape
+
+x-app-environment: &app-environment
+  DJANGO_SETTINGS_MODULE: config.managed_cloud_development
+  PORT: "8000"
+  CASAMEA_DB_ENGINE: postgresql
+  CASAMEA_POSTGRES_DB: serviciiaproape
+  CASAMEA_POSTGRES_USER: serviciiaproape
+  CASAMEA_POSTGRES_PASSWORD: ${CASAMEA_POSTGRES_PASSWORD:-serviciiaproape-development}
+  CASAMEA_POSTGRES_HOST: db
+  CASAMEA_MEDIA_ROOT: /app/private_media
+  CASAMEA_ADMIN_USERNAME: ${CASAMEA_ADMIN_USERNAME:?Configureaza numele administratorului initial}
+  CASAMEA_ADMIN_EMAIL: ${CASAMEA_ADMIN_EMAIL:?Configureaza emailul administratorului initial}
+  CASAMEA_ADMIN_PASSWORD: ${CASAMEA_ADMIN_PASSWORD:?Configureaza parola administratorului initial}
+  CASAMEA_SUBSCRIPTION_MONTHLY_PRICE_RON: ${CASAMEA_SUBSCRIPTION_MONTHLY_PRICE_RON:-49}
+  CASAMEA_MANAGED_SITE_MONTHLY_PRICE_RON: ${CASAMEA_MANAGED_SITE_MONTHLY_PRICE_RON:-299}
+  CASAMEA_COMMERCIAL_EMAIL: ${CASAMEA_COMMERCIAL_EMAIL:-contact@localhost}
+  CASAMEA_RETENTION_MANAGED_SITE_INQUIRY_DAYS: ${CASAMEA_RETENTION_MANAGED_SITE_INQUIRY_DAYS:-365}
+
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: serviciiaproape
+      POSTGRES_USER: serviciiaproape
+      POSTGRES_PASSWORD: ${CASAMEA_POSTGRES_PASSWORD:-serviciiaproape-development}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  web:
+    build:
+      context: ./apps/casa_mea
+      dockerfile: Dockerfile
+      target: managed-cloud
+    depends_on:
+      - db
+    ports:
+      - "${APP_HOST_PORT:-8000}:8000"
+    environment: *app-environment
+    volumes:
+      - private_media:/app/private_media
+    healthcheck:
+      test: [CMD, python, deploy/healthcheck.py]
+      interval: 30s
+      timeout: 10s
+      start_period: 90s
+      retries: 3
+
+volumes:
+  postgres_data:
+  private_media:

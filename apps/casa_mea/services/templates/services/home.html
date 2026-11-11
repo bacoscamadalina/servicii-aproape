@@ -1,0 +1,369 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{% translate 'Găsește meșteri, firme și servicii pentru casă după localitate și județ.' %}">
+  <title>ServiciiAproape — {% translate "Servicii pentru casă, găsite local" %}</title>
+  <link rel="canonical" href="{% if LANGUAGE_CODE == 'en' %}{{ absolute_language_url_en }}{% else %}{{ absolute_language_url_ro }}{% endif %}">
+  <link rel="alternate" hreflang="ro" href="{{ absolute_language_url_ro }}">
+  <link rel="alternate" hreflang="en" href="{{ absolute_language_url_en }}">
+  <link rel="alternate" hreflang="x-default" href="{{ absolute_language_url_ro }}">
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260922-editorial-home">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+  <script src="{% static 'services/locations.js' %}?v=20260914-1" defer></script>
+  <script src="{% static 'services/promo_video.js' %}?v=20260910-2" defer></script>
+</head>
+<body class="home-body">
+  <!--
+    THESIS: Comunitatea locală se vede în acțiune; refuzăm hero-ul SaaS rigid și transformăm căutarea într-un index editorial viu.
+    OWN-WORLD: Hârtie caldă #fcf9f2, tuș verde #0f3425, coral #fd6049, lavandă #e7caf7, mentă #c9e8d1, fotografie documentară și rigle de tipar.
+    STORY: Vizitatorul vede oameni pricepuți, înțelege căutarea locală și selectează județul, localitatea și serviciul fără să părăsească primul ecran.
+    FIRST VIEWPORT: Mesaj și căutare numerotată în stânga, trei fotografii dinamice în dreapta, sigiliu animat la intersecție și servicii indexate la bază.
+    FORM: Comunitatea în mișcare, poziția 3 din runda aprobată; seed 2a4c17c0, comp .impeccable/mocks/home-editia-v2-collage.webp.
+    FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+  -->
+  <a class="skip-link" href="#cautare">{% translate "Sari la căutare" %}</a>
+  <header class="site-header home-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    <nav class="home-main-nav" aria-label="{% translate 'Navigație principală' %}">
+      <a href="#servicii">{% translate "Servicii" %}</a>
+      <a href="#cum-functioneaza">{% translate "Cum funcționează" %}</a>
+      {% if not read_only_preview %}<a class="nav-saved" href="{% url 'services:provider_shortlist' %}">{% translate "Firme salvate" %}{% if saved_provider_count %}<span>{{ saved_provider_count }}</span>{% endif %}</a>{% endif %}
+      {% if not read_only_preview %}<a class="nav-customer" href="{% if request.user.is_authenticated %}{% url 'services:customer_dashboard' %}{% else %}{% url 'services:customer_login' %}{% endif %}">{% translate "Cont client" %}</a>{% endif %}
+      {% if not read_only_preview %}<a class="nav-action" href="{% url 'services:professionals' %}">{% translate "Pentru profesioniști" %}</a>{% endif %}
+    </nav>
+    <details class="home-language-menu">
+      <summary aria-label="{% translate 'Alege limba' %}"><span>{{ current_language|upper }}</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"></path></svg></summary>
+      <nav aria-label="{% translate 'Alege limba' %}">
+        <a href="{{ language_url_ro }}" lang="ro" hreflang="ro"{% if current_language == "ro" %} aria-current="page"{% endif %}>Română</a>
+        <a href="{{ language_url_en }}" lang="en" hreflang="en"{% if current_language == "en" %} aria-current="page"{% endif %}>English</a>
+      </nav>
+    </details>
+    <details class="home-menu">
+      <summary><span>{% translate "Meniu" %}</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></summary>
+      <nav class="home-mobile-nav" aria-label="{% translate 'Navigație principală' %}">
+        <a href="#servicii">{% translate "Servicii" %}</a>
+        <a href="#cum-functioneaza">{% translate "Cum funcționează" %}</a>
+        {% if not read_only_preview %}<a class="nav-saved" href="{% url 'services:provider_shortlist' %}">{% translate "Firme salvate" %}{% if saved_provider_count %}<span>{{ saved_provider_count }}</span>{% endif %}</a>{% endif %}
+        {% if not read_only_preview %}<a href="{% if request.user.is_authenticated %}{% url 'services:customer_dashboard' %}{% else %}{% url 'services:customer_login' %}{% endif %}">{% translate "Cont client" %}</a>{% endif %}
+        {% if not read_only_preview %}<a class="nav-action" href="{% url 'services:professionals' %}">{% translate "Pentru profesioniști" %}</a>{% endif %}
+      </nav>
+    </details>
+  </header>
+
+  <main>
+    <section class="hero editorial-home-hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <h1 id="hero-title">{% translate "Aproape de casă. Aproape de oamenii potriviți." %}</h1>
+        <p class="hero-subtitle">{% translate "Alege județul, apoi restrânge opțional după localitate și serviciu. Îți arătăm firmele relevante din catalogul ONRC." %}</p>
+      </div>
+
+      <div class="search-panel" id="cautare">
+        <div class="panel-heading">
+          <h2>{% translate "Începe căutarea locală" %}</h2>
+        </div>
+        <form method="get" action="{% url 'services:home' %}"
+              data-locations-url="{% url 'services:localities' %}"
+              data-locality-all="{% translate 'Toate localitățile din județ' %}"
+              data-locality-none="{% translate 'Nu există localități' %}"
+              data-locality-county-first="{% translate 'Alege întâi județul' %}"
+              data-locality-loading="{% translate 'Se încarcă localitățile…' %}"
+              data-locality-load-error="{% translate 'Localitățile nu au putut fi încărcate' %}"
+              data-locality-retry="{% translate 'Reîncearcă selectarea județului.' %}"
+              data-locality-count-one="{% translate '{count} localitate disponibilă' %}"
+              data-locality-count-many="{% translate '{count} localități disponibile' %}"
+              novalidate>
+          <div class="field-grid location-fields">
+            <div class="field">
+              <label for="{{ form.county.id_for_label }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 6 5-2 6 2 5-2v14l-5 2-6-2-5 2V6Z"/><path d="M9 4v14M15 6v14"/></svg><span>{{ form.county.label }}</span></label>
+              {{ form.county }}
+              {% for error in form.county.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
+            </div>
+            <div class="field">
+              <label for="{{ form.locality.id_for_label }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>{{ form.locality.label }}</span></label>
+              {{ form.locality }}
+              {% for error in form.locality.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
+              <span class="field-status" id="location-status" aria-live="polite"></span>
+            </div>
+          </div>
+          <div class="field wide">
+              <label for="{{ form.category.id_for_label }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.2 6.2 3.6 3.6M4 20l6.2-6.2M12.4 4.6a5 5 0 0 0-6.8 6.8l2.8-2.8 3 3-2.8 2.8a5 5 0 0 0 6.8-6.8L20 3l1 1-4.6 4.6"/></svg><span>{{ form.category.label }}</span></label>
+              {{ form.category }}
+              {% for error in form.category.errors %}<span class="field-error">{{ error }}</span>{% endfor %}
+          </div>
+          <button type="submit">
+            <span>{% translate "Caută firme" %}</span>
+            <svg class="ui-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"/></svg>
+          </button>
+          <noscript><p class="noscript-note">{% translate "Fără JavaScript: alege județul și apasă căutare, apoi selectează localitatea din lista afișată." %}</p></noscript>
+        </form>
+        <p class="search-note">{% translate "Sediul social nu înseamnă că firma deservește localitatea. Datele ONRC nu dovedesc disponibilitatea, experiența sau calitatea lucrărilor." %}</p>
+      </div>
+
+      <div class="editorial-collage" aria-label="{% translate 'Meserii locale ilustrate' %}">
+        <figure class="editorial-photo editorial-photo-carpenter">
+          <img src="{% static 'services/home-editorial/carpenter.webp' %}" alt="{% translate 'Tâmplar lucrând la o piesă de mobilier' %}" width="1448" height="1086">
+          <figcaption>{% translate "Construcții și mobilier" %}</figcaption>
+        </figure>
+        <figure class="editorial-photo editorial-photo-painter">
+          <img src="{% static 'services/home-editorial/painter.webp' %}" alt="{% translate 'Zugrăviță finisând un perete interior' %}" width="1448" height="1086">
+          <figcaption>{% translate "Finisaje interioare" %}</figcaption>
+        </figure>
+        <figure class="editorial-photo editorial-photo-plumber">
+          <img src="{% static 'services/home-editorial/plumber.webp' %}" alt="{% translate 'Instalator reparând țevile unei bucătării' %}" width="1448" height="1086">
+          <figcaption>{% translate "Instalații" %}</figcaption>
+        </figure>
+        <div class="editorial-seal" aria-hidden="true">
+          <svg viewBox="0 0 160 160">
+            <defs><path id="home-seal-path" d="M80,80 m-58,0 a58,58 0 1,1 116,0 a58,58 0 1,1 -116,0"/></defs>
+            <circle cx="80" cy="80" r="76"/>
+            <text><textPath href="#home-seal-path">SERVICII APROAPE · OAMENI POTRIVIȚI · </textPath></text>
+            <path class="seal-roof" d="M48 75 80 48l32 27v34H48Z"/>
+            <path class="seal-tool" d="M94 68a15 15 0 0 0-20 20l-17 17 6 6 17-17a15 15 0 0 0 20-20l-9 9-8-8Z"/>
+          </svg>
+        </div>
+        <p class="editorial-note editorial-note-one">{% translate "Meseria aduce oamenii împreună." %}</p>
+        <p class="editorial-note editorial-note-two">{% translate "Aproape de ceea ce contează." %}</p>
+      </div>
+    </section>
+
+    {% if searched %}
+      <section class="results" id="rezultate" aria-live="polite">
+        <div class="section-heading">
+          <div>
+            <h2>{% translate "Rezultatele căutării" %}</h2>
+            {% if form.is_valid %}
+              {% if catalogue_mode == "registry_preview" %}
+                <p>{% if selected_locality %}{{ selected_locality }}, {% else %}{% translate "Județul" %} {% endif %}{{ form.cleaned_data.county }} · {% translate "previzualizare internă ONRC" %}</p>
+              {% elif catalogue_mode == "registry" %}
+                <p>{% if selected_locality %}{{ selected_locality }}, {{ form.cleaned_data.county }} · {% translate "firme cu sediul social în localitate" %}{% else %}{% translate "Județul" %} {{ form.cleaned_data.county }} · {% translate "firme cu sediul social în județ" %}{% endif %}</p>
+              {% elif catalogue_mode == "demo" %}
+                <p>{% if selected_locality %}{{ selected_locality }}, {% else %}{% translate "Județul" %} {% endif %}{{ form.cleaned_data.county }} · {% translate "exemple demonstrative" %}</p>
+              {% endif %}
+            {% endif %}
+          </div>
+          <div class="result-heading-actions">
+            {% if write_features_enabled and form.is_valid %}<a class="result-request-link" href="{% url 'services:provider_lead_batch_create' %}?county={{ form.cleaned_data.county|urlencode }}&amp;locality={{ form.cleaned_data.locality|urlencode }}&amp;category={{ form.cleaned_data.category|urlencode }}">{% translate "Cere oferte" %}<svg class="ui-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"/></svg></a>{% endif %}
+            {% if results %}<span class="result-count">{% blocktranslate count counter=result_count %}{{ result_count_display }} înregistrare{% plural %}{{ result_count_display }} înregistrări{% endblocktranslate %}</span>{% endif %}
+          </div>
+        </div>
+        {% if form.is_valid and published_profiles %}
+          <section class="published-providers" aria-labelledby="published-providers-title">
+            <div class="published-providers-intro">
+              <h3 id="published-providers-title">{% translate "Firme cu profil complet" %}</h3>
+              <p>{% translate "Vezi serviciile, zonele deservite, datele de contact și lucrările prezentate de fiecare firmă." %}</p>
+            </div>
+            <div class="published-provider-list">
+              {% for provider in published_profiles %}
+                <article class="published-provider-row">
+                  <div class="published-provider-summary">
+                    <h4>{{ provider.display_name }}</h4>
+                    <p>{{ provider.description|truncatechars:180 }}</p>
+                    <span class="published-provider-category">{{ provider.category_labels|join:", " }}</span>
+                  </div>
+                  <aside class="published-provider-facts">
+                    <div><strong>{% translate "Serviciu" %}</strong><span>{{ provider.category_labels|join:", " }}</span></div>
+                    <div><strong>{% translate "Localitate" %}</strong><span>{{ provider.searched_locality_label }}, {{ selected_county }}</span></div>
+                    <a href="{% url 'services:provider_public_detail' provider.public_id %}?county={{ selected_county|urlencode }}&amp;locality={{ provider.searched_locality_code|urlencode }}&amp;category={{ form.cleaned_data.category|urlencode }}">{% translate "Vezi profilul furnizorului" %} <svg class="ui-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"/></svg></a>
+                  </aside>
+                </article>
+              {% endfor %}
+            </div>
+          </section>
+        {% endif %}
+        {% if form.is_valid and results %}
+          <div class="provider-list">
+            {% if catalogue_mode == "registry" or catalogue_mode == "registry_preview" %}
+              {% for provider in results %}
+                <article class="provider-row registry-row">
+                  <div class="provider-avatar" aria-hidden="true">{{ provider.initials }}</div>
+                  <div class="provider-main">
+                    <h3>{{ provider.legal_name }}</h3>
+                    <p>{% translate "Înregistrare legală ONRC" %}</p>
+                    <a class="registry-detail-link" href="{% url 'services:company_detail' provider.business_id %}?county={{ selected_county|urlencode }}&amp;locality={{ selected_locality_code|urlencode }}&amp;category={{ form.cleaned_data.category|urlencode }}{% if registry_page.number > 1 %}&amp;return_page={{ registry_page.number }}{% endif %}">{% translate "Vezi fișa firmei" %} <svg class="ui-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"/></svg></a>
+                  </div>
+                  <dl>
+                    <div>
+                      <dt>{% if provider.evidence_kind == "direct_service" %}{% translate "Serviciu confirmat din sursă directă" %}{% elif registry_source.activity_evidence_year %}{% translate "Activitate preponderentă raportată" %}{% else %}{% translate "Categorii derivate din CAEN" %}{% endif %}</dt>
+                      <dd>{{ provider.category_labels|join:", " }}</dd>
+                    </div>
+                    {% if provider.evidence_source_url %}
+                      <div>
+                        <dt>{% translate "Dovadă revizuită" %}</dt>
+                        <dd><a href="{{ provider.evidence_source_url }}" rel="noopener noreferrer">{{ provider.evidence_source_title }}</a> · {{ provider.evidence_summary }} · {% translate "acoperire declarată:" %} {{ provider.coverage_label }} · {% translate "verificat la" %} {{ provider.evidence_retrieved_at|date:"DATE_FORMAT" }}</dd>
+                      </div>
+                    {% endif %}
+                    <div>
+                      <dt>{% translate "Sursa" %}</dt>
+                      <dd>ONRC · {{ registry_source.snapshot_date|date:"DATE_FORMAT" }}</dd>
+                    </div>
+                  </dl>
+                  <span class="provider-location">{% translate "Sediu social" %} · {{ provider.registered_office_label }}</span>
+                </article>
+              {% endfor %}
+            {% else %}
+              {% for provider in results %}
+              <article class="provider-row">
+                <div class="provider-avatar" aria-hidden="true">{{ provider.initials }}</div>
+                <div class="provider-main">
+                  <h3>{{ provider.name }}</h3>
+                  <p>{{ provider.trade }}</p>
+                </div>
+                <dl>
+                  <div><dt>{% translate "Experiență declarată" %}</dt><dd>{{ provider.experience }}</dd></div>
+                  <div><dt>{% translate "Timp de răspuns declarat" %}</dt><dd>{{ provider.response }}</dd></div>
+                </dl>
+                <span class="provider-location">{{ provider.locality }}</span>
+              </article>
+              {% endfor %}
+            {% endif %}
+          </div>
+          {% if catalogue_mode == "registry" or catalogue_mode == "registry_preview" %}
+            <div class="registry-disclosure">
+              {% if not selected_locality %}
+                <p>{% translate "Rezultatele includ firmele eligibile din toate localitățile județului selectat. Sediul social este afișat separat pentru fiecare firmă; acesta nu dovedește aria în care firma lucrează." %}</p>
+              {% else %}
+              {% if registry_source.activity_evidence_year %}
+                {% if registry_source.contains_direct_service_evidence %}
+                  <p>{% blocktranslate with evidence_year=registry_source.activity_evidence_year %}<strong>Ce înseamnă aceste rezultate:</strong> firme cu sediul social în localitatea aleasă care fie trec filtrul strict MF {{ evidence_year }}, fie au serviciul autorizat ONRC și confirmat printr-o sursă publică directă, revizuită și cu termen de reverificare. Acoperirea declarată este afișată separat. Rezultatele nu reprezintă recomandări, disponibilitate sau garanția executării unei lucrări.{% endblocktranslate %}</p>
+                {% else %}
+                  <p>{% blocktranslate with evidence_year=registry_source.activity_evidence_year %}<strong>Ce înseamnă aceste rezultate:</strong> firme cu sediul social în localitatea aleasă, pentru care activitatea preponderentă raportată în {{ evidence_year }} corespunde unui serviciu autorizat ONRC din categoria selectată. Firmele fără evidență MF {{ evidence_year }} nu apar dacă nu există o dovadă directă revizuită. Rezultatele nu reprezintă recomandări, disponibilitate sau arie de lucru.{% endblocktranslate %}</p>
+                {% endif %}
+              {% else %}
+                <p>{% blocktranslate %}<strong>Ce înseamnă aceste rezultate:</strong> firme înregistrate cu sediul social în localitatea aleasă și activități CAEN asociate categoriilor selectate. Nu reprezintă recomandări, disponibilitate sau arie de lucru.{% endblocktranslate %}</p>
+              {% endif %}
+              {% endif %}
+              <a href="{{ registry_source.dataset_url }}" rel="noopener noreferrer">{% translate "Sursa ONRC" %} · {{ registry_source.license_label }}</a>
+              {% if registry_source.activity_evidence_year %}
+                <a href="{{ registry_source.activity_evidence_dataset_url }}" rel="noopener noreferrer">{% blocktranslate with evidence_year=registry_source.activity_evidence_year %}Activitate preponderentă raportată MF {{ evidence_year }}{% endblocktranslate %} · {{ registry_source.activity_evidence_license_label }}</a>
+              {% endif %}
+            </div>
+            {% if registry_page.has_other_pages %}
+              <nav class="pagination" aria-label="{% translate 'Paginile rezultatelor' %}">
+                {% if registry_page.has_previous %}<a href="?{{ pagination_query }}&amp;page={{ registry_page.previous_page_number }}#rezultate">{% translate "Pagina anterioară" %}</a>{% else %}<span></span>{% endif %}
+                <span>{% blocktranslate with page_number=registry_page.number page_count=registry_page.paginator.num_pages %}Pagina {{ page_number }} din {{ page_count }}{% endblocktranslate %}</span>
+                {% if registry_page.has_next %}<a href="?{{ pagination_query }}&amp;page={{ registry_page.next_page_number }}#rezultate">{% translate "Pagina următoare" %}</a>{% else %}<span></span>{% endif %}
+              </nav>
+            {% endif %}
+          {% endif %}
+        {% elif form.is_valid and catalogue_mode == "unavailable" %}
+          <div class="form-alert" role="status">{% translate "Catalogul verificat pentru acest județ este momentan indisponibil. Datele demonstrative nu îl înlocuiesc; reîncearcă mai târziu." %}</div>
+        {% elif form.is_valid and category_unsupported %}
+          <div class="empty-state">
+            <span class="empty-mark" aria-hidden="true"></span>
+            <div>
+              <h3>{% blocktranslate %}Categoria nu este încă inclusă în catalogul verificat din {{ selected_county }}.{% endblocktranslate %}</h3>
+              <p>{% translate "Alege un serviciu disponibil sau Toate serviciile pentru rezultatele ONRC." %}</p>
+            </div>
+            <a href="#cautare">{% translate "Schimbă serviciul" %}</a>
+          </div>
+        {% elif form.is_valid and not published_profiles %}
+          <div class="empty-state">
+            <span class="empty-mark" aria-hidden="true"></span>
+            <div>
+              {% if catalogue_mode == "registry" or catalogue_mode == "registry_preview" %}
+                {% if not selected_locality %}
+                  <h3>{% translate "Nu am găsit firme eligibile în acest județ." %}</h3>
+                  <p>{% translate "Încearcă fără filtru de serviciu sau alege alt județ." %}</p>
+                {% else %}
+                {% if registry_source.activity_evidence_year %}
+                  <h3>{% translate "Nu am găsit firme care trec filtrul strict în această localitate." %}</h3>
+                  <p>{% blocktranslate with evidence_year=registry_source.activity_evidence_year %}Catalogul cere activitate preponderentă raportată MF {{ evidence_year }} și autorizare ONRC în aceeași categorie. Încearcă fără categorie sau alege altă localitate din județul {{ selected_county }}.{% endblocktranslate %}</p>
+                {% else %}
+                  <h3>{% translate "Nu am găsit firme cu sediul social în această localitate." %}</h3>
+                  <p>{% blocktranslate %}Încearcă fără categorie sau alege altă localitate din județul {{ selected_county }}.{% endblocktranslate %}</p>
+                {% endif %}
+                {% endif %}
+              {% else %}
+                <h3>{% translate "Nu avem încă exemple demonstrative aici." %}</h3>
+                <p>{% translate "Acest județ nu are încă un catalog ONRC activ; rezultatele de aici sunt doar demonstrative." %}</p>
+              {% endif %}
+            </div>
+            <a href="#cautare">{% translate "Modifică căutarea" %}</a>
+          </div>
+        {% elif not form.is_valid %}
+          <div class="form-alert" role="alert">{% translate "Alege județul pentru a începe căutarea." %}</div>
+        {% endif %}
+      </section>
+    {% endif %}
+
+    <section class="services" id="servicii" aria-labelledby="services-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="services-title">{% translate "Tot ce ține de casă, într-un singur loc." %}</h2>
+        </div>
+      </div>
+      <div class="category-grid">
+        {% for slug, label, description, local_url in category_cards %}
+          <a class="category" href="{{ local_url }}">
+            {% include "services/partials/category_icon.html" with category_slug=slug %}
+            <span class="category-copy"><strong>{{ label }}</strong><small>{{ description }}</small></span>
+          </a>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="home-promo" id="cum-functioneaza" aria-labelledby="home-promo-title">
+      <div class="home-promo-copy">
+        <h2 id="home-promo-title">{% translate "Vezi cum ajungi de la proiect la firma potrivită." %}</h2>
+        <p>{% translate "În mai puțin de un minut, află cum cauți local, compari profilurile complete și contactezi firma aleasă." %}</p>
+      </div>
+      {% if LANGUAGE_CODE == "en" %}
+        {% static "services/video/servicii-aproape-home-en.mp4" as promo_video_src %}
+        {% static "services/video/servicii-aproape-home-en.webp" as promo_poster_src %}
+      {% else %}
+        {% static "services/video/servicii-aproape-home-ro.mp4" as promo_video_src %}
+        {% static "services/video/servicii-aproape-home-ro.webp" as promo_poster_src %}
+      {% endif %}
+      <figure class="home-promo-player" data-promo-player>
+        <video playsinline controls preload="metadata" poster="{{ promo_poster_src }}" data-promo-video aria-describedby="home-promo-caption">
+          <source src="{{ promo_video_src }}" type="video/mp4">
+          <track kind="captions" srclang="{{ LANGUAGE_CODE }}" src="{% if LANGUAGE_CODE == 'en' %}{% static 'services/video/servicii-aproape-home-en.vtt' %}{% else %}{% static 'services/video/servicii-aproape-home-ro.vtt' %}{% endif %}" label="{% translate 'Subtitrări' %}" default>
+          <p><a href="{{ promo_video_src }}">{% translate "Deschide videoclipul promoțional" %}</a></p>
+        </video>
+        <figcaption id="home-promo-caption">
+          <span>{% translate "Ghid video cu sunet · 29 secunde" %}</span>
+          <span class="home-promo-progress" aria-hidden="true"><i data-promo-progress></i></span>
+          <button type="button" hidden data-promo-toggle
+                  data-play-label="{% translate 'Redă cu sunet' %}"
+                  data-pause-label="{% translate 'Pune pauză' %}">
+            <svg class="promo-pause-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 4v12M14 4v12"/></svg>
+            <svg class="promo-play-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 9 6-9 6V4Z"/></svg>
+            <span>{% translate "Redă cu sunet" %}</span>
+          </button>
+        </figcaption>
+      </figure>
+    </section>
+
+    {% if not read_only_preview %}<section class="professional-strip" id="profesionisti">
+      <div>
+        <h2>{% translate "Lucrezi bine. Meriți să fii găsit local." %}</h2>
+        <p>{% translate "Revendică fișa existentă sau solicită înscrierea firmei dacă nu apare încă în catalog. Accesul se activează numai după verificare." %}</p>
+      </div>
+      <div class="professional-actions">
+        <a class="professional-route professional-route-primary" href="{% url 'services:professionals' %}">
+          <span><small>{% translate "Firma există în catalog" %}</small><strong>{% translate "Vezi pașii de revendicare" %}</strong></span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="professional-route professional-route-secondary" href="{% url 'services:company_registration' %}">
+          <span><small>{% translate "Firma nu apare în catalog" %}</small><strong>{% translate "Înscrie firma" %}</strong></span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+        </a>
+        <nav class="professional-resource-links" aria-label="{% translate 'Resurse pentru profesioniști' %}">
+          <a href="{% url 'services:subscription_plan' %}">{% translate "Cost și beneficii" %}</a>
+          <a href="{% url 'services:provider_login' %}">{% translate "Intră în cont" %}</a>
+        </nav>
+      </div>
+    </section>{% endif %}
+  </main>
+
+  {% include "services/partials/site_footer.html" %}
+</body>
+</html>

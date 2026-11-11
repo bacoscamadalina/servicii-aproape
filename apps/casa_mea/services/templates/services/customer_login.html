@@ -1,0 +1,29 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE|default:'ro' }}">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex">
+  <title>{% translate "Autentificare client" %} — ServiciiAproape</title>
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260917-1">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body class="customer-portal-body">
+  <a class="skip-link" href="#customer-login">{% translate "Sari la autentificare" %}</a>
+  <header class="site-header"><a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">{% include "services/partials/editorial_brand_mark.html" %}<span>Servicii<span>Aproape</span></span></a>{% include "services/partials/language_switcher.html" %}</header>
+  <main id="customer-login" class="customer-access-page customer-login-page">
+    <section class="customer-access-intro" aria-labelledby="customer-login-title"><div><h1 id="customer-login-title">{% translate "Bine ai revenit la proiectele tale." %}</h1><p>{% translate "Intră în cont pentru a vedea solicitările, ofertele și conversațiile cu firmele." %}</p></div><a class="customer-discovery-link" href="{% url 'services:home' %}#cautare">{% translate "Caută o firmă" %}<span aria-hidden="true">→</span></a></section>
+    <section class="customer-form-panel" aria-labelledby="customer-login-form-title">
+      <header><h2 id="customer-login-form-title">{% translate "Intră în contul de client" %}</h2></header>
+      <form method="post" novalidate>{% csrf_token %}{% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+        {% if customer_login_form.non_field_errors %}<div class="form-alert" role="alert">{{ customer_login_form.non_field_errors }}</div>{% endif %}
+        {% for field in customer_login_form %}<div class="provider-field"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% for error in field.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}</div>{% endfor %}
+        <a class="provider-secondary-link" href="{% url 'services:customer_password_reset' %}">{% translate "Ai uitat parola?" %}</a>
+        <button class="provider-submit" type="submit">{% translate "Vezi proiectele mele" %}</button>
+        <p class="customer-form-switch">{% translate "Nu ai cont?" %} <a href="{% url 'services:customer_register' %}">{% translate "Înregistrează-te gratuit" %}</a></p>
+      </form>
+    </section>
+  </main>
+  {% include "services/partials/site_footer.html" %}
+</body></html>

@@ -1,0 +1,120 @@
+name: serviciiaproape
+
+x-app: &app
+  build:
+    context: .
+    target: production
+  image: serviciiaproape-app:local
+  environment: &environment
+    DJANGO_SETTINGS_MODULE: config.production
+    CASAMEA_SECRET_KEY: ${CASAMEA_SECRET_KEY:?Configureaza cheia secreta in .env}
+    CASAMEA_DOMAIN: ${CASAMEA_DOMAIN:?Configureaza domeniul in .env}
+    CASAMEA_DB_ENGINE: postgresql
+    CASAMEA_POSTGRES_DB: serviciiaproape
+    CASAMEA_POSTGRES_USER: serviciiaproape
+    CASAMEA_POSTGRES_PASSWORD: ${CASAMEA_POSTGRES_PASSWORD:?Configureaza parola bazei in .env}
+    CASAMEA_POSTGRES_HOST: db
+    CASAMEA_MEDIA_ROOT: /app/private_media
+    CASAMEA_EMAIL_HOST: ${CASAMEA_EMAIL_HOST:?Configureaza serverul SMTP in .env}
+    CASAMEA_EMAIL_PORT: ${CASAMEA_EMAIL_PORT:-587}
+    CASAMEA_EMAIL_HOST_USER: ${CASAMEA_EMAIL_HOST_USER:?Configureaza utilizatorul SMTP in .env}
+    CASAMEA_EMAIL_HOST_PASSWORD: ${CASAMEA_EMAIL_HOST_PASSWORD:?Configureaza parola SMTP in .env}
+    CASAMEA_DEFAULT_FROM_EMAIL: ${CASAMEA_DEFAULT_FROM_EMAIL:?Configureaza expeditorul in .env}
+    CASAMEA_LEGAL_OPERATOR_NAME: ${CASAMEA_LEGAL_OPERATOR_NAME:?Configureaza numele operatorului in .env}
+    CASAMEA_LEGAL_OPERATOR_ADDRESS: ${CASAMEA_LEGAL_OPERATOR_ADDRESS:?Configureaza adresa operatorului in .env}
+    CASAMEA_PRIVACY_EMAIL: ${CASAMEA_PRIVACY_EMAIL:?Configureaza contactul de confidentialitate in .env}
+    CASAMEA_COMMERCIAL_EMAIL: ${CASAMEA_COMMERCIAL_EMAIL:?Configureaza contactul comercial in .env}
+    CASAMEA_SUBSCRIPTION_MONTHLY_PRICE_RON: ${CASAMEA_SUBSCRIPTION_MONTHLY_PRICE_RON:-49}
+    CASAMEA_MANAGED_SITE_MONTHLY_PRICE_RON: ${CASAMEA_MANAGED_SITE_MONTHLY_PRICE_RON:-299}
+    CASAMEA_SIMULATED_CHECKOUT_ENABLED: ${CASAMEA_SIMULATED_CHECKOUT_ENABLED:-1}
+    CASAMEA_RETENTION_UNVERIFIED_CLAIM_DAYS: ${CASAMEA_RETENTION_UNVERIFIED_CLAIM_DAYS:?Configureaza retentia cererilor neconfirmate in .env}
+    CASAMEA_RETENTION_REJECTED_CLAIM_DAYS: ${CASAMEA_RETENTION_REJECTED_CLAIM_DAYS:?Configureaza retentia cererilor respinse in .env}
+    CASAMEA_RETENTION_CLOSED_REPORT_DAYS: ${CASAMEA_RETENTION_CLOSED_REPORT_DAYS:?Configureaza retentia sesizarilor inchise in .env}
+    CASAMEA_RETENTION_CLOSED_DATA_REQUEST_DAYS: ${CASAMEA_RETENTION_CLOSED_DATA_REQUEST_DAYS:?Configureaza retentia cererilor privind datele in .env}
+    CASAMEA_RETENTION_MANAGED_SITE_INQUIRY_DAYS: ${CASAMEA_RETENTION_MANAGED_SITE_INQUIRY_DAYS:?Configureaza retentia solicitarilor Partener in .env}
+  volumes:
+    - private_media:/app/private_media
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: serviciiaproape
+      POSTGRES_USER: serviciiaproape
+      POSTGRES_PASSWORD: ${CASAMEA_POSTGRES_PASSWORD:?Configureaza parola bazei in .env}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    # No host port: database access stays inside this Compose project.
+
+  restore:
+    <<: *app
+    profiles: [tools]
+    user: "0:0"
+    command: [python, deploy/restore.py]
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - private_media:/app/private_media
+      - ${CASAMEA_BACKUP_DIR:-./deploy/backups/current}:/backup:ro,z
+
+  verify-backup:
+    <<: *app
+    profiles: [tools]
+    user: "0:0"
+    command: [python, deploy/verify_backup.py, /backup]
+    environment:
+      <<: *environment
+      CASAMEA_BACKUP_MAX_AGE_HOURS: ${CASAMEA_BACKUP_MAX_AGE_HOURS:-26}
+    volumes:
+      - ${CASAMEA_BACKUP_DIR:-./deploy/backups/current}:/backup:ro,z
+
+  bootstrap:
+    <<: *app
+    command: [python, deploy/bootstrap.py]
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  web:
+    <<: *app
+    restart: unless-stopped
+    depends_on:
+      bootstrap:
+        condition: service_completed_successfully
+    healthcheck:
+      test: [CMD, python, deploy/healthcheck.py]
+      interval: 30s
+      timeout: 10s
+      start_period: 30s
+      retries: 3
+    # Only the trusted HTTPS proxy can reach Gunicorn from outside Docker.
+
+  proxy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    environment:
+      CASAMEA_DOMAIN: ${CASAMEA_DOMAIN:?Configureaza domeniul in .env}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro,z
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      web:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  private_media:
+  caddy_data:
+  caddy_config:

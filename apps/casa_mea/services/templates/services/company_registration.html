@@ -1,0 +1,109 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{% translate 'Solicită verificarea și înscrierea unei firme care nu apare încă în catalogul ServiciiAproape.' %}">
+  <meta name="robots" content="noindex">
+  <title>{% translate "Înscrie firma" %} — ServiciiAproape</title>
+  <link rel="canonical" href="{% if LANGUAGE_CODE == 'en' %}{{ absolute_language_url_en }}{% else %}{{ absolute_language_url_ro }}{% endif %}">
+  <link rel="alternate" hreflang="ro" href="{{ absolute_language_url_ro }}">
+  <link rel="alternate" hreflang="en" href="{{ absolute_language_url_en }}">
+  <link rel="alternate" hreflang="x-default" href="{{ absolute_language_url_ro }}">
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260908-9">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+  <script src="{% static 'services/locations.js' %}?v=20260824-3" defer></script>
+</head>
+<body>
+  <!--
+  THESIS: A company missing from the catalogue enters through a legal-identity checkpoint, not a generic account form.
+  OWN-WORLD: ServiciiAproape's warm paper ground, ink panel, rust accent, editorial serif display and square ruled controls.
+  STORY: The representative submits verifiable legal data, confirms email, waits for admin verification, then continues into claiming and activation.
+  FIRST VIEWPORT: On desktop, a large three-step editorial explanation balances the verification form; on mobile, the action-first form opens with the no-account/no-publication boundary.
+  FORM: Established claim-flow split, first and only direct-extension choice; seed key local-extension/no-roll.
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+  -->
+  <a class="skip-link" href="#formular-inscriere">{% translate "Sari la formular" %}</a>
+  <header class="site-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    {% include "services/partials/language_switcher.html" %}
+  </header>
+
+  <main id="formular-inscriere" class="claim-page">
+    <a class="detail-back" href="{% url 'services:professionals' %}">
+      <svg class="ui-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M17 10H4M9 5l-5 5 5 5"/></svg>
+      {% translate "Înapoi la pagina pentru profesioniști" %}
+    </a>
+
+    {% if registration_sent %}
+      <section class="claim-result" aria-labelledby="registration-result-title">
+        <span class="claim-result-mark" aria-hidden="true"></span>
+        <div>
+          <h1 id="registration-result-title">{% translate "Cererea a intrat în verificare." %}</h1>
+          <p>{% blocktranslate %}Datele contului pentru <strong>{{ registration_email }}</strong> au fost înregistrate. Nu trebuie să confirmi niciun link primit prin e-mail.{% endblocktranslate %}</p>
+          <p>{% translate "După verificarea identității juridice și a reprezentării, te vei putea autentifica folosind e-mailul și parola alese." %}</p>
+          <a class="claim-primary-link" href="{% url 'services:professionals' %}">{% translate "Vezi procesul pentru profesioniști" %}</a>
+        </div>
+      </section>
+    {% else %}
+      <div class="claim-layout registration-layout">
+        <section class="claim-intro" aria-labelledby="registration-title">
+          <h1 id="registration-title">{% translate "Solicită înscrierea firmei" %}<span class="accent-period">.</span></h1>
+          <p>{% translate "Dacă firma nu apare în catalog, trimite datele juridice, datele contului și dovada reprezentării. Contul devine activ numai după verificarea administratorului." %}</p>
+          <dl>
+            <div><dt>01</dt><dd>{% translate "Completezi contul și dovada" %}</dd></div>
+            <div><dt>02</dt><dd>{% translate "Verificăm firma și reprezentarea" %}</dd></div>
+            <div><dt>03</dt><dd>{% translate "Te autentifici cu e-mail și parolă" %}</dd></div>
+          </dl>
+        </section>
+
+        <section class="claim-form-panel" aria-labelledby="registration-form-title">
+          <h2 id="registration-form-title">{% translate "Date pentru verificare" %}</h2>
+          <p class="claim-form-boundary">{% translate "Trimiterea pornește verificarea administrativă. Firma nu este publicată automat." %}</p>
+          <form method="post" enctype="multipart/form-data"
+                data-locations-url="{% url 'services:localities' %}"
+                data-locality-choose="{% translate 'Alege localitatea' %}"
+                data-locality-none="{% translate 'Nu există localități' %}"
+                data-locality-county-first="{% translate 'Alege întâi județul' %}"
+                data-locality-loading="{% translate 'Se încarcă localitățile…' %}"
+                data-locality-load-error="{% translate 'Localitățile nu au putut fi încărcate' %}"
+                data-locality-retry="{% translate 'Reîncearcă selectarea județului.' %}"
+                data-locality-count-one="{% translate '{count} localitate disponibilă' %}"
+                data-locality-count-many="{% translate '{count} localități disponibile' %}"
+                novalidate>
+            {% csrf_token %}
+            {{ registration_form.website }}
+            {% if registration_form.non_field_errors %}<div class="form-alert">{{ registration_form.non_field_errors }}</div>{% endif %}
+            {% for field in registration_form.visible_fields %}
+              {% if field.name == "privacy_consent" %}
+                <div class="claim-consent">
+                  {{ field }}
+                  <label for="{{ field.id_for_label }}">{% translate "Confirm că am citit informațiile despre" %} <a href="{% url 'services:privacy' %}">{% translate "prelucrarea datelor personale" %}</a>.</label>
+                </div>
+              {% else %}
+                <div class="claim-field">
+                  <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                  {{ field }}
+                  {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
+                </div>
+              {% endif %}
+              {% for error in field.errors %}<span class="claim-error">{{ error }}</span>{% endfor %}
+              {% if field.name == "registered_office_siruta" %}<span class="claim-field-status" id="location-status" aria-live="polite"></span>{% endif %}
+            {% endfor %}
+            <button class="claim-submit" type="submit">{% translate "Trimite cererea spre verificare" %}</button>
+          </form>
+          <p class="claim-privacy">{% translate "Parola este stocată numai în formă criptografică. Datele și documentul justificativ rămân private în timpul verificării." %}</p>
+        </section>
+      </div>
+    {% endif %}
+  </main>
+
+  {% include "services/partials/site_footer.html" %}
+</body>
+</html>

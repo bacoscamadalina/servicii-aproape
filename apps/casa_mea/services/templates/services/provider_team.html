@@ -1,0 +1,62 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, noarchive">
+  <title>{% translate "Echipa firmei" %} — ServiciiAproape</title>
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260918-team">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body class="provider-billing-body">
+  <a class="skip-link" href="#echipa">{% translate "Sari la echipă" %}</a>
+  <header class="site-header provider-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">{% include "services/partials/editorial_brand_mark.html" %}<span>Servicii<span>Aproape</span></span></a>
+    <div class="provider-header-tools"><div class="provider-account-actions">
+      <a href="{% url 'services:provider_leads' %}?view=work">{% translate "Lucrări" %}</a>
+      <a href="{% url 'services:provider_dashboard' %}">{% translate "Profilul firmei" %}</a>
+      <form method="post" action="{% url 'services:provider_logout' %}">{% csrf_token %}<button class="provider-logout" type="submit">{% translate "Ieși din cont" %}</button></form>
+    </div>{% include "services/partials/language_switcher.html" %}</div>
+  </header>
+  <main id="echipa" class="provider-billing-page provider-team-page">
+    <header class="provider-billing-heading"><div>
+      <h1>{% translate "Echipa firmei" %}</h1>
+      <p>{% blocktranslate with name=profile.display_name %}Invită tehnicieni pentru lucrările programate ale {{ name }}.{% endblocktranslate %}</p>
+    </div><a href="{% url 'services:provider_leads' %}?view=work">{% translate "Înapoi la lucrări" %}</a></header>
+    {% if messages %}<div class="provider-messages" aria-live="polite">{% for message in messages %}<p>{{ message }}</p>{% endfor %}</div>{% endif %}
+    <div class="provider-billing-layout">
+      <section class="provider-billing-form" aria-labelledby="invite-title">
+        <header><h2 id="invite-title">{% translate "Invită un tehnician" %}</h2><p>{% translate "Trimitem un link valabil 48 de ore. Persoana își confirmă contul înainte să vadă lucrările atribuite." %}</p></header>
+        <form method="post" novalidate>{% csrf_token %}<input type="hidden" name="action" value="invite">
+          {% if form.non_field_errors %}<div class="form-alert">{{ form.non_field_errors }}</div>{% endif %}
+          <div class="provider-field"><label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>{{ form.email }}{% for error in form.email.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}</div>
+          <button class="provider-submit" type="submit">{% translate "Trimite invitația" %}</button>
+        </form>
+      </section>
+      <aside class="provider-billing-boundary" aria-labelledby="team-boundary-title">
+        <h2 id="team-boundary-title">{% translate "Acces limitat la lucrare" %}</h2>
+        <p>{% translate "Tehnicianul vede numai lucrările programate și atribuite lui. Nu poate deschide toate solicitările, ofertele celorlalte firme sau ciornele de facturare." %}</p>
+        <p>{% translate "Poți revoca accesul în orice moment. O invitație trimisă nu acordă acces până când este acceptată." %}</p>
+      </aside>
+    </div>
+    <section class="provider-team-register" aria-labelledby="members-title">
+      <h2 id="members-title">{% translate "Tehnicieni activi" %}</h2>
+      {% if members %}<ul>{% for member in members %}<li>
+        <div><strong>{{ member.user.get_full_name|default:member.user.username }}</strong><span>{{ member.user.email }}</span></div>
+        <form method="post">{% csrf_token %}<input type="hidden" name="action" value="revoke_member"><input type="hidden" name="record_id" value="{{ member.pk }}"><button class="secondary-action" type="submit">{% translate "Revocă accesul" %}</button></form>
+      </li>{% endfor %}</ul>{% else %}<p>{% translate "Nu există încă tehnicieni activi." %}</p>{% endif %}
+    </section>
+    <section class="provider-team-register" aria-labelledby="invitations-title">
+      <h2 id="invitations-title">{% translate "Invitații în așteptare" %}</h2>
+      {% if invitations %}<ul>{% for invitation in invitations %}<li>
+        <div><strong>{{ invitation.normalized_email }}</strong><span>{% blocktranslate with date=invitation.expires_at|date:"SHORT_DATETIME_FORMAT" %}Expiră la {{ date }}{% endblocktranslate %}</span></div>
+        <form method="post">{% csrf_token %}<input type="hidden" name="action" value="revoke_invitation"><input type="hidden" name="record_id" value="{{ invitation.pk }}"><button class="secondary-action" type="submit">{% translate "Retrage invitația" %}</button></form>
+      </li>{% endfor %}</ul>{% else %}<p>{% translate "Nu există invitații active în așteptare." %}</p>{% endif %}
+    </section>
+  </main>
+  {% include "services/partials/site_footer.html" %}
+</body>
+</html>

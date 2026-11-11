@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "purpose": "private-development-snapshot",
+  "captured_at": "2026-09-09T14:39:08.519957+00:00",
+  "sha256": "2b2445e7b4e263f45c14a82aa07fe5dcbd013ef9224c2c2e3b3d4808b5b4f0af",
+  "bytes": 68550656,
+  "businesses": 72881,
+  "variants": 152508,
+  "counties": 42
+}

@@ -1,0 +1,2152 @@
+{
+  "activation_plan": [
+    {
+      "expected_previous_run_id": 91,
+      "expected_scope_key": "76060ac50ae2a84675c8fb8a0098d7982533e98ed8873bb06846f59385b0c8f5",
+      "run_id": 175
+    },
+    {
+      "expected_previous_run_id": 92,
+      "expected_scope_key": "47009ddd70362732da6e22895822a81ca1ae866c799e7536f1cc224c65642d9a",
+      "run_id": 176
+    },
+    {
+      "expected_previous_run_id": 93,
+      "expected_scope_key": "7c9ea15275e1a80150e50ce3ea6b68944ac584e2dedad7dc5e5888aa644959c8",
+      "run_id": 177
+    },
+    {
+      "expected_previous_run_id": 94,
+      "expected_scope_key": "0b70b2ed0dc3210e17da31e74de1b19e778a604958a6bdd442fed44ade5a8de6",
+      "run_id": 178
+    },
+    {
+      "expected_previous_run_id": 95,
+      "expected_scope_key": "7973618878fde0a3fceadd4aa140d746ac99545ff8735ef70be86b38e7521f66",
+      "run_id": 179
+    },
+    {
+      "expected_previous_run_id": 96,
+      "expected_scope_key": "49d5d5cc2c043ba35f5477dfb23aecb30b682b77982de3cf03a07f7bf5f2345c",
+      "run_id": 180
+    },
+    {
+      "expected_previous_run_id": 97,
+      "expected_scope_key": "7d8e838a345ef78964e43a37366970dd1548a10b9463db128d8833e031f69edf",
+      "run_id": 181
+    },
+    {
+      "expected_previous_run_id": 98,
+      "expected_scope_key": "719c32c672e16a8e86a9a737b5b64b64c51c50b829ef7edf87f672270225cab9",
+      "run_id": 182
+    },
+    {
+      "expected_previous_run_id": 99,
+      "expected_scope_key": "732cd28e1adfd527aa47371786e34f1e95160279d009b7f92c07be9c5be01a2a",
+      "run_id": 183
+    },
+    {
+      "expected_previous_run_id": 100,
+      "expected_scope_key": "3b4155b797b19110af9dc32e14e8616369489a84a3531874daaadd2e5511218a",
+      "run_id": 184
+    },
+    {
+      "expected_previous_run_id": 101,
+      "expected_scope_key": "14a719b92effeef412d717b3d4c47512b035bbf6d2444fb5d5a5b4a561e258b0",
+      "run_id": 185
+    },
+    {
+      "expected_previous_run_id": 102,
+      "expected_scope_key": "a72549efa1d64065dbc83213b569d0312ded21927e82c5ccb6a450f53886c8d0",
+      "run_id": 186
+    },
+    {
+      "expected_previous_run_id": 103,
+      "expected_scope_key": "512ca3224fb495fb70e5d8fe594bebe580ff0db58ae175e58dfd5e8c6000c73f",
+      "run_id": 187
+    },
+    {
+      "expected_previous_run_id": 104,
+      "expected_scope_key": "488cec8d95ac8477852c29550f35e7a4da0f39deb0aa1beaf59a37ef8e2bae5e",
+      "run_id": 188
+    },
+    {
+      "expected_previous_run_id": 105,
+      "expected_scope_key": "6d1dc4a80879c2b567bc2fb38e40800191750aa49c35f18943007b248680a275",
+      "run_id": 189
+    },
+    {
+      "expected_previous_run_id": 106,
+      "expected_scope_key": "f21ae6cf3ae83df682ba5b3124f6586493338ed2294db846f27127a1e53cacac",
+      "run_id": 190
+    },
+    {
+      "expected_previous_run_id": 107,
+      "expected_scope_key": "c9b9b1ee6f30eafb0aa59576294f22531256aace11f6d78060038928c0b66380",
+      "run_id": 191
+    },
+    {
+      "expected_previous_run_id": 108,
+      "expected_scope_key": "ec4226ad9b8fed8b79dabfbc84f38cdcdd78a7febb143f495cc643bf149f589f",
+      "run_id": 192
+    },
+    {
+      "expected_previous_run_id": 109,
+      "expected_scope_key": "a98621e77a127291c2bc80f09a1c1e150e0e83213ee2e4843ed5aa9ab5c45e64",
+      "run_id": 193
+    },
+    {
+      "expected_previous_run_id": 110,
+      "expected_scope_key": "a7749ba280ed0f2bed0f266a94944e0ffa9c06b63288019fc3c3ee25c97ea692",
+      "run_id": 194
+    },
+    {
+      "expected_previous_run_id": 111,
+      "expected_scope_key": "b1e10d1e5ee0017c6c1aa323f19cbf35f22bb568cc2ee9c77862efb69b52f3c5",
+      "run_id": 195
+    },
+    {
+      "expected_previous_run_id": 112,
+      "expected_scope_key": "b51ad2569f25dfa3bca7af389142a49696328d51af0af7f3e217da9639240f87",
+      "run_id": 196
+    },
+    {
+      "expected_previous_run_id": 113,
+      "expected_scope_key": "845564e46b63fcad8f7bd83dbf93c9b9038214881eebc65c62d5accb9398d778",
+      "run_id": 197
+    },
+    {
+      "expected_previous_run_id": 114,
+      "expected_scope_key": "e7a6665ab8f5165d745948151243dd55edc7f67b200f2dfd11aceeaa8ecf18d5",
+      "run_id": 198
+    },
+    {
+      "expected_previous_run_id": 115,
+      "expected_scope_key": "1fe3f0a14b255111ada1efb144003a7c7b84a8524b2066aad1292e9437ae21fc",
+      "run_id": 199
+    },
+    {
+      "expected_previous_run_id": 116,
+      "expected_scope_key": "9bc3469b0ba95a01fdcccf91db5c32fef6550507a7fd3f2b5fae3b600da274f4",
+      "run_id": 200
+    },
+    {
+      "expected_previous_run_id": 117,
+      "expected_scope_key": "c1cbb2d5363c2cbabb14ed55303a511da575d26645be9c9281e5ce403f18a499",
+      "run_id": 201
+    },
+    {
+      "expected_previous_run_id": 118,
+      "expected_scope_key": "3504206352491a02c89c74e113073da4feee692c7870402a106ac417b5a57913",
+      "run_id": 202
+    },
+    {
+      "expected_previous_run_id": 119,
+      "expected_scope_key": "06644f11e8b82cf5c83421e9df0ad01da6162642a8d4817ab9b464db60a60627",
+      "run_id": 203
+    },
+    {
+      "expected_previous_run_id": 120,
+      "expected_scope_key": "86351e9e2136bb1e9423ec7660c5cb928450518110017e1ec56481dd2b71fd2d",
+      "run_id": 204
+    },
+    {
+      "expected_previous_run_id": 121,
+      "expected_scope_key": "8fb502ed96a1d5b7413ab6aecb3f6a4260baafd3e749c2c033b1280446d5d1de",
+      "run_id": 205
+    },
+    {
+      "expected_previous_run_id": 122,
+      "expected_scope_key": "e05901b2ade6e6192d697816b6d3cf4e458834a3f58f72cbb6f68b2c57399654",
+      "run_id": 206
+    },
+    {
+      "expected_previous_run_id": 123,
+      "expected_scope_key": "3eac387c53269fb68295e30dcd130945400b8143b47192b836e8f17ddb03d9d1",
+      "run_id": 207
+    },
+    {
+      "expected_previous_run_id": 124,
+      "expected_scope_key": "56090ebca369cf7029d5db57af7dc9ff9fb9ce653850ddf6165162f75716bd5a",
+      "run_id": 208
+    },
+    {
+      "expected_previous_run_id": 125,
+      "expected_scope_key": "0a491bee3a0a1e0f8af160937b7271ca2d98e006359e5aee4806f85880665353",
+      "run_id": 209
+    },
+    {
+      "expected_previous_run_id": 126,
+      "expected_scope_key": "b20790cbf839ba0fad4c8a32ded5eee961d77cbbe331d50373f7f07e282d7c6d",
+      "run_id": 210
+    },
+    {
+      "expected_previous_run_id": 127,
+      "expected_scope_key": "e6db695a0baa37df2cd5920915ef041785550f5bc5a4228827b04e7dccbb6de0",
+      "run_id": 211
+    },
+    {
+      "expected_previous_run_id": 128,
+      "expected_scope_key": "6d28d5c13fc435d0d8f6bc4c8a1676a6691b944d30a99667bfd13931b633682f",
+      "run_id": 212
+    },
+    {
+      "expected_previous_run_id": 129,
+      "expected_scope_key": "3b08644001ad733ef4883df22b91b5e6aa1714d4e1ef2bedfdb2c0cee9abeccc",
+      "run_id": 213
+    },
+    {
+      "expected_previous_run_id": 130,
+      "expected_scope_key": "0de008da9a66280ab2d0f603e686a4dc4f9b57b5e13e309a3b014e082d4f45f8",
+      "run_id": 214
+    },
+    {
+      "expected_previous_run_id": 131,
+      "expected_scope_key": "283ff0effb87af84d8ab2bc48f246f40542a61c77077bcb215d34abb21215e04",
+      "run_id": 215
+    },
+    {
+      "expected_previous_run_id": 132,
+      "expected_scope_key": "ae2cee9ca9d03aec2fdc2af3147184eced8d9a088f2623c617a8ce0b26e10923",
+      "run_id": 216
+    }
+  ],
+  "mf_evidence_sha256": "bad18b93549831fe5100a1540eac691219ba675adeea9d88739badb04805cb35",
+  "mf_manifest_sha256": "1c47b3ed35d86998249b94fd2bb932766ed4b1d45c8f2c04c4247f0f13ac4242",
+  "publication_approvals_inherited": 0,
+  "report_schema_version": 1,
+  "runs": [
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 1317,
+        "staged_caen": 8626,
+        "staged_categories": 1317,
+        "staged_statuses": 1317
+      },
+      "base_run_id": 133,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 9,
+        "mapped_include": 1317,
+        "no_mf_2024_filing": 2363,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 1317,
+        "staged_businesses": 1317,
+        "staged_caen": 8626,
+        "staged_categories": 1317,
+        "staged_statuses": 1317,
+        "unmapped_reported_activity": 1427
+      },
+      "county": "Alba",
+      "run_id": 175,
+      "scope_key": "76060ac50ae2a84675c8fb8a0098d7982533e98ed8873bb06846f59385b0c8f5"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 1559,
+        "staged_caen": 11750,
+        "staged_categories": 1559,
+        "staged_statuses": 1559
+      },
+      "base_run_id": 134,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 8,
+        "mapped_include": 1559,
+        "no_mf_2024_filing": 3270,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 1559,
+        "staged_businesses": 1559,
+        "staged_caen": 11750,
+        "staged_categories": 1559,
+        "staged_statuses": 1559,
+        "unmapped_reported_activity": 1902
+      },
+      "county": "Arad",
+      "run_id": 176,
+      "scope_key": "47009ddd70362732da6e22895822a81ca1ae866c799e7536f1cc224c65642d9a"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 1910,
+        "staged_caen": 14195,
+        "staged_categories": 1910,
+        "staged_statuses": 1910
+      },
+      "base_run_id": 135,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 21,
+        "mapped_include": 1910,
+        "no_mf_2024_filing": 2688,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 1910,
+        "staged_businesses": 1910,
+        "staged_caen": 14195,
+        "staged_categories": 1910,
+        "staged_statuses": 1910,
+        "unmapped_reported_activity": 2663
+      },
+      "county": "Argeș",
+      "run_id": 177,
+      "scope_key": "7c9ea15275e1a80150e50ce3ea6b68944ac584e2dedad7dc5e5888aa644959c8"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 1628,
+        "staged_caen": 13893,
+        "staged_categories": 1628,
+        "staged_statuses": 1628
+      },
+      "base_run_id": 136,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 11,
+        "mapped_include": 1628,
+        "no_mf_2024_filing": 2498,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 1628,
+        "staged_businesses": 1628,
+        "staged_caen": 13893,
+        "staged_categories": 1628,
+        "staged_statuses": 1628,
+        "unmapped_reported_activity": 1844
+      },
+      "county": "Bacău",
+      "run_id": 178,
+      "scope_key": "0b70b2ed0dc3210e17da31e74de1b19e778a604958a6bdd442fed44ade5a8de6"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 2946,
+        "staged_caen": 21337,
+        "staged_categories": 2946,
+        "staged_statuses": 2946
+      },
+      "base_run_id": 137,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 24,
+        "mapped_include": 2946,
+        "no_mf_2024_filing": 4911,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 2946,
+        "staged_businesses": 2946,
+        "staged_caen": 21337,
+        "staged_categories": 2946,
+        "staged_statuses": 2946,
+        "unmapped_reported_activity": 3404
+      },
+      "county": "Bihor",
+      "run_id": 179,
+      "scope_key": "7973618878fde0a3fceadd4aa140d746ac99545ff8735ef70be86b38e7521f66"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 1025,
+        "staged_caen": 8101,
+        "staged_categories": 1025,
+        "staged_statuses": 1025
+      },
+      "base_run_id": 138,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 9,
+        "mapped_include": 1025,
+        "no_mf_2024_filing": 1215,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 1025,
+        "staged_businesses": 1025,
+        "staged_caen": 8101,
+        "staged_categories": 1025,
+        "staged_statuses": 1025,
+        "unmapped_reported_activity": 1007
+      },
+      "county": "Bistrița-Năsăud",
+      "run_id": 180,
+      "scope_key": "49d5d5cc2c043ba35f5477dfb23aecb30b682b77982de3cf03a07f7bf5f2345c"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 679,
+        "staged_caen": 4985,
+        "staged_categories": 679,
+        "staged_statuses": 679
+      },
+      "base_run_id": 139,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 5,
+        "mapped_include": 679,
+        "no_mf_2024_filing": 1252,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 679,
+        "staged_businesses": 679,
+        "staged_caen": 4985,
+        "staged_categories": 679,
+        "staged_statuses": 679,
+        "unmapped_reported_activity": 662
+      },
+      "county": "Botoșani",
+      "run_id": 181,
+      "scope_key": "7d8e838a345ef78964e43a37366970dd1548a10b9463db128d8833e031f69edf"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 2796,
+        "staged_caen": 25869,
+        "staged_categories": 2796,
+        "staged_statuses": 2796
+      },
+      "base_run_id": 140,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 28,
+        "mapped_include": 2796,
+        "no_mf_2024_filing": 4273,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 2796,
+        "staged_businesses": 2796,
+        "staged_caen": 25869,
+        "staged_categories": 2796,
+        "staged_statuses": 2796,
+        "unmapped_reported_activity": 4197
+      },
+      "county": "Brașov",
+      "run_id": 182,
+      "scope_key": "719c32c672e16a8e86a9a737b5b64b64c51c50b829ef7edf87f672270225cab9"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 603,
+        "staged_caen": 4204,
+        "staged_categories": 603,
+        "staged_statuses": 603
+      },
+      "base_run_id": 141,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 5,
+        "mapped_include": 603,
+        "no_mf_2024_filing": 837,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 603,
+        "staged_businesses": 603,
+        "staged_caen": 4204,
+        "staged_categories": 603,
+        "staged_statuses": 603,
+        "unmapped_reported_activity": 803
+      },
+      "county": "Brăila",
+      "run_id": 183,
+      "scope_key": "732cd28e1adfd527aa47371786e34f1e95160279d009b7f92c07be9c5be01a2a"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 10987,
+        "staged_caen": 81696,
+        "staged_categories": 10987,
+        "staged_statuses": 10987
+      },
+      "base_run_id": 142,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 118,
+        "mapped_include": 10987,
+        "no_mf_2024_filing": 15644,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 10987,
+        "staged_businesses": 10987,
+        "staged_caen": 81696,
+        "staged_categories": 10987,
+        "staged_statuses": 10987,
+        "unmapped_reported_activity": 21174
+      },
+      "county": "București",
+      "run_id": 184,
+      "scope_key": "3b4155b797b19110af9dc32e14e8616369489a84a3531874daaadd2e5511218a"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 1032,
+        "staged_caen": 8521,
+        "staged_categories": 1032,
+        "staged_statuses": 1032
+      },
+      "base_run_id": 143,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 10,
+        "mapped_include": 1032,
+        "no_mf_2024_filing": 1860,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 1032,
+        "staged_businesses": 1032,
+        "staged_caen": 8521,
+        "staged_categories": 1032,
+        "staged_statuses": 1032,
+        "unmapped_reported_activity": 1496
+      },
+      "county": "Buzău",
+      "run_id": 185,
+      "scope_key": "14a719b92effeef412d717b3d4c47512b035bbf6d2444fb5d5a5b4a561e258b0"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 453,
+        "staged_caen": 3806,
+        "staged_categories": 453,
+        "staged_statuses": 453
+      },
+      "base_run_id": 144,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 3,
+        "mapped_include": 453,
+        "no_mf_2024_filing": 1186,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 453,
+        "staged_businesses": 453,
+        "staged_caen": 3806,
+        "staged_categories": 453,
+        "staged_statuses": 453,
+        "unmapped_reported_activity": 626
+      },
+      "county": "Caraș-Severin",
+      "run_id": 186,
+      "scope_key": "a72549efa1d64065dbc83213b569d0312ded21927e82c5ccb6a450f53886c8d0"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 5262,
+        "staged_caen": 37382,
+        "staged_categories": 5262,
+        "staged_statuses": 5262
+      },
+      "base_run_id": 145,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 37,
+        "mapped_include": 5262,
+        "no_mf_2024_filing": 6268,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 5262,
+        "staged_businesses": 5262,
+        "staged_caen": 37382,
+        "staged_categories": 5262,
+        "staged_statuses": 5262,
+        "unmapped_reported_activity": 7088
+      },
+      "county": "Cluj",
+      "run_id": 187,
+      "scope_key": "512ca3224fb495fb70e5d8fe594bebe580ff0db58ae175e58dfd5e8c6000c73f"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 2412,
+        "staged_caen": 17267,
+        "staged_categories": 2412,
+        "staged_statuses": 2412
+      },
+      "base_run_id": 146,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 20,
+        "mapped_include": 2412,
+        "no_mf_2024_filing": 3087,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 2412,
+        "staged_businesses": 2412,
+        "staged_caen": 17267,
+        "staged_categories": 2412,
+        "staged_statuses": 2412,
+        "unmapped_reported_activity": 3288
+      },
+      "county": "Constanța",
+      "run_id": 188,
+      "scope_key": "488cec8d95ac8477852c29550f35e7a4da0f39deb0aa1beaf59a37ef8e2bae5e"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 462,
+        "staged_caen": 2923,
+        "staged_categories": 462,
+        "staged_statuses": 462
+      },
+      "base_run_id": 147,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 5,
+        "mapped_include": 462,
+        "no_mf_2024_filing": 913,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 462,
+        "staged_businesses": 462,
+        "staged_caen": 2923,
+        "staged_categories": 462,
+        "staged_statuses": 462,
+        "unmapped_reported_activity": 612
+      },
+      "county": "Covasna",
+      "run_id": 189,
+      "scope_key": "6d1dc4a80879c2b567bc2fb38e40800191750aa49c35f18943007b248680a275"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 577,
+        "staged_caen": 3730,
+        "staged_categories": 577,
+        "staged_statuses": 577
+      },
+      "base_run_id": 148,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 11,
+        "mapped_include": 577,
+        "no_mf_2024_filing": 1311,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 577,
+        "staged_businesses": 577,
+        "staged_caen": 3730,
+        "staged_categories": 577,
+        "staged_statuses": 577,
+        "unmapped_reported_activity": 673
+      },
+      "county": "Călărași",
+      "run_id": 190,
+      "scope_key": "f21ae6cf3ae83df682ba5b3124f6586493338ed2294db846f27127a1e53cacac"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 1497,
+        "staged_caen": 10210,
+        "staged_categories": 1497,
+        "staged_statuses": 1497
+      },
+      "base_run_id": 149,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 11,
+        "mapped_include": 1497,
+        "no_mf_2024_filing": 2479,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 1497,
+        "staged_businesses": 1497,
+        "staged_caen": 10210,
+        "staged_categories": 1497,
+        "staged_statuses": 1497,
+        "unmapped_reported_activity": 1872
+      },
+      "county": "Dolj",
+      "run_id": 191,
+      "scope_key": "c9b9b1ee6f30eafb0aa59576294f22531256aace11f6d78060038928c0b66380"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 1126,
+        "staged_caen": 8262,
+        "staged_categories": 1126,
+        "staged_statuses": 1126
+      },
+      "base_run_id": 150,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 9,
+        "mapped_include": 1126,
+        "no_mf_2024_filing": 2373,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 1126,
+        "staged_businesses": 1126,
+        "staged_caen": 8262,
+        "staged_categories": 1126,
+        "staged_statuses": 1126,
+        "unmapped_reported_activity": 1367
+      },
+      "county": "Dâmbovița",
+      "run_id": 192,
+      "scope_key": "ec4226ad9b8fed8b79dabfbc84f38cdcdd78a7febb143f495cc643bf149f589f"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 1755,
+        "staged_caen": 13563,
+        "staged_categories": 1755,
+        "staged_statuses": 1755
+      },
+      "base_run_id": 151,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 11,
+        "mapped_include": 1755,
+        "no_mf_2024_filing": 2103,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 1755,
+        "staged_businesses": 1755,
+        "staged_caen": 13563,
+        "staged_categories": 1755,
+        "staged_statuses": 1755,
+        "unmapped_reported_activity": 1848
+      },
+      "county": "Galați",
+      "run_id": 193,
+      "scope_key": "a98621e77a127291c2bc80f09a1c1e150e0e83213ee2e4843ed5aa9ab5c45e64"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 1197,
+        "staged_caen": 11124,
+        "staged_categories": 1197,
+        "staged_statuses": 1197
+      },
+      "base_run_id": 152,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 10,
+        "mapped_include": 1197,
+        "no_mf_2024_filing": 1768,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 1197,
+        "staged_businesses": 1197,
+        "staged_caen": 11124,
+        "staged_categories": 1197,
+        "staged_statuses": 1197,
+        "unmapped_reported_activity": 967
+      },
+      "county": "Giurgiu",
+      "run_id": 194,
+      "scope_key": "a7749ba280ed0f2bed0f266a94944e0ffa9c06b63288019fc3c3ee25c97ea692"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 810,
+        "staged_caen": 7347,
+        "staged_categories": 810,
+        "staged_statuses": 810
+      },
+      "base_run_id": 153,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 5,
+        "mapped_include": 810,
+        "no_mf_2024_filing": 1017,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 810,
+        "staged_businesses": 810,
+        "staged_caen": 7347,
+        "staged_categories": 810,
+        "staged_statuses": 810,
+        "unmapped_reported_activity": 1051
+      },
+      "county": "Gorj",
+      "run_id": 195,
+      "scope_key": "b1e10d1e5ee0017c6c1aa323f19cbf35f22bb568cc2ee9c77862efb69b52f3c5"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 1019,
+        "staged_caen": 7922,
+        "staged_categories": 1019,
+        "staged_statuses": 1019
+      },
+      "base_run_id": 154,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 6,
+        "mapped_include": 1019,
+        "no_mf_2024_filing": 1686,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 1019,
+        "staged_businesses": 1019,
+        "staged_caen": 7922,
+        "staged_categories": 1019,
+        "staged_statuses": 1019,
+        "unmapped_reported_activity": 1369
+      },
+      "county": "Harghita",
+      "run_id": 196,
+      "scope_key": "b51ad2569f25dfa3bca7af389142a49696328d51af0af7f3e217da9639240f87"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 959,
+        "staged_caen": 8441,
+        "staged_categories": 959,
+        "staged_statuses": 959
+      },
+      "base_run_id": 155,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 6,
+        "mapped_include": 959,
+        "no_mf_2024_filing": 2017,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 959,
+        "staged_businesses": 959,
+        "staged_caen": 8441,
+        "staged_categories": 959,
+        "staged_statuses": 959,
+        "unmapped_reported_activity": 1437
+      },
+      "county": "Hunedoara",
+      "run_id": 197,
+      "scope_key": "845564e46b63fcad8f7bd83dbf93c9b9038214881eebc65c62d5accb9398d778"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 437,
+        "staged_caen": 2839,
+        "staged_categories": 437,
+        "staged_statuses": 437
+      },
+      "base_run_id": 156,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 6,
+        "mapped_include": 437,
+        "no_mf_2024_filing": 798,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 437,
+        "staged_businesses": 437,
+        "staged_caen": 2839,
+        "staged_categories": 437,
+        "staged_statuses": 437,
+        "unmapped_reported_activity": 600
+      },
+      "county": "Ialomița",
+      "run_id": 198,
+      "scope_key": "e7a6665ab8f5165d745948151243dd55edc7f67b200f2dfd11aceeaa8ecf18d5"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 2660,
+        "staged_caen": 23150,
+        "staged_categories": 2660,
+        "staged_statuses": 2660
+      },
+      "base_run_id": 157,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 16,
+        "mapped_include": 2660,
+        "no_mf_2024_filing": 5573,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 2660,
+        "staged_businesses": 2660,
+        "staged_caen": 23150,
+        "staged_categories": 2660,
+        "staged_statuses": 2660,
+        "unmapped_reported_activity": 3783
+      },
+      "county": "Iași",
+      "run_id": 199,
+      "scope_key": "1fe3f0a14b255111ada1efb144003a7c7b84a8524b2066aad1292e9437ae21fc"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 3830,
+        "staged_caen": 29281,
+        "staged_categories": 3830,
+        "staged_statuses": 3830
+      },
+      "base_run_id": 158,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 32,
+        "mapped_include": 3830,
+        "no_mf_2024_filing": 4804,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 3830,
+        "staged_businesses": 3830,
+        "staged_caen": 29281,
+        "staged_categories": 3830,
+        "staged_statuses": 3830,
+        "unmapped_reported_activity": 5879
+      },
+      "county": "Ilfov",
+      "run_id": 200,
+      "scope_key": "9bc3469b0ba95a01fdcccf91db5c32fef6550507a7fd3f2b5fae3b600da274f4"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 1695,
+        "staged_caen": 12861,
+        "staged_categories": 1695,
+        "staged_statuses": 1695
+      },
+      "base_run_id": 159,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 10,
+        "mapped_include": 1695,
+        "no_mf_2024_filing": 3410,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 1695,
+        "staged_businesses": 1695,
+        "staged_caen": 12861,
+        "staged_categories": 1695,
+        "staged_statuses": 1695,
+        "unmapped_reported_activity": 1855
+      },
+      "county": "Maramureș",
+      "run_id": 201,
+      "scope_key": "c1cbb2d5363c2cbabb14ed55303a511da575d26645be9c9281e5ce403f18a499"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 317,
+        "staged_caen": 2368,
+        "staged_categories": 317,
+        "staged_statuses": 317
+      },
+      "base_run_id": 160,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 3,
+        "mapped_include": 317,
+        "no_mf_2024_filing": 1043,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 317,
+        "staged_businesses": 317,
+        "staged_caen": 2368,
+        "staged_categories": 317,
+        "staged_statuses": 317,
+        "unmapped_reported_activity": 524
+      },
+      "county": "Mehedinți",
+      "run_id": 202,
+      "scope_key": "3504206352491a02c89c74e113073da4feee692c7870402a106ac417b5a57913"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 1605,
+        "staged_caen": 10965,
+        "staged_categories": 1605,
+        "staged_statuses": 1605
+      },
+      "base_run_id": 161,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 22,
+        "mapped_include": 1605,
+        "no_mf_2024_filing": 2899,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 1605,
+        "staged_businesses": 1605,
+        "staged_caen": 10965,
+        "staged_categories": 1605,
+        "staged_statuses": 1605,
+        "unmapped_reported_activity": 2350
+      },
+      "county": "Mureș",
+      "run_id": 203,
+      "scope_key": "06644f11e8b82cf5c83421e9df0ad01da6162642a8d4817ab9b464db60a60627"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 1180,
+        "staged_caen": 8908,
+        "staged_categories": 1180,
+        "staged_statuses": 1180
+      },
+      "base_run_id": 162,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 12,
+        "mapped_include": 1180,
+        "no_mf_2024_filing": 2636,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 1180,
+        "staged_businesses": 1180,
+        "staged_caen": 8908,
+        "staged_categories": 1180,
+        "staged_statuses": 1180,
+        "unmapped_reported_activity": 1610
+      },
+      "county": "Neamț",
+      "run_id": 204,
+      "scope_key": "86351e9e2136bb1e9423ec7660c5cb928450518110017e1ec56481dd2b71fd2d"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 939,
+        "staged_caen": 7606,
+        "staged_categories": 939,
+        "staged_statuses": 939
+      },
+      "base_run_id": 163,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 9,
+        "mapped_include": 939,
+        "no_mf_2024_filing": 1234,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 939,
+        "staged_businesses": 939,
+        "staged_caen": 7606,
+        "staged_categories": 939,
+        "staged_statuses": 939,
+        "unmapped_reported_activity": 1013
+      },
+      "county": "Olt",
+      "run_id": 205,
+      "scope_key": "8fb502ed96a1d5b7413ab6aecb3f6a4260baafd3e749c2c033b1280446d5d1de"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 2607,
+        "staged_caen": 23840,
+        "staged_categories": 2607,
+        "staged_statuses": 2607
+      },
+      "base_run_id": 164,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 19,
+        "mapped_include": 2607,
+        "no_mf_2024_filing": 3295,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 2607,
+        "staged_businesses": 2607,
+        "staged_caen": 23840,
+        "staged_categories": 2607,
+        "staged_statuses": 2607,
+        "unmapped_reported_activity": 2822
+      },
+      "county": "Prahova",
+      "run_id": 206,
+      "scope_key": "e05901b2ade6e6192d697816b6d3cf4e458834a3f58f72cbb6f68b2c57399654"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 1382,
+        "staged_caen": 11438,
+        "staged_categories": 1382,
+        "staged_statuses": 1382
+      },
+      "base_run_id": 165,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 7,
+        "mapped_include": 1382,
+        "no_mf_2024_filing": 2006,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 1382,
+        "staged_businesses": 1382,
+        "staged_caen": 11438,
+        "staged_categories": 1382,
+        "staged_statuses": 1382,
+        "unmapped_reported_activity": 1204
+      },
+      "county": "Satu Mare",
+      "run_id": 207,
+      "scope_key": "3eac387c53269fb68295e30dcd130945400b8143b47192b836e8f17ddb03d9d1"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 1584,
+        "staged_caen": 11568,
+        "staged_categories": 1584,
+        "staged_statuses": 1584
+      },
+      "base_run_id": 166,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 11,
+        "mapped_include": 1584,
+        "no_mf_2024_filing": 2496,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 1584,
+        "staged_businesses": 1584,
+        "staged_caen": 11568,
+        "staged_categories": 1584,
+        "staged_statuses": 1584,
+        "unmapped_reported_activity": 2099
+      },
+      "county": "Sibiu",
+      "run_id": 208,
+      "scope_key": "56090ebca369cf7029d5db57af7dc9ff9fb9ce653850ddf6165162f75716bd5a"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 2133,
+        "staged_caen": 16881,
+        "staged_categories": 2133,
+        "staged_statuses": 2133
+      },
+      "base_run_id": 167,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 14,
+        "mapped_include": 2133,
+        "no_mf_2024_filing": 3235,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 2133,
+        "staged_businesses": 2133,
+        "staged_caen": 16881,
+        "staged_categories": 2133,
+        "staged_statuses": 2133,
+        "unmapped_reported_activity": 2462
+      },
+      "county": "Suceava",
+      "run_id": 209,
+      "scope_key": "0a491bee3a0a1e0f8af160937b7271ca2d98e006359e5aee4806f85880665353"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 837,
+        "staged_caen": 6240,
+        "staged_categories": 837,
+        "staged_statuses": 837
+      },
+      "base_run_id": 168,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 11,
+        "mapped_include": 837,
+        "no_mf_2024_filing": 1604,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 837,
+        "staged_businesses": 837,
+        "staged_caen": 6240,
+        "staged_categories": 837,
+        "staged_statuses": 837,
+        "unmapped_reported_activity": 889
+      },
+      "county": "Sălaj",
+      "run_id": 210,
+      "scope_key": "b20790cbf839ba0fad4c8a32ded5eee961d77cbbe331d50373f7f07e282d7c6d"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 494,
+        "staged_caen": 3409,
+        "staged_categories": 494,
+        "staged_statuses": 494
+      },
+      "base_run_id": 169,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 5,
+        "mapped_include": 494,
+        "no_mf_2024_filing": 1027,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 494,
+        "staged_businesses": 494,
+        "staged_caen": 3409,
+        "staged_categories": 494,
+        "staged_statuses": 494,
+        "unmapped_reported_activity": 611
+      },
+      "county": "Teleorman",
+      "run_id": 211,
+      "scope_key": "e6db695a0baa37df2cd5920915ef041785550f5bc5a4228827b04e7dccbb6de0"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 3908,
+        "staged_caen": 29970,
+        "staged_categories": 3908,
+        "staged_statuses": 3908
+      },
+      "base_run_id": 170,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 27,
+        "mapped_include": 3908,
+        "no_mf_2024_filing": 6401,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 3908,
+        "staged_businesses": 3908,
+        "staged_caen": 29970,
+        "staged_categories": 3908,
+        "staged_statuses": 3908,
+        "unmapped_reported_activity": 4971
+      },
+      "county": "Timiș",
+      "run_id": 212,
+      "scope_key": "6d28d5c13fc435d0d8f6bc4c8a1676a6691b944d30a99667bfd13931b633682f"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 407,
+        "staged_caen": 3318,
+        "staged_categories": 407,
+        "staged_statuses": 407
+      },
+      "base_run_id": 171,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 7,
+        "mapped_include": 407,
+        "no_mf_2024_filing": 610,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 407,
+        "staged_businesses": 407,
+        "staged_caen": 3318,
+        "staged_categories": 407,
+        "staged_statuses": 407,
+        "unmapped_reported_activity": 778
+      },
+      "county": "Tulcea",
+      "run_id": 213,
+      "scope_key": "3b08644001ad733ef4883df22b91b5e6aa1714d4e1ef2bedfdb2c0cee9abeccc"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 825,
+        "staged_caen": 7734,
+        "staged_categories": 825,
+        "staged_statuses": 825
+      },
+      "base_run_id": 172,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 8,
+        "mapped_include": 825,
+        "no_mf_2024_filing": 1455,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 825,
+        "staged_businesses": 825,
+        "staged_caen": 7734,
+        "staged_categories": 825,
+        "staged_statuses": 825,
+        "unmapped_reported_activity": 934
+      },
+      "county": "Vaslui",
+      "run_id": 214,
+      "scope_key": "0de008da9a66280ab2d0f603e686a4dc4f9b57b5e13e309a3b014e082d4f45f8"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 1015,
+        "staged_caen": 7767,
+        "staged_categories": 1015,
+        "staged_statuses": 1015
+      },
+      "base_run_id": 173,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 9,
+        "mapped_include": 1015,
+        "no_mf_2024_filing": 1233,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 1015,
+        "staged_businesses": 1015,
+        "staged_caen": 7767,
+        "staged_categories": 1015,
+        "staged_statuses": 1015,
+        "unmapped_reported_activity": 1182
+      },
+      "county": "Vrancea",
+      "run_id": 215,
+      "scope_key": "283ff0effb87af84d8ab2bc48f246f40542a61c77077bcb215d34abb21215e04"
+    },
+    {
+      "audited": {
+        "quarantine_records": 0,
+        "staged_businesses": 1014,
+        "staged_caen": 7564,
+        "staged_categories": 1014,
+        "staged_statuses": 1014
+      },
+      "base_run_id": 174,
+      "changed": true,
+      "counters": {
+        "mapped_but_not_authorized": 12,
+        "mapped_include": 1014,
+        "no_mf_2024_filing": 1267,
+        "quarantine_records": 0,
+        "staged_activity_evidence": 1014,
+        "staged_businesses": 1014,
+        "staged_caen": 7564,
+        "staged_categories": 1014,
+        "staged_statuses": 1014,
+        "unmapped_reported_activity": 1083
+      },
+      "county": "Vâlcea",
+      "run_id": 216,
+      "scope_key": "ae2cee9ca9d03aec2fdc2af3147184eced8d9a088f2623c617a8ce0b26e10923"
+    }
+  ],
+  "shadow": {
+    "base_candidates": 286973,
+    "base_provenance": {
+      "categories": [
+        "constructii",
+        "curatenie",
+        "gradinarit",
+        "instalatii",
+        "reparatii",
+        "tamplarie"
+      ],
+      "provider": "ONRC",
+      "publication_approval_count": 0,
+      "scope_contract_versions": [
+        1
+      ],
+      "snapshot_ids": [
+        1
+      ],
+      "snapshot_manifest_sha256": [
+        "c8510f383565c04124a2c182e4c1be9e5b248b7b4a547606a5c19bdce078429f"
+      ],
+      "visibility": "not_activated"
+    },
+    "base_runs": [
+      {
+        "county": "Alba",
+        "run_id": 133,
+        "scope_key": "6742657a6f6b2fd1060d97e53898d53b5dc124b5d97b579c9d2cc95a0bd3fd00"
+      },
+      {
+        "county": "Arad",
+        "run_id": 134,
+        "scope_key": "fefdb8ce28e766d825c3f7ec29874c7e32e2d3267e3e0157c221107c1bb38a22"
+      },
+      {
+        "county": "Argeș",
+        "run_id": 135,
+        "scope_key": "d08feefeea0425b804d6b6b0aeebbeb1f607364e40948fba0b08d66abe52cda4"
+      },
+      {
+        "county": "Bacău",
+        "run_id": 136,
+        "scope_key": "60c0ae6f4f71a8089caa990889b75efcc4d02395fd42bba61c0418346348b087"
+      },
+      {
+        "county": "Bihor",
+        "run_id": 137,
+        "scope_key": "f1123c27734a69f0a3c39969c10087c285e27c5d3a67f8323fdf9298353dadde"
+      },
+      {
+        "county": "Bistrița-Năsăud",
+        "run_id": 138,
+        "scope_key": "df21d7aaba4ebe80bc585514a095b4c49bc5647eb935a9cbe44819af3097d6be"
+      },
+      {
+        "county": "Botoșani",
+        "run_id": 139,
+        "scope_key": "49ee2e4ccaa20d4242aa4b3a2adb7345253e3ab74cb5c18e3ea281325f467414"
+      },
+      {
+        "county": "Brașov",
+        "run_id": 140,
+        "scope_key": "8a28a82748e7375947109d51a206ffcb10a674012d1ef32c2bf09398ea0f79a9"
+      },
+      {
+        "county": "Brăila",
+        "run_id": 141,
+        "scope_key": "bcc7544f89d7424ab8d6f07fbf431b1dbc072821b9ae14bdcc7a457a5ae3f275"
+      },
+      {
+        "county": "București",
+        "run_id": 142,
+        "scope_key": "a1cec83c18c2dbf78447350f74e7cf1aea710dc6b5a1441186941afb288465ed"
+      },
+      {
+        "county": "Buzău",
+        "run_id": 143,
+        "scope_key": "7f80e9b90a40f54cfba3b306dac54e8e4e0eb7bd1667b0f8091a6c856527b22b"
+      },
+      {
+        "county": "Caraș-Severin",
+        "run_id": 144,
+        "scope_key": "d9e54c5ed5b51f9c34ce63ce397b27dd06b56a8d9e8cacb2603a636a8805bcc3"
+      },
+      {
+        "county": "Cluj",
+        "run_id": 145,
+        "scope_key": "b5438eda96f1651dc4f3be9ae8f4af64608260a6354f9f0675fde5f9e214615e"
+      },
+      {
+        "county": "Constanța",
+        "run_id": 146,
+        "scope_key": "e297d9fcaecd0d01690a170eeea8146033889d5e66f7ec9b48ad414df23235ce"
+      },
+      {
+        "county": "Covasna",
+        "run_id": 147,
+        "scope_key": "bc96593a8f4a97d29ed16d43545c6fbfa67d7ea94e020728cac0063c2e365b1e"
+      },
+      {
+        "county": "Călărași",
+        "run_id": 148,
+        "scope_key": "724944ff9f9e2dbdbb435b9f05ed1de2ec0d2bda938c5adbf98dd74d8b756252"
+      },
+      {
+        "county": "Dolj",
+        "run_id": 149,
+        "scope_key": "c5c62e52f7666678d9e2af41f36d1c8fea0ec43071533314b2512baae66e108e"
+      },
+      {
+        "county": "Dâmbovița",
+        "run_id": 150,
+        "scope_key": "f8ed2bc4c122514058fbf86c71152d5f2f4dd7b05814d755c2ff70428a17c807"
+      },
+      {
+        "county": "Galați",
+        "run_id": 151,
+        "scope_key": "5e43955af129b679c5e3ddaf4826572f2a6570414a3724e32d876184117193ae"
+      },
+      {
+        "county": "Giurgiu",
+        "run_id": 152,
+        "scope_key": "40a571b8ad5451a279d4fa36a527725e5c413c13c7dc94b94b56d71933b38093"
+      },
+      {
+        "county": "Gorj",
+        "run_id": 153,
+        "scope_key": "c581cf97baba8e45336e622081b1209ed04a0f635af234a6b27eb5298bc111bf"
+      },
+      {
+        "county": "Harghita",
+        "run_id": 154,
+        "scope_key": "e00f4e54397ad6c7283d416979e8bbefa16c2017964150f3d4f946ba2ae1eaa2"
+      },
+      {
+        "county": "Hunedoara",
+        "run_id": 155,
+        "scope_key": "b38430bd9e3c9b674439efe78d4d153af1b3748543ffee5efaefbb0b92c2b272"
+      },
+      {
+        "county": "Ialomița",
+        "run_id": 156,
+        "scope_key": "4d68004104e34af90c1bf70e9a747f88db934844afe0679e7ad3553cf317cfb7"
+      },
+      {
+        "county": "Iași",
+        "run_id": 157,
+        "scope_key": "ccefa1180defaceda1febe429cac01d675e6200d06679390cd7a945f0ad51f8a"
+      },
+      {
+        "county": "Ilfov",
+        "run_id": 158,
+        "scope_key": "fcf751018087a92fb772d7204ca349757f8ccd39e094771f4422034368fa1099"
+      },
+      {
+        "county": "Maramureș",
+        "run_id": 159,
+        "scope_key": "e44c8e96f656a7e8be35c3a148e806897a36e689d744740b9e373c94d4244461"
+      },
+      {
+        "county": "Mehedinți",
+        "run_id": 160,
+        "scope_key": "f1d06a61a7a2516b32cdbd7fb55d0bfa87c7096144f7a25a568949efb47bbf63"
+      },
+      {
+        "county": "Mureș",
+        "run_id": 161,
+        "scope_key": "4a3119554902030f666ff365229386f4a5fe324312ec44413f403ff754a1464d"
+      },
+      {
+        "county": "Neamț",
+        "run_id": 162,
+        "scope_key": "e1d4279b30513919bcab05f6fab21604bd7a171d62cdf9c214ac8a8b906fcf8a"
+      },
+      {
+        "county": "Olt",
+        "run_id": 163,
+        "scope_key": "4690888679abd3a252ea51eb192a9b527d7e3d2d08434fcf9aca3be531db9bab"
+      },
+      {
+        "county": "Prahova",
+        "run_id": 164,
+        "scope_key": "e14f72ccacc7663c447bf2ee8e496a05f004dbfe8840826c6ce94c15e6190336"
+      },
+      {
+        "county": "Satu Mare",
+        "run_id": 165,
+        "scope_key": "1a19a492a9e28c926e18f94532e2a919e8529393244f0c9b55350cecf647d795"
+      },
+      {
+        "county": "Sibiu",
+        "run_id": 166,
+        "scope_key": "31bdd3a0f6e2e39806c0af797ac2448ed40bdb9b5c447d59fd8ece7d8097ad84"
+      },
+      {
+        "county": "Suceava",
+        "run_id": 167,
+        "scope_key": "c6cb0f63bd7b22a97c117623ce8496752f59ed127bcd3c04a5fd51933a337825"
+      },
+      {
+        "county": "Sălaj",
+        "run_id": 168,
+        "scope_key": "60ec66133e7774c57eeeaccb144a5d65cd8c0663c39a74bcb0dbc20824316574"
+      },
+      {
+        "county": "Teleorman",
+        "run_id": 169,
+        "scope_key": "e36cd03a9f6c18b9916049f9b32f42532d9a93ff218671f59e80b41b5797689a"
+      },
+      {
+        "county": "Timiș",
+        "run_id": 170,
+        "scope_key": "78c667285a22e10bbd2bfab8381c36009f77accd8ef5632b782980cd9c7e5ca1"
+      },
+      {
+        "county": "Tulcea",
+        "run_id": 171,
+        "scope_key": "af7390b82355ef212c24f48ccf1d032b1e090b9f4060ca54401bc8bbc9df878d"
+      },
+      {
+        "county": "Vaslui",
+        "run_id": 172,
+        "scope_key": "30ad610434a1ed05e8b52e685fde43a58834e295a179fac9bc9fb259f97266c2"
+      },
+      {
+        "county": "Vrancea",
+        "run_id": 173,
+        "scope_key": "eb7a525fd213a589def11f1465a8975daa5f020460ec225761ec9d782bd65ccb"
+      },
+      {
+        "county": "Vâlcea",
+        "run_id": 174,
+        "scope_key": "ddb318373289e7d133250a63c856e45dc7355bd120b97f8bef1d89f7fe78dd80"
+      }
+    ],
+    "by_county": {
+      "Alba": {
+        "mapped_but_not_authorized": 9,
+        "mapped_include": 1317,
+        "no_mf_2024_filing": 2363,
+        "unmapped_reported_activity": 1427
+      },
+      "Arad": {
+        "mapped_but_not_authorized": 8,
+        "mapped_include": 1559,
+        "no_mf_2024_filing": 3270,
+        "unmapped_reported_activity": 1902
+      },
+      "Argeș": {
+        "mapped_but_not_authorized": 21,
+        "mapped_include": 1910,
+        "no_mf_2024_filing": 2688,
+        "unmapped_reported_activity": 2663
+      },
+      "Bacău": {
+        "mapped_but_not_authorized": 11,
+        "mapped_include": 1628,
+        "no_mf_2024_filing": 2498,
+        "unmapped_reported_activity": 1844
+      },
+      "Bihor": {
+        "mapped_but_not_authorized": 24,
+        "mapped_include": 2946,
+        "no_mf_2024_filing": 4911,
+        "unmapped_reported_activity": 3404
+      },
+      "Bistrița-Năsăud": {
+        "mapped_but_not_authorized": 9,
+        "mapped_include": 1025,
+        "no_mf_2024_filing": 1215,
+        "unmapped_reported_activity": 1007
+      },
+      "Botoșani": {
+        "mapped_but_not_authorized": 5,
+        "mapped_include": 679,
+        "no_mf_2024_filing": 1252,
+        "unmapped_reported_activity": 662
+      },
+      "Brașov": {
+        "mapped_but_not_authorized": 28,
+        "mapped_include": 2796,
+        "no_mf_2024_filing": 4273,
+        "unmapped_reported_activity": 4197
+      },
+      "Brăila": {
+        "mapped_but_not_authorized": 5,
+        "mapped_include": 603,
+        "no_mf_2024_filing": 837,
+        "unmapped_reported_activity": 803
+      },
+      "București": {
+        "mapped_but_not_authorized": 118,
+        "mapped_include": 10987,
+        "no_mf_2024_filing": 15644,
+        "unmapped_reported_activity": 21174
+      },
+      "Buzău": {
+        "mapped_but_not_authorized": 10,
+        "mapped_include": 1032,
+        "no_mf_2024_filing": 1860,
+        "unmapped_reported_activity": 1496
+      },
+      "Caraș-Severin": {
+        "mapped_but_not_authorized": 3,
+        "mapped_include": 453,
+        "no_mf_2024_filing": 1186,
+        "unmapped_reported_activity": 626
+      },
+      "Cluj": {
+        "mapped_but_not_authorized": 37,
+        "mapped_include": 5262,
+        "no_mf_2024_filing": 6268,
+        "unmapped_reported_activity": 7088
+      },
+      "Constanța": {
+        "mapped_but_not_authorized": 20,
+        "mapped_include": 2412,
+        "no_mf_2024_filing": 3087,
+        "unmapped_reported_activity": 3288
+      },
+      "Covasna": {
+        "mapped_but_not_authorized": 5,
+        "mapped_include": 462,
+        "no_mf_2024_filing": 913,
+        "unmapped_reported_activity": 612
+      },
+      "Călărași": {
+        "mapped_but_not_authorized": 11,
+        "mapped_include": 577,
+        "no_mf_2024_filing": 1311,
+        "unmapped_reported_activity": 673
+      },
+      "Dolj": {
+        "mapped_but_not_authorized": 11,
+        "mapped_include": 1497,
+        "no_mf_2024_filing": 2479,
+        "unmapped_reported_activity": 1872
+      },
+      "Dâmbovița": {
+        "mapped_but_not_authorized": 9,
+        "mapped_include": 1126,
+        "no_mf_2024_filing": 2373,
+        "unmapped_reported_activity": 1367
+      },
+      "Galați": {
+        "mapped_but_not_authorized": 11,
+        "mapped_include": 1755,
+        "no_mf_2024_filing": 2103,
+        "unmapped_reported_activity": 1848
+      },
+      "Giurgiu": {
+        "mapped_but_not_authorized": 10,
+        "mapped_include": 1197,
+        "no_mf_2024_filing": 1768,
+        "unmapped_reported_activity": 967
+      },
+      "Gorj": {
+        "mapped_but_not_authorized": 5,
+        "mapped_include": 810,
+        "no_mf_2024_filing": 1017,
+        "unmapped_reported_activity": 1051
+      },
+      "Harghita": {
+        "mapped_but_not_authorized": 6,
+        "mapped_include": 1019,
+        "no_mf_2024_filing": 1686,
+        "unmapped_reported_activity": 1369
+      },
+      "Hunedoara": {
+        "mapped_but_not_authorized": 6,
+        "mapped_include": 959,
+        "no_mf_2024_filing": 2017,
+        "unmapped_reported_activity": 1437
+      },
+      "Ialomița": {
+        "mapped_but_not_authorized": 6,
+        "mapped_include": 437,
+        "no_mf_2024_filing": 798,
+        "unmapped_reported_activity": 600
+      },
+      "Iași": {
+        "mapped_but_not_authorized": 16,
+        "mapped_include": 2660,
+        "no_mf_2024_filing": 5573,
+        "unmapped_reported_activity": 3783
+      },
+      "Ilfov": {
+        "mapped_but_not_authorized": 32,
+        "mapped_include": 3830,
+        "no_mf_2024_filing": 4804,
+        "unmapped_reported_activity": 5879
+      },
+      "Maramureș": {
+        "mapped_but_not_authorized": 10,
+        "mapped_include": 1695,
+        "no_mf_2024_filing": 3410,
+        "unmapped_reported_activity": 1855
+      },
+      "Mehedinți": {
+        "mapped_but_not_authorized": 3,
+        "mapped_include": 317,
+        "no_mf_2024_filing": 1043,
+        "unmapped_reported_activity": 524
+      },
+      "Mureș": {
+        "mapped_but_not_authorized": 22,
+        "mapped_include": 1605,
+        "no_mf_2024_filing": 2899,
+        "unmapped_reported_activity": 2350
+      },
+      "Neamț": {
+        "mapped_but_not_authorized": 12,
+        "mapped_include": 1180,
+        "no_mf_2024_filing": 2636,
+        "unmapped_reported_activity": 1610
+      },
+      "Olt": {
+        "mapped_but_not_authorized": 9,
+        "mapped_include": 939,
+        "no_mf_2024_filing": 1234,
+        "unmapped_reported_activity": 1013
+      },
+      "Prahova": {
+        "mapped_but_not_authorized": 19,
+        "mapped_include": 2607,
+        "no_mf_2024_filing": 3295,
+        "unmapped_reported_activity": 2822
+      },
+      "Satu Mare": {
+        "mapped_but_not_authorized": 7,
+        "mapped_include": 1382,
+        "no_mf_2024_filing": 2006,
+        "unmapped_reported_activity": 1204
+      },
+      "Sibiu": {
+        "mapped_but_not_authorized": 11,
+        "mapped_include": 1584,
+        "no_mf_2024_filing": 2496,
+        "unmapped_reported_activity": 2099
+      },
+      "Suceava": {
+        "mapped_but_not_authorized": 14,
+        "mapped_include": 2133,
+        "no_mf_2024_filing": 3235,
+        "unmapped_reported_activity": 2462
+      },
+      "Sălaj": {
+        "mapped_but_not_authorized": 11,
+        "mapped_include": 837,
+        "no_mf_2024_filing": 1604,
+        "unmapped_reported_activity": 889
+      },
+      "Teleorman": {
+        "mapped_but_not_authorized": 5,
+        "mapped_include": 494,
+        "no_mf_2024_filing": 1027,
+        "unmapped_reported_activity": 611
+      },
+      "Timiș": {
+        "mapped_but_not_authorized": 27,
+        "mapped_include": 3908,
+        "no_mf_2024_filing": 6401,
+        "unmapped_reported_activity": 4971
+      },
+      "Tulcea": {
+        "mapped_but_not_authorized": 7,
+        "mapped_include": 407,
+        "no_mf_2024_filing": 610,
+        "unmapped_reported_activity": 778
+      },
+      "Vaslui": {
+        "mapped_but_not_authorized": 8,
+        "mapped_include": 825,
+        "no_mf_2024_filing": 1455,
+        "unmapped_reported_activity": 934
+      },
+      "Vrancea": {
+        "mapped_but_not_authorized": 9,
+        "mapped_include": 1015,
+        "no_mf_2024_filing": 1233,
+        "unmapped_reported_activity": 1182
+      },
+      "Vâlcea": {
+        "mapped_but_not_authorized": 12,
+        "mapped_include": 1014,
+        "no_mf_2024_filing": 1267,
+        "unmapped_reported_activity": 1083
+      }
+    },
+    "by_legal_form": {
+      "ALT": {
+        "mapped_include": 1,
+        "no_mf_2024_filing": 3,
+        "unmapped_reported_activity": 4
+      },
+      "CA": {
+        "no_mf_2024_filing": 34,
+        "unmapped_reported_activity": 61
+      },
+      "GEIE": {
+        "unmapped_reported_activity": 1
+      },
+      "GIE": {
+        "unmapped_reported_activity": 1
+      },
+      "IF": {
+        "mapped_include": 1,
+        "no_mf_2024_filing": 1348
+      },
+      "II": {
+        "no_mf_2024_filing": 11207
+      },
+      "INCD": {
+        "no_mf_2024_filing": 1,
+        "unmapped_reported_activity": 6
+      },
+      "N/A": {
+        "mapped_include": 29,
+        "no_mf_2024_filing": 121,
+        "unmapped_reported_activity": 91
+      },
+      "PFA": {
+        "no_mf_2024_filing": 19555
+      },
+      "RA": {
+        "no_mf_2024_filing": 11,
+        "unmapped_reported_activity": 34
+      },
+      "SA": {
+        "mapped_but_not_authorized": 1,
+        "mapped_include": 233,
+        "no_mf_2024_filing": 193,
+        "unmapped_reported_activity": 1018
+      },
+      "SC": {
+        "mapped_but_not_authorized": 1,
+        "mapped_include": 24,
+        "no_mf_2024_filing": 9,
+        "unmapped_reported_activity": 78
+      },
+      "SCE": {
+        "unmapped_reported_activity": 1
+      },
+      "SCS": {
+        "mapped_include": 1,
+        "no_mf_2024_filing": 1,
+        "unmapped_reported_activity": 8
+      },
+      "SE": {
+        "no_mf_2024_filing": 2
+      },
+      "SNC": {
+        "mapped_include": 11,
+        "no_mf_2024_filing": 10,
+        "unmapped_reported_activity": 14
+      },
+      "SRL": {
+        "mapped_but_not_authorized": 620,
+        "mapped_include": 72580,
+        "no_mf_2024_filing": 81549,
+        "unmapped_reported_activity": 98107
+      },
+      "unknown": {
+        "no_mf_2024_filing": 1,
+        "unmapped_reported_activity": 2
+      }
+    },
+    "by_registration_year": {
+      "1990": {
+        "mapped_include": 3,
+        "unmapped_reported_activity": 8
+      },
+      "1991": {
+        "mapped_but_not_authorized": 6,
+        "mapped_include": 453,
+        "no_mf_2024_filing": 178,
+        "unmapped_reported_activity": 1322
+      },
+      "1992": {
+        "mapped_but_not_authorized": 12,
+        "mapped_include": 517,
+        "no_mf_2024_filing": 178,
+        "unmapped_reported_activity": 1203
+      },
+      "1993": {
+        "mapped_but_not_authorized": 7,
+        "mapped_include": 498,
+        "no_mf_2024_filing": 215,
+        "unmapped_reported_activity": 1126
+      },
+      "1994": {
+        "mapped_but_not_authorized": 12,
+        "mapped_include": 805,
+        "no_mf_2024_filing": 259,
+        "unmapped_reported_activity": 1926
+      },
+      "1995": {
+        "mapped_but_not_authorized": 2,
+        "mapped_include": 293,
+        "no_mf_2024_filing": 109,
+        "unmapped_reported_activity": 623
+      },
+      "1996": {
+        "mapped_but_not_authorized": 5,
+        "mapped_include": 300,
+        "no_mf_2024_filing": 109,
+        "unmapped_reported_activity": 634
+      },
+      "1997": {
+        "mapped_but_not_authorized": 4,
+        "mapped_include": 303,
+        "no_mf_2024_filing": 109,
+        "unmapped_reported_activity": 637
+      },
+      "1998": {
+        "mapped_but_not_authorized": 5,
+        "mapped_include": 313,
+        "no_mf_2024_filing": 154,
+        "unmapped_reported_activity": 717
+      },
+      "1999": {
+        "mapped_but_not_authorized": 4,
+        "mapped_include": 290,
+        "no_mf_2024_filing": 124,
+        "unmapped_reported_activity": 642
+      },
+      "2000": {
+        "mapped_but_not_authorized": 6,
+        "mapped_include": 298,
+        "no_mf_2024_filing": 168,
+        "unmapped_reported_activity": 674
+      },
+      "2001": {
+        "mapped_but_not_authorized": 3,
+        "mapped_include": 433,
+        "no_mf_2024_filing": 203,
+        "unmapped_reported_activity": 965
+      },
+      "2002": {
+        "mapped_but_not_authorized": 4,
+        "mapped_include": 616,
+        "no_mf_2024_filing": 333,
+        "unmapped_reported_activity": 1338
+      },
+      "2003": {
+        "mapped_but_not_authorized": 15,
+        "mapped_include": 918,
+        "no_mf_2024_filing": 781,
+        "unmapped_reported_activity": 1983
+      },
+      "2004": {
+        "mapped_but_not_authorized": 16,
+        "mapped_include": 1217,
+        "no_mf_2024_filing": 1050,
+        "unmapped_reported_activity": 2303
+      },
+      "2005": {
+        "mapped_but_not_authorized": 21,
+        "mapped_include": 1219,
+        "no_mf_2024_filing": 1335,
+        "unmapped_reported_activity": 2331
+      },
+      "2006": {
+        "mapped_but_not_authorized": 24,
+        "mapped_include": 1407,
+        "no_mf_2024_filing": 1164,
+        "unmapped_reported_activity": 2382
+      },
+      "2007": {
+        "mapped_but_not_authorized": 29,
+        "mapped_include": 1701,
+        "no_mf_2024_filing": 1397,
+        "unmapped_reported_activity": 2706
+      },
+      "2008": {
+        "mapped_but_not_authorized": 32,
+        "mapped_include": 2027,
+        "no_mf_2024_filing": 3270,
+        "unmapped_reported_activity": 2906
+      },
+      "2009": {
+        "mapped_but_not_authorized": 8,
+        "mapped_include": 1033,
+        "no_mf_2024_filing": 2284,
+        "unmapped_reported_activity": 1749
+      },
+      "2010": {
+        "mapped_but_not_authorized": 7,
+        "mapped_include": 890,
+        "no_mf_2024_filing": 2100,
+        "unmapped_reported_activity": 1711
+      },
+      "2011": {
+        "mapped_but_not_authorized": 21,
+        "mapped_include": 1522,
+        "no_mf_2024_filing": 2696,
+        "unmapped_reported_activity": 2630
+      },
+      "2012": {
+        "mapped_but_not_authorized": 15,
+        "mapped_include": 1723,
+        "no_mf_2024_filing": 2625,
+        "unmapped_reported_activity": 2828
+      },
+      "2013": {
+        "mapped_but_not_authorized": 17,
+        "mapped_include": 1703,
+        "no_mf_2024_filing": 2532,
+        "unmapped_reported_activity": 3063
+      },
+      "2014": {
+        "mapped_but_not_authorized": 20,
+        "mapped_include": 1851,
+        "no_mf_2024_filing": 2447,
+        "unmapped_reported_activity": 2966
+      },
+      "2015": {
+        "mapped_but_not_authorized": 25,
+        "mapped_include": 2283,
+        "no_mf_2024_filing": 2824,
+        "unmapped_reported_activity": 3529
+      },
+      "2016": {
+        "mapped_but_not_authorized": 18,
+        "mapped_include": 2965,
+        "no_mf_2024_filing": 2945,
+        "unmapped_reported_activity": 4236
+      },
+      "2017": {
+        "mapped_but_not_authorized": 28,
+        "mapped_include": 4353,
+        "no_mf_2024_filing": 4550,
+        "unmapped_reported_activity": 5790
+      },
+      "2018": {
+        "mapped_but_not_authorized": 43,
+        "mapped_include": 4242,
+        "no_mf_2024_filing": 4707,
+        "unmapped_reported_activity": 5202
+      },
+      "2019": {
+        "mapped_but_not_authorized": 43,
+        "mapped_include": 5465,
+        "no_mf_2024_filing": 5466,
+        "unmapped_reported_activity": 5430
+      },
+      "2020": {
+        "mapped_but_not_authorized": 36,
+        "mapped_include": 5056,
+        "no_mf_2024_filing": 5321,
+        "unmapped_reported_activity": 4987
+      },
+      "2021": {
+        "mapped_but_not_authorized": 41,
+        "mapped_include": 6250,
+        "no_mf_2024_filing": 6527,
+        "unmapped_reported_activity": 6740
+      },
+      "2022": {
+        "mapped_but_not_authorized": 45,
+        "mapped_include": 6826,
+        "no_mf_2024_filing": 6857,
+        "unmapped_reported_activity": 7384
+      },
+      "2023": {
+        "mapped_but_not_authorized": 26,
+        "mapped_include": 6689,
+        "no_mf_2024_filing": 6932,
+        "unmapped_reported_activity": 7804
+      },
+      "2024": {
+        "mapped_but_not_authorized": 22,
+        "mapped_include": 6418,
+        "no_mf_2024_filing": 6352,
+        "unmapped_reported_activity": 6951
+      },
+      "2025": {
+        "no_mf_2024_filing": 23114
+      },
+      "2026": {
+        "no_mf_2024_filing": 12630
+      }
+    },
+    "caen_authorization_reconciliation": {
+      "exact_authorized_v2": 48404,
+      "not_reconciled_to_authorized_home_caen": 622,
+      "same_curated_category": 24476
+    },
+    "catalogue_mutated": false,
+    "category_relations_before": {
+      "constructii": 197265,
+      "curatenie": 57867,
+      "gradinarit": 30039,
+      "instalatii": 155871,
+      "reparatii": 13321,
+      "tamplarie": 133874
+    },
+    "decision_counts": {
+      "mapped_but_not_authorized": 622,
+      "mapped_include": 72880,
+      "no_mf_2024_filing": 114045,
+      "unmapped_reported_activity": 99426
+    },
+    "included_primary_category": {
+      "constructii": 42693,
+      "curatenie": 4703,
+      "gradinarit": 1450,
+      "instalatii": 15276,
+      "reparatii": 592,
+      "tamplarie": 8166
+    },
+    "policy": {
+      "caen_version": "2",
+      "decision": "exactly_one_known_reported_caen_mapped_to_scope_category_and_reconciled_with_authorized_onrc_category",
+      "join": "normalized_numeric_cui_exact",
+      "missing_evidence": "exclude_from_refined_preview",
+      "name": "mf_2024_reported_predominant_activity",
+      "reporting_year": 2024,
+      "sha256": "e840e3f9a4b518d59eb016d15df95a3128b4e8ae4cb1ae4c358eac02c4e95a33",
+      "version": "1"
+    },
+    "report_schema_version": 1,
+    "retention_percent": 25.396,
+    "scratch_bytes": 363823104,
+    "zero_buckets": {
+      "conflicting_mf_activity": 0,
+      "duplicate_onrc_cui": 0,
+      "missing_or_invalid_onrc_cui": 0,
+      "unknown_caen_v2": 0
+    }
+  },
+  "source_counts": {
+    "accepted_rows": 899961,
+    "conflicting_cui": 0,
+    "identical_duplicate_rows": 0,
+    "source_rows": 899961,
+    "unique_cui": 899961
+  },
+  "visibility": "not_activated"
+}

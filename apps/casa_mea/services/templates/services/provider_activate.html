@@ -1,0 +1,75 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE|default:'ro' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{% translate 'Activează contul de furnizor ServiciiAproape.' %}">
+  <meta name="robots" content="noindex">
+  <title>{% translate "Activare cont furnizor" %} — ServiciiAproape</title>
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260908-9">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body>
+  <!--
+  THESIS: Provider access is a controlled workshop instrument, never a promotional account portal.
+  OWN-WORLD: Warm mineral paper, square blue-steel work panels, drafting rules, Nimbus Narrow headings, Carlito copy, and one scarce ochre action.
+  STORY: The provider sees the private draft boundary, completes one secure task, and understands that ONRC facts and publication remain separate.
+  FIRST VIEWPORT: Desktop pairs operational context with the complete form; mobile puts the full form and primary action first, then context.
+  FORM: Code-led Operate extension of the incumbent Professional Toolmaker Catalogue; position 1; seed key incumbent-serviciiaproape-toolmaker-catalogue-v1.
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+  -->
+  <a class="skip-link" href="#activare">{% translate "Sari la activare" %}</a>
+  <header class="site-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    {% include "services/partials/language_switcher.html" %}
+  </header>
+
+  <main id="activare" class="provider-access-page">
+    {% if invalid_invitation %}
+      <section class="claim-result" aria-labelledby="activation-title">
+        <span class="claim-result-mark is-error" aria-hidden="true"></span>
+        <div>
+          <h1 id="activation-title">{% translate "Invitația nu mai este activă." %}</h1>
+          <p>{% translate "Linkul este invalid, a expirat sau a fost deja folosit. Contactează administratorul pentru o invitație nouă." %}</p>
+          <a class="claim-primary-link" href="{% url 'services:home' %}">{% translate "Mergi la pagina principală" %}</a>
+        </div>
+      </section>
+    {% else %}
+      <div class="provider-access-layout">
+        <section class="provider-access-intro" aria-labelledby="activation-title">
+          <h1 id="activation-title">{% blocktranslate with display_name=profile.display_name %}Activează accesul pentru {{ display_name }}{% endblocktranslate %}</h1>
+          <p>{% translate "Revendicarea a fost aprobată administrativ. Setează parola contului pentru a deschide panoul furnizorului." %}</p>
+          <dl>
+            <div><dt>{% translate "Stare profil" %}</dt><dd>{% translate "Ciornă privată" %}</dd></div>
+            <div><dt>{% translate "Publicare" %}</dt><dd>{% translate "Necesită o etapă separată" %}</dd></div>
+          </dl>
+        </section>
+        <section class="provider-form-panel" aria-labelledby="password-title">
+          <h2 id="password-title">{% translate "Alege parola" %}</h2>
+          <form method="post" novalidate>
+            {% csrf_token %}
+            {% if activation_form.non_field_errors %}<div class="form-alert">{{ activation_form.non_field_errors }}</div>{% endif %}
+            {% for field in activation_form %}
+              <div class="provider-field">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}<div class="provider-help">{{ field.help_text|safe }}</div>{% endif %}
+                {% for error in field.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}
+              </div>
+            {% endfor %}
+            <button class="provider-submit" type="submit">{% translate "Activează contul" %}</button>
+          </form>
+        </section>
+      </div>
+    {% endif %}
+  </main>
+
+  {% include "services/partials/site_footer.html" %}
+</body>
+</html>

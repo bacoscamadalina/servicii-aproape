@@ -1,0 +1,845 @@
+{
+  "base_candidates": 275679,
+  "base_provenance": {
+    "categories": [
+      "constructii",
+      "curatenie",
+      "gradinarit",
+      "instalatii",
+      "reparatii",
+      "tamplarie"
+    ],
+    "provider": "ONRC",
+    "publication_approval_count": 0,
+    "scope_contract_versions": [
+      1
+    ],
+    "snapshot_ids": [
+      1
+    ],
+    "snapshot_manifest_sha256": [
+      "c8510f383565c04124a2c182e4c1be9e5b248b7b4a547606a5c19bdce078429f"
+    ],
+    "visibility": "internal_preview"
+  },
+  "base_runs": [
+    {
+      "county": "Alba",
+      "run_id": 9,
+      "scope_key": "0aa71b834f7636163812856bee60a8d6f944300709cb66ec36297bb3bef082c1"
+    },
+    {
+      "county": "Arad",
+      "run_id": 10,
+      "scope_key": "4cb792a7195a5277dd5b9d2b65731986b4fbfb0bad6d5e9d47f24ee633f4c6ee"
+    },
+    {
+      "county": "Argeș",
+      "run_id": 11,
+      "scope_key": "78efdf9fdba22775bfa6cb2f2cc9e3d51e24b1c56251343f9673d0c4464487af"
+    },
+    {
+      "county": "Bacău",
+      "run_id": 12,
+      "scope_key": "5e2a513abdcddb0d3009e561c095881432918736de7de596f76633ea4b0fcb42"
+    },
+    {
+      "county": "Bihor",
+      "run_id": 13,
+      "scope_key": "d134a154233504e1f46246ded78d44c7e92d3870772f7e5bc7a81343ba332255"
+    },
+    {
+      "county": "Bistrița-Năsăud",
+      "run_id": 14,
+      "scope_key": "7f1c7b8be764b046a7bbd4b7015aa287eb6b68fe4cd2148ecf8932d9ba7ab4e0"
+    },
+    {
+      "county": "Botoșani",
+      "run_id": 15,
+      "scope_key": "9c110d9a79a2b3f8932601e2eccabd9cf585533e3b97cd6098dcfebb2c24ff8c"
+    },
+    {
+      "county": "Brașov",
+      "run_id": 16,
+      "scope_key": "8036d3b21894063208ff20b775208f7a47c6e3812a8a2f64d4d49ebe1474862d"
+    },
+    {
+      "county": "Brăila",
+      "run_id": 17,
+      "scope_key": "6c3689f872fbf518e27a3958fc589c2d434519031b0df4aa4f290fc1a9ec72b4"
+    },
+    {
+      "county": "București",
+      "run_id": 18,
+      "scope_key": "c5d4a08baa49101c8a88a86370230750f2c1d03922fd06ce2dd02a13f5687ac6"
+    },
+    {
+      "county": "Buzău",
+      "run_id": 19,
+      "scope_key": "da8f808cf8e642f886b54139b215a92c6a874197dd6e340b0cf61efa3489ecdb"
+    },
+    {
+      "county": "Caraș-Severin",
+      "run_id": 20,
+      "scope_key": "55ddd242255b2bfa2797ee1788220a903d9357a3ee570027151fcfc9c2d43761"
+    },
+    {
+      "county": "Cluj",
+      "run_id": 21,
+      "scope_key": "dde3ef6618eac845ccb5de206e3ccc1b7d39b4efdd8559cc473dcd9f755b4ff3"
+    },
+    {
+      "county": "Constanța",
+      "run_id": 22,
+      "scope_key": "4f1c3dfe7c533987fe4092523bcd1478d7e1e2575d3dd66a8bebc930423f3de0"
+    },
+    {
+      "county": "Covasna",
+      "run_id": 23,
+      "scope_key": "5224665f85ce2fb9c6ea0dde9b17e81add9649a903fac02ba06e89ee4311e4d5"
+    },
+    {
+      "county": "Călărași",
+      "run_id": 24,
+      "scope_key": "50f9277a2fb837425f899c15886251d536b8ffc21f04e819f3fbe1d635d9fa47"
+    },
+    {
+      "county": "Dolj",
+      "run_id": 25,
+      "scope_key": "bf8748e25e261031c2c718bdf811fd355fc0588016c18bb6d5692004ab24f04b"
+    },
+    {
+      "county": "Dâmbovița",
+      "run_id": 26,
+      "scope_key": "e5ab040be454da437751f9345e07c961c1cab9d11126a9081a0abeae9bf53ec8"
+    },
+    {
+      "county": "Galați",
+      "run_id": 27,
+      "scope_key": "bef3e043d734f8090484b3f4a717a765d7a04bf23859d5d40e4dd2fd73d95646"
+    },
+    {
+      "county": "Giurgiu",
+      "run_id": 28,
+      "scope_key": "c59bca63f378d25058417c754adfc708b879dc54ef47745cd9bbb79906aa452a"
+    },
+    {
+      "county": "Gorj",
+      "run_id": 29,
+      "scope_key": "cc52e020626b81538833965f4ce6627f23527b8d99e51abeaefa555d3f4328a7"
+    },
+    {
+      "county": "Harghita",
+      "run_id": 30,
+      "scope_key": "a0659d2d6aa04765938b7d3085196c33d7d5b9ee7a02436a6adeb6293e9ed4b2"
+    },
+    {
+      "county": "Hunedoara",
+      "run_id": 31,
+      "scope_key": "ac154d4b09396ca3cf9573b09c60295b6a034c55f20c197da5d467acf240b355"
+    },
+    {
+      "county": "Ialomița",
+      "run_id": 32,
+      "scope_key": "75591962a92d8be5ac71dc35ddf0e8538a15f90f057f27059c1183665ceb7ff4"
+    },
+    {
+      "county": "Iași",
+      "run_id": 7,
+      "scope_key": "d03e241ff4d36e33b9eeb3d82796f93d0cf5d2f899e5bf90476ca511128918a4"
+    },
+    {
+      "county": "Ilfov",
+      "run_id": 33,
+      "scope_key": "0911127f5fd2581eec95a1e27dbeb388c0c10e7c6946c54fcc49b9e9d2f6a98e"
+    },
+    {
+      "county": "Maramureș",
+      "run_id": 34,
+      "scope_key": "a92c93f99142b8ef82cdacfc6873661421ffc0cd1acc6d5d0b44c8df2bbf585e"
+    },
+    {
+      "county": "Mehedinți",
+      "run_id": 35,
+      "scope_key": "e78f576399205f711ed30e74cab8c6644aae00e4b322d90566fcf4585c8aa255"
+    },
+    {
+      "county": "Mureș",
+      "run_id": 36,
+      "scope_key": "54354a1265e0eb2898647f8d33a94d279c8c6223a5f3b9550e089e525d1177f0"
+    },
+    {
+      "county": "Neamț",
+      "run_id": 8,
+      "scope_key": "477a3b5e178f9123ffd3f4e8b7aac8598f74c1a9c0e1f4191ba2c08cd5f3fbf0"
+    },
+    {
+      "county": "Olt",
+      "run_id": 37,
+      "scope_key": "4a7759d5ce64d3645ae17bbb393882393f90b58b50e2d8aaf4e9ee5e67d6fab4"
+    },
+    {
+      "county": "Prahova",
+      "run_id": 38,
+      "scope_key": "a14abb1cbeb93ae4ace608d6ada5d4e13ae67aefc080b3a4783d35a24074a9b5"
+    },
+    {
+      "county": "Satu Mare",
+      "run_id": 39,
+      "scope_key": "b15f20892aaac12b0e282f9180b7344a1151a4c1aa3cfd6ced570726cdb0b0dc"
+    },
+    {
+      "county": "Sibiu",
+      "run_id": 40,
+      "scope_key": "31232a9028aa460d4de68e0aa498d127a4f662fd129e68de382784586f3b23cf"
+    },
+    {
+      "county": "Suceava",
+      "run_id": 41,
+      "scope_key": "cea4cdd490906ce4f468fd306ea0b14edec579a91aedb73894e3ce816adbbb5c"
+    },
+    {
+      "county": "Sălaj",
+      "run_id": 42,
+      "scope_key": "0e2798bb333335fdaa444379ee5fb2623ef230b6a4454a40a2d6a557588ec3ee"
+    },
+    {
+      "county": "Teleorman",
+      "run_id": 43,
+      "scope_key": "887c42b5c7e2cea911aa37cc3d90a049fefd9e146a6ed864a7a520484d822b8a"
+    },
+    {
+      "county": "Timiș",
+      "run_id": 44,
+      "scope_key": "4c0aa860b66831e819663dc6645e711d095eaf51a9ea4bec5ad721b096a510b6"
+    },
+    {
+      "county": "Tulcea",
+      "run_id": 45,
+      "scope_key": "322a9a0deffeb1fbb40de1c101804c7b5209350d88e10efcbb078e851ee925be"
+    },
+    {
+      "county": "Vaslui",
+      "run_id": 46,
+      "scope_key": "d0d4a067496e750232a759d947e51b43fe06e0bcafa71d46183c0422c9e7198d"
+    },
+    {
+      "county": "Vrancea",
+      "run_id": 47,
+      "scope_key": "98422267adc09d477f79752f8e3d39a29ea554325ec6460e9a3cf9218bb7fbf6"
+    },
+    {
+      "county": "Vâlcea",
+      "run_id": 48,
+      "scope_key": "e39d60fd242b552972cb5c250e07ef67c653227fb8090373e6110957f8e5c945"
+    }
+  ],
+  "by_county": {
+    "Alba": {
+      "mapped_but_not_authorized": 9,
+      "mapped_include": 1184,
+      "no_mf_2024_filing": 2244,
+      "unmapped_reported_activity": 1403
+    },
+    "Arad": {
+      "mapped_but_not_authorized": 6,
+      "mapped_include": 1426,
+      "no_mf_2024_filing": 3145,
+      "unmapped_reported_activity": 1905
+    },
+    "Argeș": {
+      "mapped_but_not_authorized": 18,
+      "mapped_include": 1718,
+      "no_mf_2024_filing": 2533,
+      "unmapped_reported_activity": 2580
+    },
+    "Bacău": {
+      "mapped_but_not_authorized": 10,
+      "mapped_include": 1491,
+      "no_mf_2024_filing": 2380,
+      "unmapped_reported_activity": 1795
+    },
+    "Bihor": {
+      "mapped_but_not_authorized": 21,
+      "mapped_include": 2698,
+      "no_mf_2024_filing": 4715,
+      "unmapped_reported_activity": 3378
+    },
+    "Bistrița-Năsăud": {
+      "mapped_but_not_authorized": 6,
+      "mapped_include": 967,
+      "no_mf_2024_filing": 1114,
+      "unmapped_reported_activity": 976
+    },
+    "Botoșani": {
+      "mapped_but_not_authorized": 4,
+      "mapped_include": 618,
+      "no_mf_2024_filing": 1207,
+      "unmapped_reported_activity": 667
+    },
+    "Brașov": {
+      "mapped_but_not_authorized": 23,
+      "mapped_include": 2570,
+      "no_mf_2024_filing": 4127,
+      "unmapped_reported_activity": 4197
+    },
+    "Brăila": {
+      "mapped_but_not_authorized": 4,
+      "mapped_include": 544,
+      "no_mf_2024_filing": 808,
+      "unmapped_reported_activity": 801
+    },
+    "București": {
+      "mapped_but_not_authorized": 103,
+      "mapped_include": 10380,
+      "no_mf_2024_filing": 15309,
+      "unmapped_reported_activity": 20980
+    },
+    "Buzău": {
+      "mapped_but_not_authorized": 9,
+      "mapped_include": 949,
+      "no_mf_2024_filing": 1788,
+      "unmapped_reported_activity": 1477
+    },
+    "Caraș-Severin": {
+      "mapped_but_not_authorized": 1,
+      "mapped_include": 416,
+      "no_mf_2024_filing": 1096,
+      "unmapped_reported_activity": 587
+    },
+    "Cluj": {
+      "mapped_but_not_authorized": 33,
+      "mapped_include": 4845,
+      "no_mf_2024_filing": 6001,
+      "unmapped_reported_activity": 7038
+    },
+    "Constanța": {
+      "mapped_but_not_authorized": 19,
+      "mapped_include": 2267,
+      "no_mf_2024_filing": 2989,
+      "unmapped_reported_activity": 3286
+    },
+    "Covasna": {
+      "mapped_but_not_authorized": 3,
+      "mapped_include": 413,
+      "no_mf_2024_filing": 873,
+      "unmapped_reported_activity": 593
+    },
+    "Călărași": {
+      "mapped_but_not_authorized": 9,
+      "mapped_include": 541,
+      "no_mf_2024_filing": 1258,
+      "unmapped_reported_activity": 661
+    },
+    "Dolj": {
+      "mapped_but_not_authorized": 8,
+      "mapped_include": 1368,
+      "no_mf_2024_filing": 2317,
+      "unmapped_reported_activity": 1830
+    },
+    "Dâmbovița": {
+      "mapped_but_not_authorized": 7,
+      "mapped_include": 1025,
+      "no_mf_2024_filing": 2295,
+      "unmapped_reported_activity": 1367
+    },
+    "Galați": {
+      "mapped_but_not_authorized": 11,
+      "mapped_include": 1630,
+      "no_mf_2024_filing": 2029,
+      "unmapped_reported_activity": 1841
+    },
+    "Giurgiu": {
+      "mapped_but_not_authorized": 9,
+      "mapped_include": 1148,
+      "no_mf_2024_filing": 1735,
+      "unmapped_reported_activity": 972
+    },
+    "Gorj": {
+      "mapped_but_not_authorized": 5,
+      "mapped_include": 734,
+      "no_mf_2024_filing": 970,
+      "unmapped_reported_activity": 1039
+    },
+    "Harghita": {
+      "mapped_but_not_authorized": 6,
+      "mapped_include": 848,
+      "no_mf_2024_filing": 1549,
+      "unmapped_reported_activity": 1317
+    },
+    "Hunedoara": {
+      "mapped_but_not_authorized": 6,
+      "mapped_include": 887,
+      "no_mf_2024_filing": 1944,
+      "unmapped_reported_activity": 1420
+    },
+    "Ialomița": {
+      "mapped_but_not_authorized": 4,
+      "mapped_include": 390,
+      "no_mf_2024_filing": 752,
+      "unmapped_reported_activity": 594
+    },
+    "Iași": {
+      "mapped_but_not_authorized": 10,
+      "mapped_include": 2473,
+      "no_mf_2024_filing": 5373,
+      "unmapped_reported_activity": 3766
+    },
+    "Ilfov": {
+      "mapped_but_not_authorized": 28,
+      "mapped_include": 3611,
+      "no_mf_2024_filing": 4693,
+      "unmapped_reported_activity": 5821
+    },
+    "Maramureș": {
+      "mapped_but_not_authorized": 7,
+      "mapped_include": 1512,
+      "no_mf_2024_filing": 3219,
+      "unmapped_reported_activity": 1841
+    },
+    "Mehedinți": {
+      "mapped_but_not_authorized": 3,
+      "mapped_include": 285,
+      "no_mf_2024_filing": 984,
+      "unmapped_reported_activity": 524
+    },
+    "Mureș": {
+      "mapped_but_not_authorized": 18,
+      "mapped_include": 1447,
+      "no_mf_2024_filing": 2804,
+      "unmapped_reported_activity": 2302
+    },
+    "Neamț": {
+      "mapped_but_not_authorized": 11,
+      "mapped_include": 1050,
+      "no_mf_2024_filing": 2388,
+      "unmapped_reported_activity": 1564
+    },
+    "Olt": {
+      "mapped_but_not_authorized": 6,
+      "mapped_include": 852,
+      "no_mf_2024_filing": 1149,
+      "unmapped_reported_activity": 1000
+    },
+    "Prahova": {
+      "mapped_but_not_authorized": 17,
+      "mapped_include": 2432,
+      "no_mf_2024_filing": 3188,
+      "unmapped_reported_activity": 2797
+    },
+    "Satu Mare": {
+      "mapped_but_not_authorized": 6,
+      "mapped_include": 1260,
+      "no_mf_2024_filing": 1947,
+      "unmapped_reported_activity": 1204
+    },
+    "Sibiu": {
+      "mapped_but_not_authorized": 11,
+      "mapped_include": 1488,
+      "no_mf_2024_filing": 2438,
+      "unmapped_reported_activity": 2093
+    },
+    "Suceava": {
+      "mapped_but_not_authorized": 11,
+      "mapped_include": 1913,
+      "no_mf_2024_filing": 3048,
+      "unmapped_reported_activity": 2386
+    },
+    "Sălaj": {
+      "mapped_but_not_authorized": 11,
+      "mapped_include": 780,
+      "no_mf_2024_filing": 1551,
+      "unmapped_reported_activity": 875
+    },
+    "Teleorman": {
+      "mapped_but_not_authorized": 3,
+      "mapped_include": 453,
+      "no_mf_2024_filing": 963,
+      "unmapped_reported_activity": 600
+    },
+    "Timiș": {
+      "mapped_but_not_authorized": 26,
+      "mapped_include": 3700,
+      "no_mf_2024_filing": 6236,
+      "unmapped_reported_activity": 4938
+    },
+    "Tulcea": {
+      "mapped_but_not_authorized": 4,
+      "mapped_include": 371,
+      "no_mf_2024_filing": 585,
+      "unmapped_reported_activity": 776
+    },
+    "Vaslui": {
+      "mapped_but_not_authorized": 6,
+      "mapped_include": 758,
+      "no_mf_2024_filing": 1404,
+      "unmapped_reported_activity": 947
+    },
+    "Vrancea": {
+      "mapped_but_not_authorized": 5,
+      "mapped_include": 927,
+      "no_mf_2024_filing": 1148,
+      "unmapped_reported_activity": 1119
+    },
+    "Vâlcea": {
+      "mapped_but_not_authorized": 9,
+      "mapped_include": 914,
+      "no_mf_2024_filing": 1210,
+      "unmapped_reported_activity": 1107
+    }
+  },
+  "by_legal_form": {
+    "ALT": {
+      "mapped_include": 1,
+      "no_mf_2024_filing": 3,
+      "unmapped_reported_activity": 4
+    },
+    "CA": {
+      "no_mf_2024_filing": 32,
+      "unmapped_reported_activity": 60
+    },
+    "GEIE": {
+      "unmapped_reported_activity": 1
+    },
+    "GIE": {
+      "unmapped_reported_activity": 1
+    },
+    "IF": {
+      "mapped_include": 1,
+      "no_mf_2024_filing": 1226
+    },
+    "II": {
+      "no_mf_2024_filing": 10583
+    },
+    "INCD": {
+      "no_mf_2024_filing": 1,
+      "unmapped_reported_activity": 5
+    },
+    "N/A": {
+      "mapped_include": 28,
+      "no_mf_2024_filing": 121,
+      "unmapped_reported_activity": 89
+    },
+    "PFA": {
+      "no_mf_2024_filing": 18769
+    },
+    "RA": {
+      "no_mf_2024_filing": 9,
+      "unmapped_reported_activity": 32
+    },
+    "SA": {
+      "mapped_but_not_authorized": 1,
+      "mapped_include": 206,
+      "no_mf_2024_filing": 189,
+      "unmapped_reported_activity": 1011
+    },
+    "SC": {
+      "mapped_include": 18,
+      "no_mf_2024_filing": 9,
+      "unmapped_reported_activity": 76
+    },
+    "SCE": {
+      "unmapped_reported_activity": 1
+    },
+    "SCS": {
+      "mapped_include": 1,
+      "no_mf_2024_filing": 1,
+      "unmapped_reported_activity": 8
+    },
+    "SE": {
+      "no_mf_2024_filing": 2
+    },
+    "SNC": {
+      "mapped_include": 10,
+      "no_mf_2024_filing": 10,
+      "unmapped_reported_activity": 9
+    },
+    "SRL": {
+      "mapped_but_not_authorized": 525,
+      "mapped_include": 67018,
+      "no_mf_2024_filing": 78550,
+      "unmapped_reported_activity": 97065
+    },
+    "unknown": {
+      "no_mf_2024_filing": 1,
+      "unmapped_reported_activity": 2
+    }
+  },
+  "by_registration_year": {
+    "1990": {
+      "mapped_include": 2,
+      "unmapped_reported_activity": 9
+    },
+    "1991": {
+      "mapped_but_not_authorized": 4,
+      "mapped_include": 374,
+      "no_mf_2024_filing": 164,
+      "unmapped_reported_activity": 1288
+    },
+    "1992": {
+      "mapped_but_not_authorized": 10,
+      "mapped_include": 433,
+      "no_mf_2024_filing": 166,
+      "unmapped_reported_activity": 1190
+    },
+    "1993": {
+      "mapped_but_not_authorized": 5,
+      "mapped_include": 402,
+      "no_mf_2024_filing": 203,
+      "unmapped_reported_activity": 1112
+    },
+    "1994": {
+      "mapped_but_not_authorized": 9,
+      "mapped_include": 629,
+      "no_mf_2024_filing": 245,
+      "unmapped_reported_activity": 1918
+    },
+    "1995": {
+      "mapped_but_not_authorized": 2,
+      "mapped_include": 254,
+      "no_mf_2024_filing": 100,
+      "unmapped_reported_activity": 610
+    },
+    "1996": {
+      "mapped_but_not_authorized": 4,
+      "mapped_include": 253,
+      "no_mf_2024_filing": 101,
+      "unmapped_reported_activity": 624
+    },
+    "1997": {
+      "mapped_but_not_authorized": 5,
+      "mapped_include": 258,
+      "no_mf_2024_filing": 100,
+      "unmapped_reported_activity": 631
+    },
+    "1998": {
+      "mapped_but_not_authorized": 5,
+      "mapped_include": 248,
+      "no_mf_2024_filing": 137,
+      "unmapped_reported_activity": 726
+    },
+    "1999": {
+      "mapped_but_not_authorized": 4,
+      "mapped_include": 241,
+      "no_mf_2024_filing": 108,
+      "unmapped_reported_activity": 638
+    },
+    "2000": {
+      "mapped_but_not_authorized": 5,
+      "mapped_include": 251,
+      "no_mf_2024_filing": 149,
+      "unmapped_reported_activity": 677
+    },
+    "2001": {
+      "mapped_but_not_authorized": 4,
+      "mapped_include": 373,
+      "no_mf_2024_filing": 191,
+      "unmapped_reported_activity": 963
+    },
+    "2002": {
+      "mapped_but_not_authorized": 3,
+      "mapped_include": 527,
+      "no_mf_2024_filing": 299,
+      "unmapped_reported_activity": 1354
+    },
+    "2003": {
+      "mapped_but_not_authorized": 10,
+      "mapped_include": 791,
+      "no_mf_2024_filing": 710,
+      "unmapped_reported_activity": 1958
+    },
+    "2004": {
+      "mapped_but_not_authorized": 11,
+      "mapped_include": 1074,
+      "no_mf_2024_filing": 968,
+      "unmapped_reported_activity": 2282
+    },
+    "2005": {
+      "mapped_but_not_authorized": 15,
+      "mapped_include": 1090,
+      "no_mf_2024_filing": 1232,
+      "unmapped_reported_activity": 2299
+    },
+    "2006": {
+      "mapped_but_not_authorized": 16,
+      "mapped_include": 1271,
+      "no_mf_2024_filing": 1121,
+      "unmapped_reported_activity": 2382
+    },
+    "2007": {
+      "mapped_but_not_authorized": 22,
+      "mapped_include": 1578,
+      "no_mf_2024_filing": 1327,
+      "unmapped_reported_activity": 2674
+    },
+    "2008": {
+      "mapped_but_not_authorized": 30,
+      "mapped_include": 1900,
+      "no_mf_2024_filing": 3134,
+      "unmapped_reported_activity": 2879
+    },
+    "2009": {
+      "mapped_but_not_authorized": 8,
+      "mapped_include": 955,
+      "no_mf_2024_filing": 2154,
+      "unmapped_reported_activity": 1728
+    },
+    "2010": {
+      "mapped_but_not_authorized": 6,
+      "mapped_include": 817,
+      "no_mf_2024_filing": 1986,
+      "unmapped_reported_activity": 1671
+    },
+    "2011": {
+      "mapped_but_not_authorized": 20,
+      "mapped_include": 1407,
+      "no_mf_2024_filing": 2541,
+      "unmapped_reported_activity": 2587
+    },
+    "2012": {
+      "mapped_but_not_authorized": 10,
+      "mapped_include": 1574,
+      "no_mf_2024_filing": 2489,
+      "unmapped_reported_activity": 2767
+    },
+    "2013": {
+      "mapped_but_not_authorized": 16,
+      "mapped_include": 1592,
+      "no_mf_2024_filing": 2408,
+      "unmapped_reported_activity": 2998
+    },
+    "2014": {
+      "mapped_but_not_authorized": 17,
+      "mapped_include": 1757,
+      "no_mf_2024_filing": 2345,
+      "unmapped_reported_activity": 2895
+    },
+    "2015": {
+      "mapped_but_not_authorized": 19,
+      "mapped_include": 2143,
+      "no_mf_2024_filing": 2691,
+      "unmapped_reported_activity": 3463
+    },
+    "2016": {
+      "mapped_but_not_authorized": 14,
+      "mapped_include": 2801,
+      "no_mf_2024_filing": 2816,
+      "unmapped_reported_activity": 4155
+    },
+    "2017": {
+      "mapped_but_not_authorized": 24,
+      "mapped_include": 3932,
+      "no_mf_2024_filing": 4321,
+      "unmapped_reported_activity": 5734
+    },
+    "2018": {
+      "mapped_but_not_authorized": 37,
+      "mapped_include": 3853,
+      "no_mf_2024_filing": 4477,
+      "unmapped_reported_activity": 5175
+    },
+    "2019": {
+      "mapped_but_not_authorized": 39,
+      "mapped_include": 5071,
+      "no_mf_2024_filing": 5235,
+      "unmapped_reported_activity": 5423
+    },
+    "2020": {
+      "mapped_but_not_authorized": 31,
+      "mapped_include": 4772,
+      "no_mf_2024_filing": 5125,
+      "unmapped_reported_activity": 4941
+    },
+    "2021": {
+      "mapped_but_not_authorized": 38,
+      "mapped_include": 5858,
+      "no_mf_2024_filing": 6257,
+      "unmapped_reported_activity": 6707
+    },
+    "2022": {
+      "mapped_but_not_authorized": 37,
+      "mapped_include": 6242,
+      "no_mf_2024_filing": 6560,
+      "unmapped_reported_activity": 7333
+    },
+    "2023": {
+      "mapped_but_not_authorized": 23,
+      "mapped_include": 6411,
+      "no_mf_2024_filing": 6756,
+      "unmapped_reported_activity": 7724
+    },
+    "2024": {
+      "mapped_but_not_authorized": 23,
+      "mapped_include": 6149,
+      "no_mf_2024_filing": 6218,
+      "unmapped_reported_activity": 6849
+    },
+    "2025": {
+      "no_mf_2024_filing": 22381
+    },
+    "2026": {
+      "no_mf_2024_filing": 12291
+    }
+  },
+  "caen_authorization_reconciliation": {
+    "exact_authorized_v2": 44980,
+    "not_reconciled_to_authorized_home_caen": 526,
+    "same_curated_category": 22303
+  },
+  "caen_dictionary_sha256": "45f207eb6634eea667c8450e20ac8197743ba7ec2371d19a269b20e24f07b34f",
+  "catalogue_mutated": false,
+  "category_relations_before": {
+    "constructii": 197265,
+    "curatenie": 57867,
+    "gradinarit": 30039,
+    "instalatii": 155871,
+    "reparatii": 13321,
+    "tamplarie": 117587
+  },
+  "decision_counts": {
+    "mapped_but_not_authorized": 526,
+    "mapped_include": 67283,
+    "no_mf_2024_filing": 109506,
+    "unmapped_reported_activity": 98364
+  },
+  "generated_at": "2026-08-24T07:34:19.135363+00:00",
+  "included_primary_category": {
+    "constructii": 42693,
+    "curatenie": 4703,
+    "gradinarit": 1450,
+    "instalatii": 15276,
+    "reparatii": 592,
+    "tamplarie": 2569
+  },
+  "mf_dataset_url": "https://data.gov.ro/dataset/situatii_financiare_2024",
+  "mf_evidence_sha256": "bad18b93549831fe5100a1540eac691219ba675adeea9d88739badb04805cb35",
+  "mf_license": "CC BY 4.0",
+  "mf_manifest_sha256": "1c47b3ed35d86998249b94fd2bb932766ed4b1d45c8f2c04c4247f0f13ac4242",
+  "onrc_manifest_sha256": "c8510f383565c04124a2c182e4c1be9e5b248b7b4a547606a5c19bdce078429f",
+  "policy": {
+    "caen_version": "2",
+    "decision": "exactly_one_known_reported_caen_mapped_to_scope_category_and_reconciled_with_authorized_onrc_category",
+    "join": "normalized_numeric_cui_exact",
+    "missing_evidence": "exclude_from_refined_preview",
+    "name": "mf_2024_reported_predominant_activity",
+    "reporting_year": 2024,
+    "sha256": "e840e3f9a4b518d59eb016d15df95a3128b4e8ae4cb1ae4c358eac02c4e95a33",
+    "version": "1"
+  },
+  "report_schema_version": 1,
+  "retention_percent": 24.406,
+  "scratch_bytes": 358539264,
+  "source_counts": {
+    "accepted_rows": 899961,
+    "conflicting_cui": 0,
+    "identical_duplicate_rows": 0,
+    "source_rows": 899961,
+    "unique_cui": 899961
+  },
+  "zero_buckets": {
+    "conflicting_mf_activity": 0,
+    "duplicate_onrc_cui": 0,
+    "missing_or_invalid_onrc_cui": 0,
+    "unknown_caen_v2": 0
+  }
+}

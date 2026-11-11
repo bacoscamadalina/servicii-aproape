@@ -1,0 +1,67 @@
+{
+  "result": "PASS",
+  "policy": {
+    "application_middleware": true,
+    "content_security_policy": {
+      "same_origin_scripts": true,
+      "same_origin_styles": true,
+      "object_sources_disabled": true,
+      "frame_ancestors_disabled": true,
+      "unsafe_inline": false,
+      "unsafe_eval": false,
+      "upgrade_insecure_requests": true
+    },
+    "permissions_policy_disabled": [
+      "camera",
+      "geolocation",
+      "microphone"
+    ],
+    "external_smoke_requires_policy": true,
+    "app_owned_inline_styles_or_scripts": 0
+  },
+  "validation": {
+    "focused_security_and_production_settings_tests": {
+      "tests": 11,
+      "seconds": 0.547,
+      "result": "PASS"
+    },
+    "complete_sqlite_suite": {
+      "tests": 233,
+      "skipped": 10,
+      "seconds": 34.094,
+      "result": "PASS"
+    },
+    "complete_postgresql_suite": {
+      "tests": 233,
+      "skipped": 0,
+      "seconds": 47.129,
+      "result": "PASS"
+    },
+    "production_image_build": "PASS",
+    "production_image_uid": 10001,
+    "collected_admin_css": true,
+    "production_deployment_check": "PASS",
+    "django_check": "PASS",
+    "migration_source_drift": "NONE"
+  },
+  "browser_qa": {
+    "public_desktop_console_errors_or_warnings": 0,
+    "public_320px_console_errors_or_warnings": 0,
+    "public_320px_horizontal_overflow": false,
+    "client_width": 320,
+    "scroll_width": 320,
+    "admin_custom_css_source_and_template_tests": "PASS",
+    "authenticated_admin_visual_check": "NOT_RUN_NO_TEST_LOGIN_SESSION"
+  },
+  "design_detector": {
+    "mode": "DEGRADED_REGEX_FALLBACK",
+    "reason": "Optional HTML/CSS parser modules were unavailable.",
+    "new_blocking_findings": 0,
+    "existing_design_system_drift_reported": true
+  },
+  "not_performed": [
+    "No production domain was contacted",
+    "No catalogue publication or approval changed",
+    "No authenticated administrator action was performed"
+  ]
+}

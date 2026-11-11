@@ -1,0 +1,84 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'services/admin_operations.css' %}">
+{% endblock %}
+
+{% block content %}
+  <main class="report-insights">
+    <p><a href="{% url 'admin:services_publicproviderreport_changelist' %}">← Înapoi la coada de sesizări</a></p>
+    <p class="report-insights__lead">Această pagină arată numai agregate despre coada administrativă. Motivele sunt declarate de vizitatori, iar concluziile sunt stări de lucru înregistrate; niciuna nu reprezintă automat o abatere confirmată, calitatea unui furnizor sau retragerea unui profil.</p>
+
+    <nav aria-label="Fereastra de analiză">
+      <ul class="report-insights__windows">
+        {% for days in window_choices %}
+          <li><a href="?days={{ days }}" {% if report_insights.window_days == days %}aria-current="page"{% endif %}>Ultimele {{ days }} zile</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+
+    <p class="report-insights__meta">
+      <strong>Interval exact:</strong> [{{ report_insights.window_start }}, {{ report_insights.window_end }}), ora României.<br>
+      <strong>Calculat la:</strong> {{ report_insights.calculated_at }}.
+    </p>
+
+    {% if report_insights.reports_without_case %}
+      <p class="report-insights__warning" role="alert"><strong>Anomalie de integritate:</strong> {{ report_insights.reports_without_case }} {% if report_insights.reports_without_case == 1 %}sesizare{% else %}sesizări{% endif %} fără dosar operațional. Verifică migrarea și fluxul de intake; această pagină nu repară automat datele.</p>
+    {% endif %}
+
+    {% if not report_insights.current_total and not report_insights.reports_without_case %}
+      <p>Nu există încă sesizări în coada administrativă. Tabelele rămân vizibile cu valori zero pentru a arăta ce va fi măsurat după primul raport valid.</p>
+    {% endif %}
+
+    <div class="report-insights__grid">
+      <section aria-labelledby="queue-state-title">
+        <h2 id="queue-state-title">Starea curentă a cozii</h2>
+        <table aria-labelledby="queue-state-title">
+          <thead><tr><th scope="col">Stare</th><th scope="col">Dosare</th><th scope="col">Cea mai veche sesizare</th></tr></thead>
+          <tbody>
+            {% for item in report_insights.current_states %}
+              <tr><td>{{ item.label }}</td><td class="report-insights__count">{{ item.count }}</td><td>{% if item.oldest_report_at %}{{ item.oldest_report_at }}{% else %}—{% endif %}</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
+
+      <section aria-labelledby="intake-reasons-title">
+        <h2 id="intake-reasons-title">Sesizări primite în interval</h2>
+        <table aria-labelledby="intake-reasons-title">
+          <thead><tr><th scope="col">Motiv declarat</th><th scope="col">Sesizări</th></tr></thead>
+          <tbody>
+            {% for item in report_insights.intake_reasons %}
+              <tr><td>{{ item.label }}</td><td class="report-insights__count">{{ item.count }}</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
+
+      <section aria-labelledby="transitions-title">
+        <h2 id="transitions-title">Tranziții înregistrate în interval</h2>
+        <table aria-labelledby="transitions-title">
+          <thead><tr><th scope="col">Tranziție</th><th scope="col">Evenimente</th></tr></thead>
+          <tbody>
+            <tr><td>Preluate în analiză</td><td class="report-insights__count">{{ report_insights.started_transitions }}</td></tr>
+            <tr><td>Închise</td><td class="report-insights__count">{{ report_insights.closed_transitions }}</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section aria-labelledby="outcomes-title">
+        <h2 id="outcomes-title">Concluzii înregistrate în interval</h2>
+        <table aria-labelledby="outcomes-title">
+          <thead><tr><th scope="col">Concluzie operațională</th><th scope="col">Evenimente</th></tr></thead>
+          <tbody>
+            {% for item in report_insights.closed_outcomes %}
+              <tr><td>{{ item.label }}</td><td class="report-insights__count">{{ item.count }}</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </main>
+{% endblock %}

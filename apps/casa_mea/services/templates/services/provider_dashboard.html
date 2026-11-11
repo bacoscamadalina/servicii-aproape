@@ -1,0 +1,400 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE|default:'ro' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{% translate 'Editează ciorna profilului tău ServiciiAproape.' %}">
+  <meta name="robots" content="noindex">
+  <title>{% translate "Profil furnizor" %} — ServiciiAproape</title>
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260918-billing-identity">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body class="provider-dashboard-body">
+  <!--
+  THESIS: Provider access is a controlled workshop instrument, never a promotional account portal.
+  OWN-WORLD: Warm mineral paper, square blue-steel work panels, drafting rules, Nimbus Narrow headings, Carlito copy, and one scarce ochre action.
+  STORY: The provider sees the private draft boundary, completes one secure task, and understands that ONRC facts and publication remain separate.
+  FIRST VIEWPORT: Desktop pairs the private profile task with its legal boundary, then opens the versioned service-area workbench; mobile keeps each complete task and action together.
+  FORM: Code-led Operate extension of the incumbent Professional Toolmaker Catalogue; position 1; seed key incumbent-serviciiaproape-toolmaker-catalogue-v1.
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+  -->
+  <a class="skip-link" href="#profil">{% translate "Sari la profil" %}</a>
+  <header class="site-header provider-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    <div class="provider-header-tools">
+      <div class="provider-account-actions">
+        <a href="{% url 'services:provider_leads' %}">{% translate "Solicitări" %}</a>
+        <a href="{% url 'services:provider_billing_identity' %}">{% translate "Date emitent" %}</a>
+        <a href="{% url 'services:provider_password_change' %}">{% translate "Schimbă parola" %}</a>
+        <form method="post" action="{% url 'services:provider_logout' %}">
+          {% csrf_token %}
+          <button class="provider-logout" type="submit">{% translate "Ieși din cont" %}</button>
+        </form>
+      </div>
+      {% include "services/partials/language_switcher.html" %}
+    </div>
+  </header>
+
+  <main id="profil" class="provider-dashboard">
+    <section class="provider-dashboard-heading" aria-labelledby="profile-title">
+      <div>
+        <h1 id="profile-title">{% blocktranslate with display_name=profile.display_name %}Profilul {{ display_name }}{% endblocktranslate %}</h1>
+        <p>{% translate "Completează doar informațiile pe care vrei să le folosești ulterior în profilul public." %}</p>
+      </div>
+      <span class="provider-draft-state">
+        {% if effective_publication_visibility == "internal_preview" %}{% translate "Publicat în preview" %}{% elif effective_publication_visibility == "public" %}{% translate "Public" %}{% elif effective_publication_visibility == "subscription_inactive" %}{% translate "Ascuns · abonament inactiv" %}{% elif effective_publication_visibility == "invalid" %}{% translate "Vizibilitate suspendată" %}{% else %}{% translate "Ciornă privată" %}{% endif %}
+      </span>
+    </section>
+
+    {% if messages %}
+      <div class="provider-messages" aria-live="polite">
+        {% for message in messages %}<p>{{ message }}</p>{% endfor %}
+      </div>
+    {% endif %}
+
+    <div id="date-profil" class="provider-dashboard-layout">
+      <section class="provider-form-panel" aria-labelledby="profile-form-title">
+        <h2 id="profile-form-title">{% translate "Informații furnizate de firmă" %}</h2>
+        <form method="post" novalidate>
+          {% csrf_token %}
+          <input type="hidden" name="action" value="save_profile">
+          {% if profile_form.non_field_errors %}<div class="form-alert">{{ profile_form.non_field_errors }}</div>{% endif %}
+          {% for field in profile_form %}
+            <div class="provider-field">
+              <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+              {{ field }}
+              {% if field.help_text %}<p class="provider-help">{{ field.help_text }}</p>{% endif %}
+              {% for error in field.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}
+            </div>
+          {% endfor %}
+          <button class="provider-submit" type="submit">{% translate "Salvează ciorna" %}</button>
+        </form>
+      </section>
+      <aside class="provider-boundary" aria-labelledby="boundary-title">
+        <h2 id="boundary-title">{% translate "Ce nu se schimbă aici" %}</h2>
+        <dl>
+          <div><dt>{% translate "Date juridice" %}</dt><dd>{% translate "Rămân cele din sursa ONRC." %}</dd></div>
+          <div><dt>{% translate "Servicii și acoperire" %}</dt><dd>{% translate "Vor avea verificare separată." %}</dd></div>
+          <div><dt>{% translate "Disponibilitate" %}</dt><dd>{% translate "Este declarată de firmă și poate varia." %}</dd></div>
+          <div><dt>{% translate "Vizibilitate" %}</dt><dd>{% translate "Salvarea nu publică profilul." %}</dd></div>
+        </dl>
+      </aside>
+    </div>
+
+    <section class="provider-path" aria-labelledby="provider-path-title">
+      <div class="provider-path-heading">
+        <div>
+          <h2 id="provider-path-title">{% translate "Drumul spre un profil vizibil" %}</h2>
+          <p>{% translate "Etapele sunt calculate din ciorna și deciziile reale. „Pregătit” nu înseamnă recomandat sau publicat." %}</p>
+        </div>
+        <strong>{% blocktranslate with complete=publication_checklist_complete %}{{ complete }} din 5 etape încheiate{% endblocktranslate %}</strong>
+      </div>
+      <ol>
+        {% for step in publication_checklist %}
+          <li class="is-{{ step.status }}">
+            <span class="provider-path-mark" aria-hidden="true"></span>
+            <div>
+              <strong>{{ step.label }}</strong>
+              <p>{{ step.detail }}</p>
+            </div>
+            <span class="provider-path-status">{{ step.status_label }}</span>
+            <a href="#{{ step.anchor }}">{% translate "Vezi etapa" %}</a>
+          </li>
+        {% endfor %}
+      </ol>
+    </section>
+
+    <section id="servicii" class="provider-offerings" aria-labelledby="offerings-title">
+      <div class="provider-offerings-heading">
+        <div>
+          <h2 id="offerings-title">{% translate "Servicii și localități declarate" %}</h2>
+          <p>{% translate "Alege ce prestează firma și unde se deplasează. Declarația rămâne privată până la verificarea separată." %}</p>
+        </div>
+        <span class="provider-review-tag is-{{ offering_review_state }}">{% blocktranslate with revision=offering_revision review_label=offering_review_label %}Revizia {{ revision }} · {{ review_label }}{% endblocktranslate %}</span>
+      </div>
+
+      {% if authorization_error %}
+        <div class="form-alert provider-source-alert" role="alert">
+          {% if offering_editable %}
+            <strong>{% translate "Autorizările firmei sunt încă în verificare." %}</strong>
+            <p>{{ authorization_error }} {% translate "Poți pregăti serviciile și localitățile în ciorna privată, dar nu le poți trimite spre aprobare încă." %}</p>
+          {% else %}
+            <strong>{% translate "Editorul este temporar indisponibil." %}</strong>
+            <p>{{ authorization_error }} {% translate "Datele salvate rămân private și intacte. Reîncearcă după restabilirea sursei ONRC." %}</p>
+          {% endif %}
+        </div>
+      {% elif authorization_is_demo %}
+        <div class="form-alert provider-source-alert" role="status">
+          <strong>{% translate "Mod demonstrativ activ" %}</strong>
+          <p>{% translate "Serviciile pot parcurge fluxul complet numai pentru testare. Această autorizare nu provine din ONRC și nu este disponibilă în producție." %}</p>
+        </div>
+      {% endif %}
+      {% if offering_editable %}
+        <form class="provider-offerings-form" method="post" novalidate
+              data-provider-locations-url="{% url 'services:localities' %}"
+              data-locality-choose="{% translate 'Alege localitatea' %}"
+              data-locality-none="{% translate 'Nu există localități' %}"
+              data-locality-county-first="{% translate 'Alege întâi județul' %}"
+              data-locality-loading="{% translate 'Se încarcă localitățile…' %}"
+              data-locality-load-error="{% translate 'Localitățile nu au putut fi încărcate' %}"
+              data-locality-retry="{% translate 'Reîncearcă selectarea județului.' %}"
+              data-locality-count-one="{% translate '{count} localitate disponibilă.' %}"
+              data-locality-count-many="{% translate '{count} localități disponibile.' %}">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="save_offerings">
+          {{ offering_form.expected_revision }}
+          {% if offering_form.non_field_errors %}<div class="form-alert">{{ offering_form.non_field_errors }}</div>{% endif %}
+
+          <fieldset class="provider-service-picker">
+            <legend>{% translate "Servicii prestate" %}</legend>
+            {% if authorization_is_demo %}
+              <p>{% translate "Pentru această firmă demo, categoria este acordată exclusiv pentru verificarea fluxului din development." %}</p>
+            {% elif authorization_error %}
+              <p>{% translate "Alege serviciile pentru ciorna privată. Ele rămân neverificate și nu pot fi trimise sau publicate până când administratorul confirmă autorizările firmei." %}</p>
+            {% else %}
+              <p>{% translate "ONRC arată plafonul legal autorizat; bifarea este declarația firmei și nu dovedește calitatea sau disponibilitatea." %}</p>
+            {% endif %}
+            {% if offering_review_state == "pending" or offering_review_state == "approved" %}
+              <p class="provider-edit-warning">{% translate "O modificare reală creează o revizie nouă și înlocuiește depunerea curentă." %}</p>
+            {% endif %}
+            <div class="provider-service-options">
+              {% for option in service_options %}
+                <label class="provider-service-option{% if not option.authorized %} is-disabled{% endif %}">
+                  <input type="checkbox" name="services" value="{{ option.slug }}"{% if option.selected %} checked{% endif %}{% if not option.authorized %} disabled{% endif %}>
+                  <span><strong>{{ option.label }}</strong><small>{{ option.description }}</small></span>
+                </label>
+              {% endfor %}
+            </div>
+            {% for error in offering_form.services.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}
+          </fieldset>
+
+          <fieldset class="provider-coverage-picker">
+            <legend>{% translate "Localități deservite" %}</legend>
+            <p>{% translate "Sediul social nu este arie de lucru. Adaugă numai localitățile în care firma declară că poate presta serviciile bifate." %}</p>
+            <div class="provider-location-controls">
+              <div class="provider-field">
+                <label for="{{ offering_form.coverage_county.id_for_label }}">{{ offering_form.coverage_county.label }}</label>
+                {{ offering_form.coverage_county }}
+              </div>
+              <div class="provider-field">
+                <label for="{{ offering_form.coverage_locality.id_for_label }}">{{ offering_form.coverage_locality.label }}</label>
+                {{ offering_form.coverage_locality }}
+                {% for error in offering_form.coverage_locality.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}
+              </div>
+              <button class="provider-load-localities" type="button" data-load-provider-localities>{% translate "Încarcă localitățile" %}</button>
+            </div>
+            <p id="provider-location-status" class="provider-location-status" aria-live="polite"></p>
+
+            {% if coverage_display %}
+              <div class="provider-coverage-list">
+                <h3>{% translate "Acoperire salvată" %}</h3>
+                <p>{% translate "Bifează localitățile pe care vrei să le elimini la salvare." %}</p>
+                {{ offering_form.remove_coverage }}
+              </div>
+            {% else %}
+              <p class="provider-coverage-empty">{% translate "Nu ai adăugat încă nicio localitate." %}</p>
+            {% endif %}
+          </fieldset>
+          <button class="provider-submit provider-offerings-submit" type="submit">{% translate "Salvează serviciile și acoperirea" %}</button>
+        </form>
+      {% endif %}
+
+        <div class="provider-review-panel is-{{ offering_review_state }}" aria-live="polite">
+          {% if authorization_error and offering_editable %}
+            <div><h3>{% translate "Ciornă în așteptarea autorizărilor" %}</h3><p>{% translate "Serviciile și localitățile pot fi salvate acum. Trimiterea spre verificare se activează după reconcilierea juridică a firmei." %}</p></div>
+          {% elif authorization_error %}
+            <div><h3>{% translate "Verificarea sursei este necesară" %}</h3><p>{% translate "Editorul revine automat după ce sursa ONRC a firmei poate fi validată din nou." %}</p></div>
+          {% elif offering_review_state == "pending" %}
+            <div><h3>{% translate "Revizia este în verificare" %}</h3><p>{% translate "Poți continua editarea, dar prima modificare salvată va înlocui această depunere." %}</p></div>
+          {% elif offering_review_state == "approved" %}
+            <div><h3>{% translate "Aprobat intern — încă nepublicat" %}</h3><p>{% translate "Revizia a trecut verificarea administrativă. Publicarea rămâne o decizie separată." %}</p></div>
+          {% elif offering_review_state == "changes_required" %}
+            <div>
+              <h3>{% translate "Sunt necesare modificări" %}</h3>
+              <p>{{ current_submission.provider_feedback }}</p>
+              <p>{% translate "Modifică și salvează declarația pentru a crea o revizie nouă înainte de retrimitere." %}</p>
+            </div>
+          {% elif offering_revision > 0 %}
+            <div><h3>{% translate "Revizia este pregătită" %}</h3><p>{% translate "Trimiterea deschide verificarea internă și nu publică profilul." %}</p></div>
+            <form method="post">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="submit_offerings_review">
+              {{ review_submit_form.expected_revision }}
+              <button class="provider-review-submit" type="submit">{% translate "Trimite spre verificare" %}</button>
+            </form>
+          {% else %}
+            <div><h3>{% translate "Completează prima revizie" %}</h3><p>{% translate "Alege cel puțin un serviciu autorizat și o localitate deservită." %}</p></div>
+          {% endif %}
+          {% if review_submit_form.non_field_errors %}<div class="form-alert">{{ review_submit_form.non_field_errors }}</div>{% endif %}
+        </div>
+    </section>
+
+    <section id="abonament" class="provider-subscription" aria-labelledby="subscription-title">
+      <div>
+        <h2 id="subscription-title">{% translate "Abonamentul profilului" %}</h2>
+        {% if subscription_state.is_active %}
+          <p>{% blocktranslate with end=subscription_state.period_ends_at|date:"DATE_FORMAT" %}Abonamentul de test este activ până la {{ end }}. În această etapă nu a fost procesată nicio plată.{% endblocktranslate %}</p>
+        {% elif subscription_state.code == "expired" %}
+          <p>{% translate "Abonamentul de test a expirat. Datele profesionale aprobate sunt ascunse până la reactivare." %}</p>
+        {% else %}
+          <p>{% translate "Abonamentul demo nu este activ. Îl poți testa fără date de card și fără nicio tranzacție reală." %}</p>
+        {% endif %}
+        {% if not subscription_state.is_active and simulated_checkout_enabled %}
+          <a class="provider-subscription-activate" href="{% url 'services:provider_simulated_checkout' %}">{% translate "Simulează activarea" %}</a>
+        {% endif %}
+        <a class="provider-subscription-details" href="{% url 'services:subscription_plan' %}">{% translate "Vezi costul și ce include abonamentul" %}</a>
+      </div>
+      <span class="provider-review-tag is-{{ subscription_state.code }}">{{ subscription_state.label }}</span>
+    </section>
+
+    <section id="plan-partener" class="provider-partner-tracker" aria-labelledby="partner-tracker-title">
+      <header>
+        <div>
+          <span>{% translate "SERVICIU SEPARAT" %}</span>
+          <h2 id="partner-tracker-title">{% translate "Site administrat · plan Partener" %}</h2>
+          <p>{% translate "Urmărește aici discuțiile despre realizarea și administrarea site-ului firmei." %}</p>
+        </div>
+        <a href="{% url 'services:managed_site_inquiry' %}">{% if managed_site_inquiries %}{% translate "Trimite un nou brief" %}{% else %}{% translate "Discută cu echipa" %}{% endif %}<span aria-hidden="true">→</span></a>
+      </header>
+      {% if managed_site_inquiries %}
+        <ol class="provider-partner-inquiries">
+          {% for inquiry in managed_site_inquiries %}
+            <li>
+              <div>
+                <strong>{{ inquiry.get_goal_display }}</strong>
+                <time datetime="{{ inquiry.created_at|date:'c' }}">{{ inquiry.created_at|date:"DATE_FORMAT" }}</time>
+              </div>
+              <span class="is-{{ inquiry.status }}">{{ inquiry.get_status_display }}</span>
+            </li>
+          {% endfor %}
+        </ol>
+        <p class="provider-partner-boundary">{% translate "„Propunere acceptată” confirmă doar acordul pentru serviciul discutat; nu dovedește o plată și nu activează automat abonamentul Esențial." %}</p>
+      {% else %}
+        <div class="provider-partner-empty">
+          <strong>{% translate "Nu ai trimis încă un brief pentru planul Partener." %}</strong>
+          <p>{% translate "Poți descrie obiectivul acum; echipa îl analizează înainte de orice propunere. Nu se solicită date de card." %}</p>
+        </div>
+      {% endif %}
+    </section>
+
+    <section id="publicare" class="provider-publication" aria-labelledby="publication-title">
+      <div class="provider-publication-heading">
+        <div>
+          <h2 id="publication-title">{% translate "Portofoliu și publicare" %}</h2>
+          <p>{% translate "Fotografiile sunt curățate de metadate și rămân private până când întregul profil este aprobat și activat." %}</p>
+        </div>
+        <span>
+          {% if effective_publication_visibility == "internal_preview" %}{% translate "Previzualizare internă activă" %}
+          {% elif effective_publication_visibility == "public" %}{% translate "Profil public" %}
+          {% elif effective_publication_visibility == "invalid" %}{% translate "Vizibilitate suspendată" %}
+          {% elif effective_publication_visibility == "subscription_inactive" %}{% translate "Ascuns · abonament inactiv" %}
+          {% elif publication_submission.decision == "pending" %}{% translate "În verificare" %}
+          {% elif publication_submission.decision == "changes_required" %}{% translate "Necesită modificări" %}
+          {% else %}{% translate "Nepublicat" %}{% endif %}
+        </span>
+      </div>
+
+      <div id="portofoliu" class="provider-portfolio-workbench">
+        <section aria-labelledby="portfolio-list-title">
+          <h3 id="portfolio-list-title">{% translate "Lucrări selectate" %}</h3>
+          {% if portfolio_items %}
+            {% translate "Lucrare din portofoliul furnizorului" as default_portfolio_alt %}
+            {% translate "Fără descriere" as default_portfolio_caption %}
+            <div class="provider-portfolio-grid">
+              {% for item in portfolio_items %}
+                <article>
+                  <img src="{% url 'services:provider_portfolio_image' item.asset.opaque_id %}" alt="{{ item.caption|default:default_portfolio_alt }}" width="{{ item.asset.width }}" height="{{ item.asset.height }}" loading="lazy" decoding="async">
+                  <p>{{ item.caption|default:default_portfolio_caption }}</p>
+                  <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="remove_portfolio">
+                    <input type="hidden" name="item_id" value="{{ item.pk }}">
+                    <button type="submit">{% translate "Elimină din ciornă" %}</button>
+                  </form>
+                </article>
+              {% endfor %}
+            </div>
+          {% else %}
+            <p class="provider-coverage-empty">{% translate "Nu ai adăugat încă nicio fotografie." %}</p>
+          {% endif %}
+        </section>
+
+        <section class="provider-portfolio-upload" aria-labelledby="portfolio-upload-title">
+          <h3 id="portfolio-upload-title">{% translate "Adaugă fotografii" %}</h3>
+          <p>{% translate "Selectează mai multe fișiere JPEG, PNG sau WebP. Fiecare fotografie poate avea maximum 10 MB." %}</p>
+          <p>{% translate "Descrierea scurtă se aplică tuturor fotografiilor selectate." %}</p>
+          <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <input type="hidden" name="action" value="add_portfolio">
+            {% if portfolio_form.non_field_errors %}<div class="form-alert">{{ portfolio_form.non_field_errors }}</div>{% endif %}
+            {% for field in portfolio_form %}
+              <div class="provider-field{% if field.name == 'rights_confirmation' %} provider-consent{% endif %}">
+                {{ field }}
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {% for error in field.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}
+              </div>
+            {% endfor %}
+            <button class="provider-submit" type="submit">{% translate "Adaugă fotografiile în portofoliu" %}</button>
+          </form>
+        </section>
+      </div>
+
+      <div class="provider-publication-panel">
+        <div>
+          {% if effective_publication_visibility == "internal_preview" or effective_publication_visibility == "public" %}
+            <h3>{% translate "Versiunea aprobată este vizibilă" %}</h3>
+            <p>{% translate "Modificarea profilului, portofoliului, serviciilor sau acoperirii oprește automat această versiune." %}</p>
+          {% elif effective_publication_visibility == "invalid" %}
+            <h3>{% translate "Vizibilitatea este suspendată" %}</h3>
+            <p>{% translate "Sursa sau snapshotul aprobat nu mai trece verificările curente. Poți retrage versiunea în siguranță." %}</p>
+          {% elif effective_publication_visibility == "subscription_inactive" %}
+            <h3>{% translate "Profilul aprobat este ascuns" %}</h3>
+            <p>{% translate "Datele profesionale redevin vizibile automat când administratorul reactivează abonamentul." %}</p>
+          {% elif publication_submission.decision == "pending" %}
+            <h3>{% translate "Profilul complet este în verificare" %}</h3>
+            <p>{% translate "Snapshotul include datele publice, serviciile aprobate, acoperirea și portofoliul." %}</p>
+          {% elif publication_submission.decision == "changes_required" %}
+            <h3>{% translate "Sunt necesare modificări înainte de publicare" %}</h3>
+            <p>{{ publication_submission.provider_feedback }}</p>
+          {% elif publication_submission.decision == "approved" %}
+            <h3>{% translate "Profilul aprobat este retras" %}</h3>
+            <p>{% translate "Modifică o informație reală din ciornă pentru a crea o versiune nouă, apoi retrimite profilul." %}</p>
+          {% else %}
+            <h3>{% translate "Pregătește profilul complet pentru publicare" %}</h3>
+            <p>{% translate "Ai nevoie de servicii și acoperire aprobate, o descriere de minimum 60 de caractere, cel puțin un contact și o fotografie." %}</p>
+          {% endif %}
+        </div>
+        {% if publication_scope.visibility != "off" %}
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="unpublish_profile">
+            <button class="provider-publication-secondary" type="submit">{% translate "Oprește publicarea" %}</button>
+          </form>
+        {% elif publication_submission.decision == "approved" %}
+          <a class="provider-publication-secondary" href="#date-profil">{% translate "Editează o versiune nouă" %}</a>
+        {% elif publication_can_submit %}
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="submit_publication">
+            {{ publication_submit_form.acknowledgement }}
+            <label for="{{ publication_submit_form.acknowledgement.id_for_label }}">{{ publication_submit_form.acknowledgement.label }}</label>
+            {% for error in publication_submit_form.acknowledgement.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}
+            {% if publication_submit_form.non_field_errors %}<div class="form-alert">{{ publication_submit_form.non_field_errors }}</div>{% endif %}
+            <button class="provider-review-submit" type="submit">{% translate "Trimite profilul spre publicare" %}</button>
+          </form>
+        {% elif publication_waits_for_subscription %}
+          <p class="provider-publication-blocked">{% translate "Trimiterea se deschide după activarea abonamentului de test de către administrator." %}</p>
+        {% endif %}
+      </div>
+    </section>
+  </main>
+  {% include "services/partials/site_footer.html" %}
+  <script src="{% static 'services/provider_offerings.js' %}?v=20260904-1" defer></script>
+</body>
+</html>

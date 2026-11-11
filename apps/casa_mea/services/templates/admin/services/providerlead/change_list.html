@@ -1,0 +1,10 @@
+{% extends "admin/change_list.html" %}
+
+{% block object-tools-items %}
+  {% if perms.services.view_provider_lead_insights %}
+    <li><a href="{% url 'admin:services_providerlead_pilot' %}">Pregătirea lansării locale</a></li>
+    <li><a href="{% url 'admin:services_providerlead_insights' %}">Cerere și acoperire</a></li>
+    <li><a href="{% url 'admin:services_providerlead_delivery' %}">Livrarea notificărilor</a></li>
+  {% endif %}
+  {{ block.super }}
+{% endblock %}

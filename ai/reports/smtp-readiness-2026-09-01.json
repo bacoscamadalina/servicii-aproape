@@ -1,0 +1,59 @@
+{
+  "result": "PASS",
+  "production_contract": {
+    "backend": "django.core.mail.backends.smtp.EmailBackend",
+    "smtp_host_required": true,
+    "smtp_port_range": [1, 65535],
+    "credentials_required": true,
+    "valid_sender_required": true,
+    "header_injection_rejected": true,
+    "starttls_required": true,
+    "timeout_seconds": 10
+  },
+  "operator_probe": {
+    "configuration_audit_opens_network_connection": false,
+    "send_requires_recipient": true,
+    "send_requires_acknowledgement": "SEND_SYNTHETIC_SMTP_PROBE",
+    "synthetic_message_contains_account_data": false,
+    "output_contains_recipient": false,
+    "logs_contain_recipient": false,
+    "logs_contain_provider_exception_text": false,
+    "real_delivery_tested": false
+  },
+  "validation": {
+    "focused_tests": {
+      "tests": 9,
+      "seconds": 1.814,
+      "result": "PASS"
+    },
+    "complete_sqlite_suite": {
+      "tests": 246,
+      "skipped": 10,
+      "seconds": 40.008,
+      "result": "PASS"
+    },
+    "complete_postgresql_suite": {
+      "tests": 246,
+      "skipped": 0,
+      "seconds": 53.411,
+      "result": "PASS"
+    },
+    "production_compose_validation": "PASS",
+    "production_image_build": "PASS",
+    "production_no_send_audit": "PASS",
+    "production_deployment_check": "PASS",
+    "django_check": "PASS",
+    "migration_source_drift": "NONE"
+  },
+  "state_changes": {
+    "schema_migration_required": false,
+    "emails_sent": 0,
+    "accounts_changed": 0,
+    "claims_changed": 0,
+    "publication_or_visibility_changes": 0
+  },
+  "external_follow_up": {
+    "required": true,
+    "reason": "The operator must configure real private SMTP credentials, run one consented delivery probe and verify SPF, DKIM, DMARC and inbox delivery."
+  }
+}

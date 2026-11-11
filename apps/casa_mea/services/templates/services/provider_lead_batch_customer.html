@@ -1,0 +1,106 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <title>{% translate "Compară ofertele" %} — ServiciiAproape</title>
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260922-quote-lines">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body class="customer-workspace-body">
+  <a class="skip-link" href="#comparatie-oferte">{% translate "Sari la oferte" %}</a>
+  <header class="site-header provider-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    {% if customer_portal %}<a class="customer-workspace-back" href="{% url 'services:customer_dashboard' %}">{% translate "Proiectele mele" %}</a>{% endif %}
+    {% include "services/partials/language_switcher.html" %}
+  </header>
+
+  <main id="comparatie-oferte" class="customer-workspace comparison-workspace">
+    {% if customer_portal %}<a class="detail-back" href="{% url 'services:customer_dashboard' %}">← {% translate "Înapoi la proiectele mele" %}</a>{% endif %}
+    <header class="customer-workspace-heading comparison-heading">
+      <div><p class="general-lead-kicker">{% translate "Spațiul privat al proiectului" %}</p><h1>{% translate "Compară răspunsurile firmelor" %}</h1><p>{% translate "Poți discuta separat cu fiecare firmă și poți accepta o singură ofertă." %}</p></div>
+      <span class="comparison-count">{% blocktranslate count counter=lead_cards|length %}O firmă contactată{% plural %}{{ counter }} firme contactate{% endblocktranslate %}</span>
+    </header>
+
+    {% if messages %}<div class="provider-messages" aria-live="polite">{% for message in messages %}<p>{{ message }}</p>{% endfor %}</div>{% endif %}
+
+    <section class="comparison-project" aria-labelledby="comparison-project-title">
+      <div><span>{% translate "Proiect" %}</span><h2 id="comparison-project-title">{{ category_label }} — {{ locality }}, {{ batch.county }}</h2><p>{{ project.description }}</p></div>
+      <dl>
+        <div><dt>{% translate "Buget orientativ" %}</dt><dd>{{ project.get_budget_display }}</dd></div>
+        <div><dt>{% translate "Începere" %}</dt><dd>{{ project.get_desired_start_display }}</dd></div>
+      </dl>
+    </section>
+
+    <nav class="comparison-provider-nav" aria-label="{% translate 'Firmele contactate' %}">
+      {% for card in lead_cards %}<a href="#firma-{{ card.lead.public_id }}"><span>{{ forloop.counter|stringformat:"02d" }}</span>{{ card.lead.submission.display_name }}</a>{% endfor %}
+    </nav>
+
+    <div class="comparison-list">
+      {% for card in lead_cards %}
+        <article class="comparison-provider" id="firma-{{ card.lead.public_id }}">
+          <header>
+            <div><span>{% translate "Răspuns de la" %}</span><h2>{{ card.lead.submission.display_name }}</h2></div>
+            <span class="provider-lead-status is-{{ card.lead.status }}">{{ card.lead.get_status_display }}</span>
+          </header>
+          <div class="comparison-provider-grid">
+            <section class="comparison-offer" aria-labelledby="offer-{{ card.lead.pk }}">
+              <h3 id="offer-{{ card.lead.pk }}">{% translate "Oferta firmei" %}</h3>
+              {% if card.latest_quote %}
+                <div class="customer-quote-price"><strong>{{ card.latest_quote.amount_ron|floatformat:2 }}</strong><span>{% translate "lei" %}</span></div>
+                <p>{{ card.latest_quote.summary }}</p>
+                {% include "services/partials/quote_lines.html" with quote=card.latest_quote %}
+                <dl>
+                  <div><dt>{% translate "Durată estimată" %}</dt><dd>{{ card.latest_quote.estimated_duration }}</dd></div>
+                  <div><dt>{% translate "Valabilă până la" %}</dt><dd>{{ card.latest_quote.valid_until|date:"DATE_FORMAT" }}</dd></div>
+                </dl>
+                <span class="customer-quote-state is-{{ card.latest_quote.status }}">{{ card.latest_quote.get_status_display }}</span>
+                {% if card.latest_quote.status == "sent" and not card.quote_is_expired %}
+                  <form method="post" class="customer-quote-actions">
+                    {% csrf_token %}<input type="hidden" name="lead_id" value="{{ card.lead.public_id }}"><input type="hidden" name="quote_id" value="{{ card.latest_quote.pk }}">
+                    <button class="provider-submit" type="submit" name="action" value="accepted">{% translate "Acceptă oferta" %}</button>
+                    <button class="secondary-action" type="submit" name="action" value="declined">{% translate "Refuză oferta" %}</button>
+                  </form>
+                {% elif card.quote_is_expired and card.latest_quote.status == "sent" %}
+                  <p class="form-alert">{% translate "Această ofertă a expirat. Cere o versiune actualizată în conversație." %}</p>
+                {% endif %}
+              {% else %}
+                <div class="customer-quote-empty"><p>{% translate "Firma nu a trimis încă o ofertă. Poți trimite un mesaj pentru clarificări." %}</p></div>
+              {% endif %}
+            </section>
+
+            <section class="comparison-conversation" aria-labelledby="conversation-{{ card.lead.pk }}">
+              <h3 id="conversation-{{ card.lead.pk }}">{% translate "Conversație privată" %}</h3>
+              {% if card.conversation %}
+                <ol class="lead-message-list compact">
+                  {% for item in card.conversation %}<li class="is-{{ item.sender_role }}"><div><strong>{{ item.get_sender_role_display }}</strong><time datetime="{{ item.created_at|date:'c' }}">{{ item.created_at|date:"SHORT_DATETIME_FORMAT" }}</time><p>{{ item.body }}</p></div></li>{% endfor %}
+                </ol>
+              {% else %}
+                <p class="lead-conversation-empty">{% translate "Nu există încă mesaje cu această firmă." %}</p>
+              {% endif %}
+              <form method="post" class="lead-message-form" novalidate>
+                {% csrf_token %}<input type="hidden" name="action" value="message"><input type="hidden" name="lead_id" value="{{ card.lead.public_id }}">
+                {% if card.message_form.non_field_errors %}<div class="form-alert">{{ card.message_form.non_field_errors }}</div>{% endif %}
+                <div class="provider-field"><label for="{{ card.message_form.body.id_for_label }}">{{ card.message_form.body.label }}</label>{{ card.message_form.body }}{% for error in card.message_form.body.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}</div>
+                <button class="provider-submit" type="submit">{% translate "Trimite mesajul" %}</button>
+              </form>
+            </section>
+          </div>
+          {% include "services/partials/work_order_summary.html" with work_order=card.work_order %}
+          {% include "services/partials/customer_visit.html" with visit=card.latest_visit lead=card.lead lead_id=card.lead.public_id %}
+        </article>
+      {% endfor %}
+    </div>
+    <p class="customer-access-note">{% translate "Acest link oferă acces la întregul proiect și la conversațiile cu firmele. Nu îl distribui altor persoane." %}</p>
+  </main>
+  {% include "services/partials/site_footer.html" %}
+</body>
+</html>

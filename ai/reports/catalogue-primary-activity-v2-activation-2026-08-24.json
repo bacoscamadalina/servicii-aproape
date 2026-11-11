@@ -1,0 +1,27 @@
+{
+  "report_schema_version": 1,
+  "activated_at": "2026-08-24",
+  "visibility": "internal_preview",
+  "publication_active": false,
+  "changed_counties": 42,
+  "staged_businesses": 72880,
+  "build_report_sha256": "161a288b9bc1f6f1b51c0e55e3011cdd988b64d679ab1f5409e6e35bed5fb167",
+  "activation_plan_sha256": "7aa6a47c21b302a2e19f69e75a19e55a59abb7b277caeded04de72ba3e093a3b",
+  "sabaoani_verification": {
+    "county": "Neamț",
+    "siruta": "124215",
+    "category": "tamplarie",
+    "result_count": 1,
+    "legal_name": "OASE ART S.R.L.",
+    "mf_2024_reported_caen_rev2": "3109"
+  },
+  "validation": {
+    "sqlite_tests": 68,
+    "postgresql_tests": 68,
+    "django_check": "ok",
+    "migrations_check": "clean",
+    "desktop_browser": "ok",
+    "mobile_browser": "ok",
+    "dependent_locality_selector": "ok"
+  }
+}

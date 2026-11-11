@@ -1,0 +1,31 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+  <div id="content-main">
+    <p><strong>Furnizor:</strong> {{ submission.draft.profile.display_name }}</p>
+    <p><strong>Revizie:</strong> {{ submission.revision }} · trimisă la {{ submission.submitted_at|date:"d.m.Y H:i" }}</p>
+    <p>Aprobarea este internă. Nu publică profilul și nu transformă autorizarea ONRC într-o dovadă de calitate sau disponibilitate.</p>
+
+    <fieldset class="module aligned">
+      <h2>Fotografia imuabilă a reviziei</h2>
+      <div class="form-row"><strong>Servicii:</strong> {{ service_labels|join:", " }}</div>
+      <div class="form-row">
+        <strong>Localități declarate:</strong>
+        <ul>{% for label in coverage_labels %}<li>{{ label }}</li>{% endfor %}</ul>
+      </div>
+      <div class="form-row"><strong>Sursa ONRC:</strong> run {{ submission.authorization_run_id }} / catalog {{ submission.catalogue_run_id }}</div>
+      <div class="form-row"><strong>SIRUTA:</strong> {{ submission.siruta_catalogue_version }} · {{ submission.siruta_catalogue_sha256 }}</div>
+    </fieldset>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <fieldset class="module aligned">
+        {{ form.as_div }}
+      </fieldset>
+      <div class="submit-row">
+        <input type="submit" value="Înregistrează decizia" class="default">
+      </div>
+    </form>
+  </div>
+{% endblock %}

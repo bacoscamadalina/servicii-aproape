@@ -1,0 +1,569 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>{% translate "Activitatea firmei" %} — ServiciiAproape</title>
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260922-quote-lines">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body class="provider-leads-body">
+  <a class="skip-link" href="#solicitari">{% translate "Sari la solicitări" %}</a>
+  <header class="site-header provider-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    <div class="provider-header-tools">
+      <div class="provider-account-actions">
+        <a href="{% url 'services:provider_dashboard' %}">{% translate "Profilul firmei" %}</a>
+        <a href="{% url 'services:provider_billing_identity' %}">{% translate "Date emitent" %}</a>
+        <a href="{% url 'services:provider_team' %}">{% translate "Echipă" %}</a>
+        <form method="post" action="{% url 'services:provider_logout' %}">{% csrf_token %}<button class="provider-logout" type="submit">{% translate "Ieși din cont" %}</button></form>
+      </div>
+      {% include "services/partials/language_switcher.html" %}
+    </div>
+  </header>
+
+  <main id="solicitari" class="provider-leads-page">
+    <header class="provider-leads-heading">
+      <div><h1>{% translate "Activitatea firmei" %}</h1><p>{% blocktranslate with profile_name=profile.display_name %}Solicitările clienților și performanța profilului {{ profile_name }}, organizate într-un singur loc.{% endblocktranslate %}</p></div>
+      <a href="{% url 'services:provider_dashboard' %}">{% translate "Editează profilul" %}</a>
+    </header>
+
+    {% if messages %}<div class="provider-messages" aria-live="polite">{% for message in messages %}<p>{{ message }}</p>{% endfor %}</div>{% endif %}
+
+    <nav class="provider-workspace-nav" aria-label="{% translate 'Secțiunile panoului' %}">
+      <a href="?view=requests"{% if dashboard_section == "requests" %} aria-current="page"{% endif %}>
+        <span>{% translate "Solicitări" %}</span>
+        <strong>{{ lead_metrics.total }}</strong>
+      </a>
+      <a href="?view=customers"{% if dashboard_section == "customers" %} aria-current="page"{% endif %}>
+        <span>{% translate "Clienți" %}</span>
+        <strong>{{ customer_counts.active }}</strong>
+      </a>
+      <a href="?view=work"{% if dashboard_section == "work" %} aria-current="page"{% endif %}>
+        <span>{% translate "Lucrări" %}</span>
+      </a>
+      <a href="?view=billing"{% if dashboard_section == "billing" %} aria-current="page"{% endif %}>
+        <span>{% translate "Ciorne de facturare" %}</span>
+      </a>
+      <a href="?view=performance&amp;period={{ analytics_period }}"{% if dashboard_section == "performance" %} aria-current="page"{% endif %}>
+        <span>{% translate "Performanța profilului" %}</span>
+      </a>
+      <a href="?view=reviews"{% if dashboard_section == "reviews" %} aria-current="page"{% endif %}>
+        <span>{% translate "Recenzii" %}</span><strong>{{ review_count }}</strong>
+      </a>
+    </nav>
+
+    {% if dashboard_section == "customers" %}
+    <section class="provider-customer-register" aria-labelledby="provider-customers-title">
+      <header class="provider-customer-heading">
+        <div>
+          <p class="section-kicker">{% translate "Registru privat" %}</p>
+          <h2 id="provider-customers-title">{% translate "Clienții firmei" %}</h2>
+          <p>{% translate "Păstrează într-un singur loc datele de contact și notițele necesare relației comerciale. Adăugarea unei persoane nu îi creează cont și nu îi trimite e-mail." %}</p>
+        </div>
+        <dl>
+          <div><dt>{% translate "Activi" %}</dt><dd>{{ customer_counts.active }}</dd></div>
+          <div><dt>{% translate "Arhivați" %}</dt><dd>{{ customer_counts.archived }}</dd></div>
+        </dl>
+      </header>
+
+      <div class="provider-customer-layout">
+        {% if linking_lead %}
+        <aside class="provider-customer-link-context" aria-labelledby="customer-link-title">
+          <p class="section-kicker">{% translate "Asociere manuală" %}</p>
+          <h3 id="customer-link-title">{% translate "Alege fișa corectă" %}</h3>
+          <p>{% blocktranslate with name=linking_lead.customer_name %}Selectează din registrul privat clientul pentru solicitarea trimisă de {{ name }}.{% endblocktranslate %}</p>
+          <small>{% translate "Asocierea organizează informațiile firmei. Nu schimbă datele originale ale solicitării, nu creează cont și nu trimite e-mail." %}</small>
+          <a href="?view=requests&amp;focus={{ linking_lead.public_id }}">{% translate "Înapoi la solicitare" %}</a>
+        </aside>
+        {% else %}
+        <section class="provider-customer-form-panel" aria-labelledby="customer-form-title">
+          <header>
+            <p class="section-kicker">{% if creating_from_lead %}{% translate "Din solicitare" %}{% elif editing_customer %}{% translate "Fișă existentă" %}{% else %}{% translate "Client nou" %}{% endif %}</p>
+            <h3 id="customer-form-title">{% if creating_from_lead %}{% translate "Creează fișa clientului" %}{% elif editing_customer %}{% translate "Editează clientul" %}{% else %}{% translate "Adaugă un client" %}{% endif %}</h3>
+            <p>{% if creating_from_lead %}{% translate "Am precompletat datele din solicitare. Verifică-le înainte de salvare; clientul nu primește e-mail și nu i se creează cont." %}{% else %}{% translate "Completează cel puțin telefonul sau e-mailul. Datele rămân private firmei." %}{% endif %}</p>
+          </header>
+          <form method="post" novalidate>
+            {% csrf_token %}<input type="hidden" name="action" value="{% if creating_from_lead %}customer_create_from_lead{% else %}customer_save{% endif %}">
+            {{ customer_form.expected_revision }}{{ customer_form.customer_id }}
+            {% if creating_from_lead %}<input type="hidden" name="lead_id" value="{{ creating_from_lead.pk }}">{{ customer_form.lead_id }}{{ customer_form.expected_link_revision }}{% endif %}
+            {% for field in customer_form.visible_fields %}
+              {% if field.name != "lawful_use_confirmed" %}
+              <div class="provider-field"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% for error in field.errors %}<p class="provider-error" role="alert">{{ error }}</p>{% endfor %}</div>
+              {% endif %}
+            {% endfor %}
+            {% for error in customer_form.non_field_errors %}<p class="provider-error" role="alert">{{ error }}</p>{% endfor %}
+            <div class="provider-consent">{{ customer_form.lawful_use_confirmed }}<label for="{{ customer_form.lawful_use_confirmed.id_for_label }}">{{ customer_form.lawful_use_confirmed.label }}</label></div>
+            {% for error in customer_form.lawful_use_confirmed.errors %}<p class="provider-error" role="alert">{{ error }}</p>{% endfor %}
+            <div class="provider-customer-form-actions">
+              <button class="provider-submit" type="submit">{% if creating_from_lead %}{% translate "Creează și asociază" %}{% elif editing_customer %}{% translate "Salvează modificările" %}{% else %}{% translate "Adaugă clientul" %}{% endif %}</button>
+              {% if editing_customer %}<a href="?view=customers">{% translate "Renunță" %}</a>{% elif creating_from_lead %}<a href="?view=requests&amp;focus={{ creating_from_lead.public_id }}">{% translate "Înapoi la solicitare" %}</a>{% endif %}
+            </div>
+          </form>
+        </section>
+        {% endif %}
+
+        <section class="provider-customer-directory" aria-labelledby="customer-directory-title">
+          <header>
+            <div><p class="section-kicker">{% translate "Director" %}</p><h3 id="customer-directory-title">{% translate "Contactele salvate" %}</h3></div>
+            <form method="get"><input type="hidden" name="view" value="customers"><input type="hidden" name="customers" value="{{ customer_filter }}">{% if linking_lead %}<input type="hidden" name="link_lead" value="{{ linking_lead.public_id }}">{% elif creating_from_lead %}<input type="hidden" name="new_for_lead" value="{{ creating_from_lead.public_id }}">{% endif %}<label class="visually-hidden" for="customer-search">{% translate "Caută un client" %}</label><input id="customer-search" name="q" value="{{ customer_search }}" placeholder="{% translate 'Nume, e-mail sau telefon' %}"><button type="submit">{% translate "Caută" %}</button></form>
+          </header>
+          <nav class="provider-customer-filters" aria-label="{% translate 'Filtre clienți' %}">
+            <a href="?view=customers&amp;customers=active{% if linking_lead %}&amp;link_lead={{ linking_lead.public_id }}{% elif creating_from_lead %}&amp;new_for_lead={{ creating_from_lead.public_id }}{% endif %}"{% if customer_filter == "active" %} aria-current="page"{% endif %}>{% translate "Activi" %}</a>
+            {% if not linking_lead and not creating_from_lead %}<a href="?view=customers&amp;customers=archived"{% if customer_filter == "archived" %} aria-current="page"{% endif %}>{% translate "Arhivați" %}</a>
+            <a href="?view=customers&amp;customers=all"{% if customer_filter == "all" %} aria-current="page"{% endif %}>{% translate "Toți" %}</a>{% endif %}
+          </nav>
+          {% if customer_page %}
+          <ol class="provider-customer-list">
+            {% for customer in customer_page %}
+            <li>
+              <div class="provider-customer-primary"><strong>{{ customer.name }}</strong><span>{{ customer.get_state_display }}</span></div>
+              <dl>
+                {% if customer.email %}<div><dt>{% translate "E-mail" %}</dt><dd><a href="mailto:{{ customer.email }}">{{ customer.email }}</a></dd></div>{% endif %}
+                {% if customer.phone %}<div><dt>{% translate "Telefon" %}</dt><dd><a href="tel:{{ customer.phone }}">{{ customer.phone }}</a></dd></div>{% endif %}
+                {% if customer.address %}<div><dt>{% translate "Adresă" %}</dt><dd>{{ customer.address }}</dd></div>{% endif %}
+              </dl>
+              {% if customer.notes %}<p>{{ customer.notes }}</p>{% endif %}
+              <div class="provider-customer-actions">
+                {% if customer.state == "active" %}
+                {% if linking_lead or creating_from_lead %}<form method="post">{% csrf_token %}<input type="hidden" name="action" value="customer_link"><input type="hidden" name="lead_id" value="{% if linking_lead %}{{ linking_lead.pk }}{% else %}{{ creating_from_lead.pk }}{% endif %}"><input type="hidden" name="customer-link-lead_id" value="{% if linking_lead %}{{ linking_lead.pk }}{% else %}{{ creating_from_lead.pk }}{% endif %}"><input type="hidden" name="customer-link-customer_id" value="{{ customer.pk }}"><input type="hidden" name="customer-link-expected_revision" value="{% if linking_lead %}{{ linking_lead.crm_customer_revision }}{% else %}{{ creating_from_lead.crm_customer_revision }}{% endif %}"><button class="provider-customer-link-button" type="submit">{% translate "Asociază acest client" %}</button></form>
+                {% else %}
+                <a href="?view=customers&amp;edit={{ customer.pk }}">{% translate "Editează" %}</a>
+                <form method="post">{% csrf_token %}<input type="hidden" name="action" value="customer_archive"><input type="hidden" name="archive-customer-customer_id" value="{{ customer.pk }}"><input type="hidden" name="archive-customer-expected_revision" value="{{ customer.revision }}"><input type="hidden" name="archive-customer-confirmed" value="on"><button type="submit">{% translate "Arhivează" %}</button></form>
+                {% endif %}
+                {% else %}<time datetime="{{ customer.archived_at|date:'c' }}">{% blocktranslate with date=customer.archived_at|date:'j F Y' %}Arhivat la {{ date }}{% endblocktranslate %}</time>{% endif %}
+              </div>
+            </li>
+            {% endfor %}
+          </ol>
+          {% if customer_page.paginator.num_pages > 1 %}<nav class="provider-inbox-pagination" aria-label="{% translate 'Paginile clienților' %}">{% if customer_page.has_previous %}<a href="?view=customers&amp;customers={{ customer_filter }}&amp;q={{ customer_search|urlencode }}&amp;customer_page={{ customer_page.previous_page_number }}{% if linking_lead %}&amp;link_lead={{ linking_lead.public_id }}{% elif creating_from_lead %}&amp;new_for_lead={{ creating_from_lead.public_id }}{% endif %}">{% translate "Pagina anterioară" %}</a>{% else %}<span></span>{% endif %}<strong>{% blocktranslate with current=customer_page.number total=customer_page.paginator.num_pages %}Pagina {{ current }} din {{ total }}{% endblocktranslate %}</strong>{% if customer_page.has_next %}<a href="?view=customers&amp;customers={{ customer_filter }}&amp;q={{ customer_search|urlencode }}&amp;customer_page={{ customer_page.next_page_number }}{% if linking_lead %}&amp;link_lead={{ linking_lead.public_id }}{% elif creating_from_lead %}&amp;new_for_lead={{ creating_from_lead.public_id }}{% endif %}">{% translate "Pagina următoare" %}</a>{% else %}<span></span>{% endif %}</nav>{% endif %}
+          {% else %}<div class="provider-customer-empty"><h4>{% translate "Niciun client în această listă" %}</h4><p>{% translate "Schimbă filtrul sau adaugă primul client al firmei." %}</p></div>{% endif %}
+          <p class="provider-customer-boundary">{% translate "Arhivarea păstrează fișa și jurnalul modificărilor; nu șterge automat datele. Folosește numai date pe care firma are dreptul să le administreze." %}</p>
+        </section>
+      </div>
+    </section>
+    {% elif dashboard_section == "work" %}
+    <section class="provider-work-register" aria-labelledby="work-register-title">
+      <header class="provider-billing-register-heading">
+        <div><h2 id="work-register-title">{% translate "Lucrările firmei" %}</h2><p>{% translate "De la oferta acceptată la programarea și finalizarea lucrării. Vizitele de constatare nu apar aici." %}</p></div>
+      </header>
+      <div class="provider-billing-register-summary" aria-label="{% translate 'Starea lucrărilor' %}">
+        <p><strong>{{ work_counts.awaiting_schedule }}</strong><span>{% translate "De programat" %}</span></p>
+        <p><strong>{{ work_counts.scheduled }}</strong><span>{% translate "Programate" %}</span></p>
+        <p><strong>{{ work_counts.completed }}</strong><span>{% translate "Finalizate" %}</span></p>
+      </div>
+      <nav class="provider-work-display" aria-label="{% translate 'Modul de afișare a lucrărilor' %}">
+        <a href="?view=work"{% if work_display == 'list' %} aria-current="page"{% endif %}>{% translate "Listă" %}</a>
+        <a href="?view=work&amp;display=calendar"{% if work_display == 'calendar' %} aria-current="page"{% endif %}>{% translate "Calendar" %}</a>
+      </nav>
+      {% if work_display == 'calendar' %}
+      <div class="provider-calendar-heading">
+        <h3>{% blocktranslate with start=calendar_week.start|date:"d M" end=calendar_week.end|date:"d M Y" %}Săptămâna {{ start }} – {{ end }}{% endblocktranslate %}</h3>
+        <nav aria-label="{% translate 'Navigare între săptămâni' %}">
+          <a href="?view=work&amp;display=calendar&amp;week={{ calendar_week.previous|date:'Y-m-d' }}">{% translate "Săptămâna anterioară" %}</a>
+          <a href="?view=work&amp;display=calendar">{% translate "Săptămâna curentă" %}</a>
+          <a href="?view=work&amp;display=calendar&amp;week={{ calendar_week.next|date:'Y-m-d' }}">{% translate "Săptămâna următoare" %}</a>
+        </nav>
+      </div>
+      <p class="provider-calendar-note">{% translate "Calendarul arată intervalele estimate. Suprapunerile aceluiași tehnician sunt semnalate doar când ambele lucrări au oră de încheiere; disponibilitatea reală nu este confirmată automat." %}</p>
+      <div class="provider-calendar-days">
+        {% for day in calendar_days %}<section aria-labelledby="calendar-day-{{ forloop.counter }}">
+          <h4 id="calendar-day-{{ forloop.counter }}">{{ day.date|date:"l, j F" }}</h4>
+          {% if day.items %}<ol>{% for lead in day.items %}<li>
+            <time datetime="{{ lead.work_order.scheduled_start|date:'c' }}">{{ lead.work_order.scheduled_start|date:"H:i" }}{% if lead.work_order.scheduled_end %}<br>– {{ lead.work_order.scheduled_end|date:"d M H:i" }}{% endif %}</time>
+            <div><strong>{{ lead.customer_name }}</strong><p>{{ lead.work_order.accepted_quote.summary|truncatechars:120 }}</p>{% if lead.known_assignee_overlap %}<p class="provider-calendar-overlap">{% translate "Același tehnician are o altă lucrare în acest interval. Verifică programarea." %}</p>{% elif lead.has_interval_overlap %}<p class="provider-calendar-overlap">{% translate "Interval suprapus cu altă lucrare. Verifică echipa înainte de a confirma disponibilitatea." %}</p>{% endif %}</div>
+            <a href="?view=requests&amp;focus={{ lead.public_id }}">{% translate "Deschide lucrarea" %}</a>
+          </li>{% endfor %}</ol>{% elif day.count %}<p>{% translate "Programările acestei zile apar pe altă pagină a săptămânii." %}</p>{% else %}<p>{% translate "Nicio lucrare programată" %}</p>{% endif %}
+        </section>{% endfor %}
+      </div>
+      {% if calendar_page.paginator.num_pages > 1 %}<nav class="provider-billing-register-pagination" aria-label="{% translate 'Paginile calendarului' %}">
+        {% if calendar_page.has_previous %}<a href="?view=work&amp;display=calendar&amp;week={{ calendar_week.start|date:'Y-m-d' }}&amp;calendar_page={{ calendar_page.previous_page_number }}">{% translate "Pagina anterioară" %}</a>{% endif %}
+        <span>{% blocktranslate with current=calendar_page.number total=calendar_page.paginator.num_pages %}Pagina {{ current }} din {{ total }}{% endblocktranslate %}</span>
+        {% if calendar_page.has_next %}<a href="?view=work&amp;display=calendar&amp;week={{ calendar_week.start|date:'Y-m-d' }}&amp;calendar_page={{ calendar_page.next_page_number }}">{% translate "Pagina următoare" %}</a>{% endif %}
+      </nav>{% endif %}
+      {% else %}
+      <nav class="provider-billing-register-filters" aria-label="{% translate 'Filtre pentru lucrări' %}">
+        <a href="?view=work"{% if work_filter == "all" %} aria-current="page"{% endif %}>{% translate "Toate" %}</a>
+        <a href="?view=work&amp;work=awaiting_schedule"{% if work_filter == "awaiting_schedule" %} aria-current="page"{% endif %}>{% translate "De programat" %}</a>
+        <a href="?view=work&amp;work=scheduled"{% if work_filter == "scheduled" %} aria-current="page"{% endif %}>{% translate "Programate" %}</a>
+        <a href="?view=work&amp;work=completed"{% if work_filter == "completed" %} aria-current="page"{% endif %}>{% translate "Finalizate" %}</a>
+      </nav>
+      {% if work_page.object_list %}<ol class="provider-billing-register-list">
+        {% for lead in work_page %}<li>
+          <div>
+            <span>{{ lead.work_order.get_status_display }}{% if lead.work_order.status == 'scheduled' %} · {{ lead.work_order.scheduled_start|date:"DATETIME_FORMAT" }}{% elif lead.work_order.status == 'completed' %} · {{ lead.work_order.completed_at|date:"DATE_FORMAT" }}{% endif %}</span>
+            <h3>{{ lead.customer_name }}</h3><p>{{ lead.work_order.accepted_quote.summary|truncatechars:140 }}</p>
+          </div>
+          <div class="provider-billing-register-action">
+            <strong>{% blocktranslate with amount=lead.work_order.accepted_quote.amount_ron %}Ofertă acceptată · {{ amount }} lei{% endblocktranslate %}</strong>
+            <a href="?view=requests&amp;focus={{ lead.public_id }}">{% if lead.work_order.status == 'awaiting_schedule' %}{% translate "Programează lucrarea" %}{% elif lead.work_order.status == 'scheduled' %}{% translate "Deschide programarea" %}{% else %}{% translate "Vezi lucrarea" %}{% endif %}</a>
+          </div>
+        </li>{% endfor %}
+      </ol>
+      <nav class="provider-billing-register-pagination" aria-label="{% translate 'Paginile lucrărilor' %}">
+        {% if work_page.has_previous %}<a href="?view=work{% if work_filter != 'all' %}&amp;work={{ work_filter }}{% endif %}&amp;work_page={{ work_page.previous_page_number }}">{% translate "Pagina anterioară" %}</a>{% endif %}
+        <span>{% blocktranslate with current=work_page.number total=work_page.paginator.num_pages %}Pagina {{ current }} din {{ total }}{% endblocktranslate %}</span>
+        {% if work_page.has_next %}<a href="?view=work{% if work_filter != 'all' %}&amp;work={{ work_filter }}{% endif %}&amp;work_page={{ work_page.next_page_number }}">{% translate "Pagina următoare" %}</a>{% endif %}
+      </nav>
+      {% else %}<div class="provider-billing-register-empty"><h3>{% if work_filter == 'all' %}{% translate "Nu există încă lucrări acceptate" %}{% else %}{% translate "Nu există lucrări în acest filtru" %}{% endif %}</h3><p>{% translate "O lucrare apare aici după ce clientul acceptă oferta unei firme." %}</p></div>{% endif %}
+      {% endif %}
+    </section>
+    {% elif dashboard_section == "billing" %}
+    <section class="provider-billing-register" aria-labelledby="billing-register-title">
+      <header class="provider-billing-register-heading">
+        <div><h2 id="billing-register-title">{% translate "Facturare și încasări interne" %}</h2><p>{% translate "Urmărește ciornele, scadențele și banii declarați manual ca încasați. Datele sunt private și nu reprezintă facturi fiscale sau confirmări bancare." %}</p></div>
+        <a href="{% url 'services:provider_billing_identity' %}">{% translate "Verifică datele emitentului" %}</a>
+      </header>
+      <div class="provider-billing-register-summary" aria-label="{% translate 'Starea evidenței interne' %}">
+        <p><strong>{{ billing_counts.total }}</strong><span>{% translate "Lucrări finalizate" %}</span></p>
+        <p><strong>{{ billing_counts.pending }}</strong><span>{% translate "De pregătit" %}</span></p>
+        <p><strong>{{ billing_counts.outstanding }}</strong><span>{% translate "Cu sold restant" %}</span></p>
+        <p><strong>{{ billing_counts.followup }}</strong><span>{% translate "De urmărit azi" %}</span></p>
+        <p><strong>{{ billing_counts.settled }}</strong><span>{% translate "Încasate integral" %}</span></p>
+      </div>
+      <nav class="provider-billing-register-filters" aria-label="{% translate 'Filtre pentru evidența internă' %}">
+        <a href="?view=billing"{% if billing_filter == "all" %} aria-current="page"{% endif %}>{% translate "Toate" %}</a>
+        <a href="?view=billing&amp;billing=pending"{% if billing_filter == "pending" %} aria-current="page"{% endif %}>{% translate "De pregătit" %}</a>
+        <a href="?view=billing&amp;billing=ready"{% if billing_filter == "ready" %} aria-current="page"{% endif %}>{% translate "Gata de urmărit" %}</a>
+        <a href="?view=billing&amp;billing=outstanding"{% if billing_filter == "outstanding" %} aria-current="page"{% endif %}>{% translate "Sold restant" %}</a>
+        <a href="?view=billing&amp;billing=followup"{% if billing_filter == "followup" %} aria-current="page"{% endif %}>{% translate "De urmărit azi" %}</a>
+        <a href="?view=billing&amp;billing=settled"{% if billing_filter == "settled" %} aria-current="page"{% endif %}>{% translate "Încasate" %}</a>
+      </nav>
+      {% if billing_rows %}<ol class="provider-billing-register-list">
+        {% for row in billing_rows %}<li class="provider-ledger-item">
+          <header class="provider-ledger-item-heading">
+            <div><span>{% translate "Lucrare finalizată" %} · {{ row.lead.work_order.completed_at|date:"DATE_FORMAT" }}</span><h3>{{ row.lead.customer_name }}</h3><p>{{ row.lead.work_order.accepted_quote.summary|truncatechars:140 }}</p></div>
+            <a href="?view=requests&amp;focus={{ row.lead.public_id }}">{% translate "Deschide lucrarea" %}</a>
+          </header>
+          {% if not row.lead.work_order.invoice_draft %}
+          <div class="provider-ledger-step"><strong>{% translate "1. Pregătește ciorna internă" %}</strong><p>{% translate "Suma și descrierea se completează în fișa lucrării înainte de deschiderea soldului." %}</p></div>
+          {% elif not row.receivable %}
+          <div class="provider-ledger-step"><strong>{% blocktranslate with amount=row.lead.work_order.invoice_draft.amount_ron %}Ciornă internă · {{ amount }} lei{% endblocktranslate %}</strong><p>{% translate "Deschide o evidență privată pentru a urmări scadența și încasările declarate." %}</p></div>
+          <form method="post" class="provider-ledger-form">
+            {% csrf_token %}<input type="hidden" name="lead_id" value="{{ row.lead.pk }}"><input type="hidden" name="action" value="receivable_open">
+            <div class="provider-field"><label for="{{ row.receivable_form.due_date.id_for_label }}">{{ row.receivable_form.due_date.label }}</label>{{ row.receivable_form.due_date }}</div>
+            <div class="provider-field"><label for="{{ row.receivable_form.reference.id_for_label }}">{{ row.receivable_form.reference.label }}</label>{{ row.receivable_form.reference }}</div>
+            <button class="provider-submit" type="submit">{% translate "Deschide evidența internă" %}</button>
+          </form>
+          {% else %}
+          <div class="provider-ledger-totals"{% if row.is_overdue %} data-overdue="true"{% endif %}>
+            <p><span>{% translate "Total urmărit" %}</span><strong>{{ row.receivable.amount_ron }} lei</strong></p>
+            <p><span>{% translate "Declarat încasat" %}</span><strong>{{ row.received }} lei</strong></p>
+            <p><span>{% translate "Sold" %}</span><strong>{{ row.balance }} lei</strong></p>
+            <p><span>{% translate "Scadență" %}</span><strong>{{ row.receivable.due_date|date:"DATE_FORMAT" }}</strong></p>
+          </div>
+          {% if row.is_settled %}<p class="provider-ledger-status is-settled">{% translate "Încasat integral conform înregistrărilor manuale" %}</p>{% elif row.is_overdue %}<p class="provider-ledger-status is-overdue">{% translate "Sold restant după scadența internă" %}</p>{% else %}<p class="provider-ledger-status">{% translate "Sold intern în curs" %}</p>{% endif %}
+          {% if row.follow_up_form %}<section class="provider-follow-up"{% if row.follow_up_due %} data-due="true"{% endif %} aria-label="{% translate 'Reminder intern' %}">
+            <div><strong>{% if row.follow_up_due %}{% translate "De urmărit azi" %}{% elif row.receivable.follow_up_on %}{% translate "Reminder intern programat" %}{% else %}{% translate "Programează un reminder intern" %}{% endif %}</strong><p>{% if row.receivable.follow_up_on %}{% blocktranslate with date=row.receivable.follow_up_on|date:"DATE_FORMAT" %}Data programată: {{ date }}. Clientul nu este contactat automat.{% endblocktranslate %}{% else %}{% translate "Alege când vrei ca acest sold să reapară în lista ta de lucru." %}{% endif %}</p></div>
+            <form method="post" class="provider-follow-up-schedule">{% csrf_token %}<input type="hidden" name="lead_id" value="{{ row.lead.pk }}"><input type="hidden" name="action" value="receivable_follow_up">{{ row.follow_up_form.expected_revision }}<label for="{{ row.follow_up_form.follow_up_on.id_for_label }}">{{ row.follow_up_form.follow_up_on.label }}</label>{{ row.follow_up_form.follow_up_on }}<button type="submit">{% if row.receivable.follow_up_on %}{% translate "Reprogramează" %}{% else %}{% translate "Programează" %}{% endif %}</button></form>
+            {% if row.follow_up_complete_form %}<form method="post" class="provider-follow-up-complete">{% csrf_token %}<input type="hidden" name="lead_id" value="{{ row.lead.pk }}"><input type="hidden" name="action" value="receivable_follow_up_complete">{{ row.follow_up_complete_form.expected_revision }}<button type="submit">{% translate "Marchează urmărirea ca realizată" %}</button></form>{% endif %}
+          </section>{% endif %}
+          {% if row.payment_form %}<details class="provider-ledger-disclosure"><summary>{% translate "Adaugă o încasare declarată" %}</summary>
+            <form method="post" class="provider-ledger-form">
+              {% csrf_token %}<input type="hidden" name="lead_id" value="{{ row.lead.pk }}"><input type="hidden" name="action" value="manual_payment">
+              <div class="provider-field"><label for="{{ row.payment_form.amount_ron.id_for_label }}">{{ row.payment_form.amount_ron.label }}</label>{{ row.payment_form.amount_ron }}</div>
+              <div class="provider-field"><label for="{{ row.payment_form.received_on.id_for_label }}">{{ row.payment_form.received_on.label }}</label>{{ row.payment_form.received_on }}</div>
+              <div class="provider-field"><label for="{{ row.payment_form.reference.id_for_label }}">{{ row.payment_form.reference.label }}</label>{{ row.payment_form.reference }}</div>
+              <button class="provider-submit" type="submit">{% translate "Înregistrează manual" %}</button>
+            </form>
+          </details>{% endif %}
+          {% if row.receivable.manual_payments.all %}<details class="provider-ledger-disclosure"><summary>{% translate "Istoricul înregistrărilor" %}</summary><ol class="provider-payment-history">
+            {% for payment in row.receivable.manual_payments.all %}<li><div><strong>{{ payment.amount_ron }} lei</strong><span>{{ payment.received_on|date:"DATE_FORMAT" }}{% if payment.reference %} · {{ payment.reference }}{% endif %}</span>{% if payment.state == 'void' %}<small>{% blocktranslate with reason=payment.void_reason %}Anulată: {{ reason }}{% endblocktranslate %}</small>{% endif %}</div>
+              {% if payment.state == 'active' %}<form method="post"><fieldset><legend>{% translate "Anulează înregistrarea greșită" %}</legend>{% csrf_token %}<input type="hidden" name="lead_id" value="{{ row.lead.pk }}"><input type="hidden" name="action" value="manual_payment_void"><input type="hidden" name="void-{{ row.lead.pk }}-payment_id" value="{{ payment.pk }}"><label for="void-{{ row.lead.pk }}-reason-{{ payment.pk }}">{% translate "Motiv" %}</label><textarea id="void-{{ row.lead.pk }}-reason-{{ payment.pk }}" name="void-{{ row.lead.pk }}-reason" rows="2" minlength="8" maxlength="500" required></textarea><button type="submit">{% translate "Anulează și păstrează istoricul" %}</button></fieldset></form>{% endif %}</li>{% endfor %}
+          </ol></details>{% endif %}
+          {% endif %}
+        </li>{% endfor %}
+      </ol>
+      <nav class="provider-billing-register-pagination" aria-label="{% translate 'Paginile ciornelor' %}">
+        {% if billing_page.has_previous %}<a href="?view=billing{% if billing_filter != 'all' %}&amp;billing={{ billing_filter }}{% endif %}&amp;billing_page={{ billing_page.previous_page_number }}">{% translate "Pagina anterioară" %}</a>{% endif %}
+        <span>{% blocktranslate with current=billing_page.number total=billing_page.paginator.num_pages %}Pagina {{ current }} din {{ total }}{% endblocktranslate %}</span>
+        {% if billing_page.has_next %}<a href="?view=billing{% if billing_filter != 'all' %}&amp;billing={{ billing_filter }}{% endif %}&amp;billing_page={{ billing_page.next_page_number }}">{% translate "Pagina următoare" %}</a>{% endif %}
+      </nav>
+      {% else %}<div class="provider-billing-register-empty"><h3>{% if billing_filter == 'all' %}{% translate "Nu există încă lucrări finalizate" %}{% else %}{% translate "Nu există lucrări în acest filtru" %}{% endif %}</h3><p>{% translate "Ciorna devine disponibilă numai după finalizarea explicită a unei lucrări acceptate." %}</p></div>{% endif %}
+      <p class="provider-billing-register-caveat">{% translate "Important: valorile sunt introduse de firmă și nu sunt verificate de bancă. Registrul nu emite facturi fiscale, nu procesează plăți și nu transmite date către RO e-Factura." %}</p>
+    </section>
+    {% elif dashboard_section == "performance" %}
+    <section class="provider-engagement-summary" aria-labelledby="engagement-summary-title">
+      <header>
+        <div>
+          <h2 id="engagement-summary-title">{% translate "Performanța profilului" %}</h2>
+          <p>{% translate "Vezi cum descoperă și contactează clienții profilul firmei." %}</p>
+        </div>
+        <nav aria-label="{% translate 'Perioada statisticilor' %}">
+          {% for period in analytics_periods %}
+            <a href="?view=performance&amp;period={{ period }}"{% if analytics_period == period %} aria-current="page"{% endif %}>{% blocktranslate %}{{ period }} zile{% endblocktranslate %}</a>
+          {% endfor %}
+        </nav>
+      </header>
+      <div class="provider-engagement-primary">
+        <div><strong>{{ engagement_metrics.profile_views }}</strong><span>{% translate "Vizualizări profil" %}</span></div>
+        <div><strong>{{ engagement_metrics.contact_actions }}</strong><span>{% translate "Acțiuni de contact" %}</span></div>
+        <div><strong>{{ engagement_metrics.interest_rate }}%</strong><span>{% translate "Rată de interes" %}</span></div>
+      </div>
+      <dl class="provider-engagement-breakdown">
+        <div><dt>{% translate "Telefon" %}</dt><dd>{{ engagement_metrics.phone }}</dd></div>
+        <div><dt>{% translate "E-mail" %}</dt><dd>{{ engagement_metrics.email }}</dd></div>
+        <div><dt>{% translate "Website" %}</dt><dd>{{ engagement_metrics.website }}</dd></div>
+        <div><dt>{% translate "Solicitări de ofertă începute" %}</dt><dd>{{ engagement_metrics.quote_requests }}</dd></div>
+      </dl>
+    </section>
+    {% elif dashboard_section == "reviews" %}
+    <section class="provider-review-workspace" aria-labelledby="provider-reviews-title">
+      <header><div><h2 id="provider-reviews-title">{% translate "Recenziile firmei" %}</h2><p>{% translate "Răspunde recenziilor publicate. Răspunsul apare în profil numai după verificare." %}</p></div>{% if review_count %}<strong>{{ review_average|floatformat:1 }} / 5</strong>{% endif %}</header>
+      {% if review_cards %}<div class="provider-review-workspace-list">
+        {% for card in review_cards %}<article><div class="provider-review-copy"><p><strong>{{ card.review.rating }}/5</strong><span>{{ card.review.reviewer_display_name }}</span></p><blockquote>{{ card.review.body }}</blockquote></div>
+          {% if card.reply %}<div class="provider-review-reply-receipt"><strong>{% translate "Răspunsul firmei" %} · {{ card.reply.get_status_display }}</strong><p>{{ card.reply.body }}</p></div>
+          {% else %}<form method="post" action="{% url 'services:provider_review_reply' card.review.pk %}" class="provider-review-reply-form" novalidate>{% csrf_token %}<label for="{{ card.form.body.id_for_label }}">{{ card.form.body.label }}</label>{{ card.form.body }}<p>{{ card.form.body.help_text }}</p><button class="provider-submit" type="submit">{% translate "Trimite răspunsul spre verificare" %}</button></form>{% endif %}
+        </article>{% endfor %}
+      </div>{% else %}<section class="provider-leads-empty"><h2>{% translate "Nu există încă recenzii publicate" %}</h2><p>{% translate "Recenziile eligibile apar aici după verificarea administrativă." %}</p></section>{% endif %}
+    </section>
+    {% else %}
+    <section class="provider-inbox-section" aria-labelledby="provider-inbox-title">
+    <header class="provider-inbox-heading">
+      <div>
+        <h2 id="provider-inbox-title">{% translate "Solicitări primite" %}</h2>
+        <p>{% translate "Proiectele noi apar primele. Deschide spațiul de lucru doar când pregătești oferta sau răspunzi clientului." %}</p>
+      </div>
+    </header>
+    <section class="provider-command" aria-labelledby="provider-command-title">
+      <div>
+        <h3 id="provider-command-title">{% translate "Asistentul firmei" %}</h3>
+        <p>{% translate "Pregătește o ofertă sau verifică soldurile restante din registrul intern. Nu folosește un serviciu AI extern, nu verifică banca și nu trimite nimic automat." %}</p>
+        <p class="provider-command-examples"><span>{% translate "Exemplu ofertă" %}</span> „{% translate "Creează ofertă pentru dl. Ionescu: montare 3 aparate AC, 7.500 lei" %}”<br><span>{% translate "Exemplu solduri" %}</span> „{% translate "Cine nu mi-a plătit?" %}”</p>
+      </div>
+      <form method="post" novalidate>
+        {% csrf_token %}<input type="hidden" name="action" value="prepare_quote">
+        <label for="{{ command_form.command.id_for_label }}">{{ command_form.command.label }}</label>
+        <div class="provider-command-entry">{{ command_form.command }}<button class="provider-submit" type="submit">{% translate "Rulează comanda" %}</button></div>
+        {% for error in command_form.command.errors %}<p class="provider-error" role="alert">{{ error }}</p>{% endfor %}
+      </form>
+      {% if command_result %}<div class="provider-command-result" role="status" aria-live="polite"><strong>{% blocktranslate count count=command_result.count %}Un sold restant{% plural %}{{ count }} solduri restante{% endblocktranslate %}</strong><p>{% blocktranslate with balance=command_result.balance_ron overdue=command_result.overdue_count %}Total declarat restant: {{ balance }} lei · {{ overdue }} după scadență.{% endblocktranslate %}</p><a href="?view=billing&amp;billing=outstanding">{% translate "Deschide lista și verifică înregistrările" %}</a><small>{% translate "Rezultatul folosește numai evidența manuală a firmei; nu este confirmare bancară." %}</small></div>{% endif %}
+    </section>
+    <section class="provider-lead-metrics" aria-label="{% translate 'Rezumatul solicitărilor' %}">
+      <div><strong>{{ lead_metrics.new }}</strong><span>{% translate "Noi" %}</span></div>
+      <div><strong>{{ lead_metrics.recent }}</strong><span>{% translate "Primite în 30 zile" %}</span></div>
+      <div><strong>{{ lead_metrics.total }}</strong><span>{% translate "Total" %}</span></div>
+      <div><strong>{{ lead_metrics.conversion }}%</strong><span>{% translate "Lucrări acceptate" %}</span></div>
+    </section>
+
+    <div class="provider-inbox-controls">
+      <div>
+        <h3>{% translate "Filtrează solicitările" %}</h3>
+        <p>{% blocktranslate count visible_count=lead_page.paginator.count %}O solicitare în această categorie.{% plural %}{{ visible_count }} solicitări în această categorie.{% endblocktranslate %}</p>
+      </div>
+      <nav aria-label="{% translate 'Filtre pentru solicitări' %}">
+        {% for item in lead_filters %}
+          <a href="?view=requests{% if item.value != 'all' %}&amp;status={{ item.value }}{% endif %}"{% if lead_filter == item.value %} aria-current="page"{% endif %}>
+            <span>{{ item.label }}</span><strong>{{ item.count }}</strong>
+          </a>
+        {% endfor %}
+      </nav>
+    </div>
+
+    {% if lead_cards %}
+      <div class="provider-lead-list">
+        {% for card in lead_cards %}
+          <article id="lead-{{ card.lead.public_id }}" class="provider-lead-card" aria-labelledby="lead-title-{{ card.lead.public_id }}">
+            <header>
+              <div><span>{{ card.lead.created_at|date:"DATE_FORMAT" }}</span><h2 id="lead-title-{{ card.lead.public_id }}">{{ card.lead.customer_name }}</h2><p>{{ card.category_label }} · {{ card.locality }}, {{ card.lead.county }}</p></div>
+              <strong class="provider-lead-status is-{{ card.lead.status }}">{{ card.lead.get_status_display }}</strong>
+            </header>
+            <div class="provider-lead-detail">
+              <section>
+                <h3>{% translate "Proiect" %}</h3>
+                <p>{{ card.lead.description }}</p>
+                <dl>
+                  <div><dt>{% translate "Buget" %}</dt><dd>{{ card.lead.get_budget_display }}</dd></div>
+                  <div><dt>{% translate "Începere" %}</dt><dd>{{ card.lead.get_desired_start_display }}</dd></div>
+                  {% if card.lead.project_address %}<div><dt>{% translate "Zonă indicată" %}</dt><dd>{{ card.lead.project_address }}</dd></div>{% endif %}
+                </dl>
+              </section>
+              <section>
+                <h3>{% translate "Contact client" %}</h3>
+                <a href="tel:{{ card.lead.customer_phone }}">{{ card.lead.customer_phone }}</a>
+                <a href="mailto:{{ card.lead.customer_email }}">{{ card.lead.customer_email }}</a>
+                <div class="provider-lead-customer-link">
+                  {% if card.lead.crm_customer %}
+                  <span>{% translate "Registru privat" %}</span>
+                  <strong>{{ card.lead.crm_customer.name }}{% if card.lead.crm_customer.state == "archived" %} · {% translate "arhivat" %}{% endif %}</strong>
+                  <div>{% if card.can_prepare_quote %}<a class="provider-prepare-quote" href="?view=requests&amp;offer_for={{ card.lead.public_id }}#lead-{{ card.lead.public_id }}">{% translate "Pregătește oferta" %}</a>{% endif %}<a href="?view=customers{% if card.lead.crm_customer.state == 'active' %}&amp;edit={{ card.lead.crm_customer.pk }}{% else %}&amp;customers=archived{% endif %}">{% translate "Vezi fișa" %}</a><form method="post">{% csrf_token %}<input type="hidden" name="action" value="customer_link"><input type="hidden" name="lead_id" value="{{ card.lead.pk }}"><input type="hidden" name="customer-link-lead_id" value="{{ card.lead.pk }}"><input type="hidden" name="customer-link-customer_id" value=""><input type="hidden" name="customer-link-expected_revision" value="{{ card.lead.crm_customer_revision }}"><button type="submit">{% translate "Elimină asocierea" %}</button></form></div>
+                  {% else %}
+                  <span>{% translate "Registru privat" %}</span>
+                  <div class="provider-lead-customer-actions"><a href="?view=customers&amp;new_for_lead={{ card.lead.public_id }}">{% translate "Creează fișă" %}</a><a href="?view=customers&amp;link_lead={{ card.lead.public_id }}">{% translate "Alege un client existent" %}</a></div>
+                  {% endif %}
+                </div>
+              </section>
+            </div>
+            {% include "services/partials/work_order_summary.html" with work_order=card.work_order %}
+            {% if card.known_assignee_overlap %}<p class="provider-calendar-overlap">{% translate "Același tehnician are o altă lucrare în acest interval. Verifică programarea." %}</p>{% endif %}
+            {% if card.work_order and card.work_order.status != "completed" %}
+            <section class="provider-work-order-actions" aria-label="{% translate 'Programarea lucrării' %}">
+              {% if not card.work_order.started_at %}
+              <form method="post" novalidate>
+                {% csrf_token %}<input type="hidden" name="lead_id" value="{{ card.lead.pk }}"><input type="hidden" name="action" value="work_schedule"><input type="hidden" name="lead_filter" value="{{ lead_filter }}"><input type="hidden" name="lead_page" value="{{ lead_page.number }}">{{ card.work_schedule_form.expected_revision }}
+                <div><h4>{% if card.work_order.status == "scheduled" %}{% translate "Schimbă programarea" %}{% else %}{% translate "Programează execuția" %}{% endif %}</h4><p>{% translate "Alege începutul lucrării și, dacă știi, ora estimată de încheiere. Clientul va vedea programarea în spațiul său privat." %}</p></div>
+                <div class="provider-field"><label for="{{ card.work_schedule_form.starts_at.id_for_label }}">{{ card.work_schedule_form.starts_at.label }}</label>{{ card.work_schedule_form.starts_at }}{% for error in card.work_schedule_form.starts_at.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}</div>
+                <div class="provider-field"><label for="{{ card.work_schedule_form.ends_at.id_for_label }}">{{ card.work_schedule_form.ends_at.label }}</label>{{ card.work_schedule_form.ends_at }}{% for error in card.work_schedule_form.ends_at.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}</div>
+                <button class="provider-submit" type="submit">{% translate "Salvează programarea" %}</button>
+                {% if card.work_schedule_form.non_field_errors %}<div class="form-alert">{{ card.work_schedule_form.non_field_errors }}</div>{% endif %}
+              </form>
+              {% if card.work_order.status == "scheduled" %}
+              <form method="post" class="provider-work-assignment" novalidate>
+                {% csrf_token %}<input type="hidden" name="lead_id" value="{{ card.lead.pk }}"><input type="hidden" name="action" value="work_assign"><input type="hidden" name="lead_filter" value="{{ lead_filter }}"><input type="hidden" name="lead_page" value="{{ lead_page.number }}">{{ card.work_assignment_form.expected_revision }}
+                <div><h4>{% translate "Atribuie unui tehnician" %}</h4><p>{% translate "Doar tehnicianul ales va vedea această lucrare în contul său. Poți schimba sau elimina atribuirea." %} <a href="{% url 'services:provider_team' %}">{% translate "Gestionează echipa" %}</a></p></div>
+                <div class="provider-field"><label for="{{ card.work_assignment_form.member_id.id_for_label }}">{{ card.work_assignment_form.member_id.label }}</label>{{ card.work_assignment_form.member_id }}{% for error in card.work_assignment_form.member_id.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}</div>
+                <button class="secondary-action" type="submit">{% translate "Salvează atribuirea" %}</button>
+                {% if card.work_assignment_form.non_field_errors %}<div class="form-alert">{{ card.work_assignment_form.non_field_errors }}</div>{% endif %}
+              </form>
+              {% endif %}
+              {% endif %}
+              {% if card.work_order.status == "scheduled" and card.work_order.scheduled_start <= now %}
+              <form method="post" class="provider-work-complete" novalidate>
+                {% csrf_token %}<input type="hidden" name="lead_id" value="{{ card.lead.pk }}"><input type="hidden" name="action" value="work_complete"><input type="hidden" name="lead_filter" value="{{ lead_filter }}"><input type="hidden" name="lead_page" value="{{ lead_page.number }}">{{ card.work_complete_form.expected_revision }}
+                <label>{{ card.work_complete_form.confirmed }}<span>{{ card.work_complete_form.confirmed.label }}</span></label>
+                {% for error in card.work_complete_form.confirmed.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}
+                <button class="provider-submit" type="submit">{% translate "Marchează lucrarea finalizată" %}</button>
+                {% if card.work_complete_form.non_field_errors %}<div class="form-alert">{{ card.work_complete_form.non_field_errors }}</div>{% endif %}
+              </form>
+              {% endif %}
+              {% if card.work_order.status == "scheduled" and card.work_order.scheduled_start > now %}
+              <form method="post" class="provider-work-cancel" novalidate>
+                {% csrf_token %}<input type="hidden" name="lead_id" value="{{ card.lead.pk }}"><input type="hidden" name="action" value="work_cancel"><input type="hidden" name="lead_filter" value="{{ lead_filter }}"><input type="hidden" name="lead_page" value="{{ lead_page.number }}">{{ card.work_cancel_form.expected_revision }}
+                <div><h4>{% translate "Anulează programarea" %}</h4><p>{% translate "Ora stabilită va fi eliminată. Oferta acceptată și lucrarea rămân active și o poți programa din nou." %}</p></div>
+                <label>{{ card.work_cancel_form.confirmed }}<span>{{ card.work_cancel_form.confirmed.label }}</span></label>
+                {% for error in card.work_cancel_form.confirmed.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}
+                <button class="secondary-action" type="submit">{% translate "Anulează această programare" %}</button>
+                {% if card.work_cancel_form.non_field_errors %}<div class="form-alert">{{ card.work_cancel_form.non_field_errors }}</div>{% endif %}
+              </form>
+              {% endif %}
+            </section>
+            {% endif %}
+            {% if card.invoice_draft_form %}
+            <details class="provider-invoice-draft"{% if card.invoice_draft_open %} open{% endif %}>
+              <summary><span><strong>{% translate "Pregătește facturarea" %}</strong><small>{% if card.invoice_draft %}{% blocktranslate with amount=card.invoice_draft.amount_ron %}Ciornă internă salvată · {{ amount }} lei{% endblocktranslate %}{% else %}{% translate "Pornește de la suma și descrierea ofertei acceptate." %}{% endif %}</small></span><span aria-hidden="true">+</span></summary>
+              <div class="provider-invoice-draft-content">
+                <p>{% translate "Doar pentru evidența firmei. Nu are număr fiscal, nu se trimite clientului și nu înregistrează o plată." %}</p>
+                <form method="post" novalidate>
+                  {% csrf_token %}<input type="hidden" name="lead_id" value="{{ card.lead.pk }}"><input type="hidden" name="action" value="invoice_draft"><input type="hidden" name="lead_filter" value="{{ lead_filter }}"><input type="hidden" name="lead_page" value="{{ lead_page.number }}">{{ card.invoice_draft_form.expected_revision }}
+                  <div class="provider-field"><label for="{{ card.invoice_draft_form.amount_ron.id_for_label }}">{{ card.invoice_draft_form.amount_ron.label }}</label>{{ card.invoice_draft_form.amount_ron }}{% for error in card.invoice_draft_form.amount_ron.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}</div>
+                  <div class="provider-field"><label for="{{ card.invoice_draft_form.description.id_for_label }}">{{ card.invoice_draft_form.description.label }}</label>{{ card.invoice_draft_form.description }}{% for error in card.invoice_draft_form.description.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}</div>
+                  {% if card.invoice_draft_form.non_field_errors %}<div class="form-alert">{{ card.invoice_draft_form.non_field_errors }}</div>{% endif %}
+                  <button class="provider-submit" type="submit">{% translate "Salvează ciorna internă" %}</button>
+                </form>
+              </div>
+            </details>
+            {% endif %}
+            <form method="post" class="provider-lead-update" novalidate>
+              {% csrf_token %}<input type="hidden" name="lead_id" value="{{ card.lead.pk }}"><input type="hidden" name="action" value="update"><input type="hidden" name="lead_filter" value="{{ lead_filter }}"><input type="hidden" name="lead_page" value="{{ lead_page.number }}">{{ card.form.expected_revision }}
+              {% if card.form.non_field_errors %}<div class="form-alert">{{ card.form.non_field_errors }}</div>{% endif %}
+              <div class="provider-field"><label for="{{ card.form.status.id_for_label }}">{{ card.form.status.label }}</label>{{ card.form.status }}</div>
+              <div class="provider-field"><label for="{{ card.form.owner_notes.id_for_label }}">{{ card.form.owner_notes.label }}</label>{{ card.form.owner_notes }}{% if card.form.owner_notes.help_text %}<p class="provider-help">{{ card.form.owner_notes.help_text }}</p>{% endif %}</div>
+              <button class="provider-submit" type="submit">{% translate "Salvează actualizarea" %}</button>
+            </form>
+            <details class="provider-lead-workspace"{% if card.workspace_open %} open{% endif %}>
+              <summary>
+                <span><strong>{% translate "Ofertă și conversație" %}</strong><small>{% translate "Pregătește oferta și discută detaliile proiectului cu clientul." %}</small></span>
+                <span class="provider-workspace-toggle"><span class="is-open-label">{% translate "Deschide spațiul de lucru" %}</span><span class="is-close-label">{% translate "Închide spațiul de lucru" %}</span></span>
+              </summary>
+              <div class="provider-lead-collaboration">
+              <section class="provider-visit-panel">
+                <header><h3>{% translate "Programează o vizită" %}</h3><p>{% translate "Propune o dată și o oră. Vizita devine confirmată numai după răspunsul clientului." %}</p></header>
+                {% if card.latest_visit %}<div class="provider-visit-current"><p><strong>{{ card.latest_visit.starts_at|date:"SHORT_DATETIME_FORMAT" }}</strong> · {{ card.latest_visit.get_status_display }}{% if card.latest_visit.note %}<br>{{ card.latest_visit.note }}{% endif %}</p>{% if card.latest_visit.status == "cancelled" %}<p>{% blocktranslate with actor=card.latest_visit.get_cancelled_by_display %}Anulată de: {{ actor }}{% endblocktranslate %}</p>{% endif %}
+                  {% if card.lead.status != "completed" and card.lead.status != "declined" %}
+                    {% if card.latest_visit.status == "accepted" or card.latest_visit.status == "proposed" and card.latest_visit.starts_at > now %}
+                    <form method="post" class="provider-visit-cancel">
+                      {% csrf_token %}<input type="hidden" name="lead_id" value="{{ card.lead.pk }}"><input type="hidden" name="action" value="visit_cancel"><input type="hidden" name="proposal_id" value="{{ card.latest_visit.pk }}">
+                      <button class="secondary-action" type="submit">{% if card.latest_visit.status == "proposed" %}{% translate "Retrage propunerea" %}{% else %}{% translate "Anulează vizita" %}{% endif %}</button>
+                    </form>
+                    {% endif %}
+                  {% endif %}
+                </div>{% endif %}
+                {% if card.lead.status == "new" or card.lead.status == "contacted" or card.lead.status == "quote_sent" or card.lead.status == "won" %}
+                  {% if not card.latest_visit or card.latest_visit.status != "accepted" and card.latest_visit.status != "proposed" or card.latest_visit.status == "proposed" and card.latest_visit.starts_at <= now %}
+                  <form method="post" class="provider-visit-form" novalidate>
+                    {% csrf_token %}<input type="hidden" name="lead_id" value="{{ card.lead.pk }}"><input type="hidden" name="action" value="visit">
+                    {% if card.visit_form.non_field_errors %}<div class="form-alert">{{ card.visit_form.non_field_errors }}</div>{% endif %}
+                    {% for field in card.visit_form %}<div class="provider-field"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% for error in field.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}</div>{% endfor %}
+                    <button class="provider-submit" type="submit">{% translate "Propune vizita" %}</button>
+                  </form>
+                  {% endif %}
+                {% endif %}
+              </section>
+              <section class="provider-quote-panel">
+                <header><h3>{% translate "Trimite o ofertă" %}</h3><p>{% translate "Oferta ajunge în spațiul privat al clientului și nu mai poate fi modificată după trimitere." %}</p></header>
+                {% if card.draft_prepared %}<p class="provider-command-preview" role="status">{% translate "Ciorna a fost completată din instrucțiune. Verifică toate câmpurile înainte de trimitere." %}</p>{% endif %}
+                {% if card.request_quote_prepared %}<div class="provider-request-quote-preview" role="status"><strong>{% translate "Ofertă pregătită din solicitarea asociată" %}</strong><p>{% blocktranslate with customer=card.lead.crm_customer.name %}Descrierea proiectului a fost preluată pentru {{ customer }}. Completează valoarea, durata și valabilitatea, apoi verifică totul înainte de trimitere.{% endblocktranslate %}</p><small>{% blocktranslate with email=card.lead.customer_email %}Destinatarul rămâne contactul din solicitare ({{ email }}). Fișa din registru nu schimbă identitatea clientului și nu acordă permisiuni noi.{% endblocktranslate %}</small></div>{% endif %}
+                {% if card.latest_quote %}
+                  <div class="provider-latest-quote">
+                    <span>{% translate "Oferta" %} {{ card.latest_quote.revision }} · {{ card.latest_quote.get_status_display }}</span>
+                    <strong>{{ card.latest_quote.amount_ron|floatformat:2 }} {% translate "lei" %}</strong>
+                    <small>{% blocktranslate with date=card.latest_quote.valid_until|date:"DATE_FORMAT" %}Valabilă până la {{ date }}{% endblocktranslate %}</small>
+                  </div>
+                {% endif %}
+                <form method="post" class="provider-quote-form" novalidate>
+                  {% csrf_token %}<input type="hidden" name="lead_id" value="{{ card.lead.pk }}"><input type="hidden" name="action" value="quote"><input type="hidden" name="lead_filter" value="{{ lead_filter }}"><input type="hidden" name="lead_page" value="{{ lead_page.number }}">
+                  {% if card.quote_form.non_field_errors %}<div class="form-alert">{{ card.quote_form.non_field_errors }}</div>{% endif %}
+                  <fieldset class="provider-quote-lines" data-add-line-label="{% translate 'Adaugă o poziție' %}">
+                    <legend>{% translate "Pozițiile ofertei" %}</legend>
+                    <p>{% translate "Detaliază serviciile și materialele. Totalul este calculat automat din cantitate și prețul unitar." %}</p>
+                    <div class="provider-quote-line-head" aria-hidden="true"><span>{% translate "Descriere" %}</span><span>{% translate "Cantitate" %}</span><span>{% translate "Unitate" %}</span><span>{% translate "Preț unitar" %}</span></div>
+                    {% for row in card.quote_form.line_rows %}<div class="provider-quote-line">
+                      <span class="provider-quote-line-number">{{ row.position }}</span>
+                      <div class="provider-field is-description"><label for="{{ row.description.id_for_label }}">{{ row.description.label }}</label>{{ row.description }}{% for error in row.description.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}</div>
+                      <div class="provider-field is-quantity"><label for="{{ row.quantity.id_for_label }}">{{ row.quantity.label }}</label>{{ row.quantity }}{% for error in row.quantity.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}</div>
+                      <div class="provider-field is-unit"><label for="{{ row.unit.id_for_label }}">{{ row.unit.label }}</label>{{ row.unit }}{% for error in row.unit.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}</div>
+                      <div class="provider-field is-price"><label for="{{ row.unit_price.id_for_label }}">{{ row.unit_price.label }}</label>{{ row.unit_price }}{% for error in row.unit_price.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}</div>
+                    </div>{% endfor %}
+                  </fieldset>
+                  <div class="provider-quote-fields">
+                    {% for field in card.quote_form.core_fields %}<div class="provider-field{% if field.name == 'summary' %} is-wide{% endif %}{% if field.name == 'amount_ron' %} is-total{% endif %}"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% if field.help_text %}<p class="provider-help">{{ field.help_text }}</p>{% endif %}{% for error in field.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}</div>{% endfor %}
+                  </div>
+                  <button class="provider-submit" type="submit">{% translate "Trimite oferta" %}</button>
+                </form>
+              </section>
+              <section class="provider-conversation-panel">
+                <header><h3>{% translate "Conversație" %}</h3><p>{% translate "Clarifică proiectul în același loc, fără să expui discuția public." %}</p></header>
+                {% if card.conversation %}
+                  <ol class="lead-message-list compact">
+                    {% for item in card.conversation %}<li class="is-{{ item.sender_role }}"><div><strong>{{ item.get_sender_role_display }}</strong><time datetime="{{ item.created_at|date:'c' }}">{{ item.created_at|date:"SHORT_DATETIME_FORMAT" }}</time><p>{{ item.body }}</p></div></li>{% endfor %}
+                  </ol>
+                {% else %}
+                  <p class="lead-conversation-empty">{% translate "Conversația nu are încă mesaje." %}</p>
+                {% endif %}
+                <form method="post" class="lead-message-form" novalidate>
+                  {% csrf_token %}<input type="hidden" name="lead_id" value="{{ card.lead.pk }}"><input type="hidden" name="action" value="message"><input type="hidden" name="lead_filter" value="{{ lead_filter }}"><input type="hidden" name="lead_page" value="{{ lead_page.number }}">
+                  {% if card.message_form.non_field_errors %}<div class="form-alert">{{ card.message_form.non_field_errors }}</div>{% endif %}
+                  <div class="provider-field"><label for="{{ card.message_form.body.id_for_label }}">{{ card.message_form.body.label }}</label>{{ card.message_form.body }}{% for error in card.message_form.body.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}</div>
+                  <button class="provider-submit" type="submit">{% translate "Trimite mesajul" %}</button>
+                </form>
+              </section>
+              </div>
+            </details>
+          </article>
+        {% endfor %}
+      </div>
+      {% if lead_page.has_other_pages %}
+        <nav class="provider-inbox-pagination" aria-label="{% translate 'Paginarea solicitărilor' %}">
+          {% if lead_page.has_previous %}<a href="?view=requests{% if lead_filter != 'all' %}&amp;status={{ lead_filter }}{% endif %}&amp;page={{ lead_page.previous_page_number }}">{% translate "Pagina anterioară" %}</a>{% else %}<span></span>{% endif %}
+          <strong>{% blocktranslate with page_number=lead_page.number page_count=lead_page.paginator.num_pages %}Pagina {{ page_number }} din {{ page_count }}{% endblocktranslate %}</strong>
+          {% if lead_page.has_next %}<a href="?view=requests{% if lead_filter != 'all' %}&amp;status={{ lead_filter }}{% endif %}&amp;page={{ lead_page.next_page_number }}">{% translate "Pagina următoare" %}</a>{% else %}<span></span>{% endif %}
+        </nav>
+      {% endif %}
+    {% else %}
+      {% if lead_filter == "all" %}<section class="provider-leads-empty"><h2>{% translate "Nu ai primit încă solicitări" %}</h2><p>{% translate "Când un client completează formularul din profilul public, solicitarea va apărea aici." %}</p></section>
+      {% else %}<section class="provider-leads-empty"><h2>{% translate "Nu există solicitări în acest filtru" %}</h2><p>{% translate "Alege altă stare sau revino la toate solicitările." %}</p><a href="?view=requests">{% translate "Vezi toate solicitările" %}</a></section>{% endif %}
+    {% endif %}
+    </section>
+    {% endif %}
+  </main>
+  {% include "services/partials/site_footer.html" %}
+  <script src="{% static 'services/quote_lines.js' %}?v=20260922-2" defer></script>
+</body>
+</html>

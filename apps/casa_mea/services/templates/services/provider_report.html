@@ -1,0 +1,101 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{% translate 'Semnalează o problemă într-un profil public ServiciiAproape.' %}">
+  <meta name="robots" content="noindex">
+  <title>{% translate "Raportează profilul" %} — ServiciiAproape</title>
+  <link rel="canonical" href="{% if LANGUAGE_CODE == 'en' %}{{ absolute_language_url_en }}{% else %}{{ absolute_language_url_ro }}{% endif %}">
+  <link rel="alternate" hreflang="ro" href="{{ absolute_language_url_ro }}">
+  <link rel="alternate" hreflang="en" href="{{ absolute_language_url_en }}">
+  <link rel="alternate" hreflang="x-default" href="{{ absolute_language_url_ro }}">
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260908-9">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body class="provider-report-body">
+  <!--
+  THESIS: Sesizarea este un instrument factual legat de versiunea exactă a profilului, nu o acuzație publică și nu un formular generic de contact.
+  OWN-WORLD: Hârtie caldă, cerneală adâncă, reguli editoriale și cărămiziu rezervat acțiunii; fără carduri sau efecte decorative.
+  STORY: Vizitatorul recunoaște profilul, descrie concret problema, înțelege ce date să evite și primește confirmarea discretă a înregistrării.
+  FIRST VIEWPORT: Identitatea profilului și limita de confidențialitate preced formularul; acțiunea principală închide coloana de lucru.
+  FORM: Extensie code-led Operate/Read a Jurnalului de cartier; seed key serviciiaproape-public-report-v1.
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+  -->
+  <a class="skip-link" href="#sesizare">{% translate "Sari la formular" %}</a>
+  <header class="site-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    {% include "services/partials/language_switcher.html" %}
+  </header>
+
+  <div class="journal-index detail-index" aria-label="{% translate 'Etapele sesizării' %}">
+    <span>{% translate "Profil public" %}</span>
+    <span>{% translate "Problemă concretă" %}</span>
+    <span>{% translate "Verificare administrativă" %}</span>
+  </div>
+
+  <main id="sesizare" class="provider-report-page">
+    <a class="detail-back" href="{{ profile_url }}">
+      <svg class="ui-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M17 10H4M9 5l-5 5 5 5"/></svg>
+      {% translate "Înapoi la profil" %}
+    </a>
+
+    {% if report_sent %}
+      <section class="provider-report-result" aria-labelledby="report-result-title">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="20"/><path d="m15 24 6 6 12-13"/></svg>
+        {% if report_created %}
+          <h1 id="report-result-title">{% translate "Sesizarea a fost înregistrată." %}</h1>
+          <p>{% translate "Echipa administrativă poate verifica acum versiunea exactă a profilului pe care ai văzut-o." %}</p>
+        {% else %}
+          <h1 id="report-result-title">{% translate "Ai sesizat deja această versiune." %}</h1>
+          <p>{% translate "Nu am creat un duplicat. Sesizarea trimisă anterior rămâne înregistrată pentru verificare." %}</p>
+        {% endif %}
+        <a href="{{ profile_url }}">{% translate "Revino la profil" %}</a>
+      </section>
+    {% else %}
+      <section class="provider-report-intro" aria-labelledby="report-title">
+        <div>
+          <h1 id="report-title">{% translate "Semnalează o problemă în profil" %}<span class="accent-period">.</span></h1>
+          <p>{% blocktranslate with provider_name=provider.display_name legal_name=provider.legal_name %}Sesizarea privește versiunea afișată pentru <strong>{{ provider_name }}</strong>, asociată firmei {{ legal_name }}.{% endblocktranslate %}</p>
+        </div>
+        <aside>
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 27 7v8c0 7-4.5 11.5-11 14C9.5 26.5 5 22 5 15V7l11-4Z"/><path d="M16 10v7M16 21h.01"/></svg>
+          <p>{% translate "Nu cerem numele, e-mailul sau telefonul tău. Nu include în descriere date personale, parole, acte sau informații bancare." %}</p>
+        </aside>
+      </section>
+
+      <section class="provider-report-workspace" aria-labelledby="report-form-title">
+        <div>
+          <h2 id="report-form-title">{% translate "Ce trebuie verificat?" %}</h2>
+          <p>{% translate "Descrie faptele observate. Sesizarea nu este afișată public și nu retrage automat profilul." %}</p>
+        </div>
+        <form method="post" novalidate>
+          {% csrf_token %}
+          {% if report_form.non_field_errors %}<div class="form-alert">{{ report_form.non_field_errors }}</div>{% endif %}
+          {% for field in report_form %}
+            {% if not field.is_hidden %}
+              <div class="report-field">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}<small id="{{ field.id_for_label }}_helptext">{{ field.help_text }}</small>{% endif %}
+                {% for error in field.errors %}<span class="field-error"{% if forloop.first %} id="{{ field.id_for_label }}_error"{% endif %}>{{ error }}</span>{% endfor %}
+              </div>
+            {% else %}
+              {{ field }}
+            {% endif %}
+          {% endfor %}
+          <button type="submit">{% translate "Trimite sesizarea pentru verificare" %}</button>
+        </form>
+      </section>
+    {% endif %}
+  </main>
+
+  {% include "services/partials/site_footer.html" %}
+</body>
+</html>

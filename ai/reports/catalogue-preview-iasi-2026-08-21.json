@@ -1,0 +1,51 @@
+{
+  "report_schema_version": 1,
+  "activated_at": "2026-08-21",
+  "provider": "ONRC",
+  "county": "Iași",
+  "run_id": 2,
+  "scope_key": "cc9dd638dde8fba4611c9ab9bc0fd07da9e7098ad33d19c606235eb301aaa5a1",
+  "visibility": "internal_preview",
+  "production_debug_default": false,
+  "publication_approval_count": 0,
+  "registered_office_acknowledgement": "REGISTERED_OFFICE_NOT_SERVICE_COVERAGE",
+  "activation_audit": {
+    "staged_businesses": 9895,
+    "staged_statuses": 9895,
+    "staged_caen": 64720,
+    "staged_categories": 15550,
+    "quarantine_records": 1
+  },
+  "reader": {
+    "page_size": 20,
+    "order": ["legal_name", "id"],
+    "iasi_siruta_95079_results": 4806,
+    "iasi_siruta_95079_pages": 241,
+    "measured_first_response_ms": 93.74,
+    "projection_fields": [
+      "legal_name",
+      "category_labels",
+      "registered_office_label",
+      "source_dataset_url",
+      "source_snapshot_date",
+      "source_license"
+    ]
+  },
+  "idempotent_reactivation": {
+    "changed": false,
+    "activation_event_count": 1
+  },
+  "validation": {
+    "sqlite_tests": "49 total: 47 passed, 2 PostgreSQL-only skipped",
+    "postgresql_activation_and_staging_tests": "22 passed including concurrent import claim, concurrent catalogue activation, and approval rotation",
+    "locality_javascript_test": "1 passed",
+    "publication_approval_rotation": "passed: a new valid approval replaces a revoked approval for the same public run",
+    "desktop_horizontal_overflow": false,
+    "mobile_horizontal_overflow": false,
+    "browser_next_page": "passed",
+    "browser_unsupported_category": "passed",
+    "browser_county_switch_and_demo_boundary": "passed"
+  },
+  "public_activation": false,
+  "public_blocker": "A documented, versioned, revocable legal/privacy PublicationApproval for this exact run does not exist."
+}

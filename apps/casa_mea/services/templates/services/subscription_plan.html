@@ -1,0 +1,184 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{% translate 'Vezi costul lunar și beneficiile abonamentului pentru profilurile profesionale ServiciiAproape.' %}">
+  <title>{% translate "Abonament pentru profesioniști" %} — ServiciiAproape</title>
+  <link rel="canonical" href="{% if LANGUAGE_CODE == 'en' %}{{ absolute_language_url_en }}{% else %}{{ absolute_language_url_ro }}{% endif %}">
+  <link rel="alternate" hreflang="ro" href="{{ absolute_language_url_ro }}">
+  <link rel="alternate" hreflang="en" href="{{ absolute_language_url_en }}">
+  <link rel="alternate" hreflang="x-default" href="{{ absolute_language_url_ro }}">
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260915-2">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body class="subscription-body">
+  <a class="skip-link" href="#continut">{% translate "Sari la conținut" %}</a>
+  <header class="site-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    <nav aria-label="{% translate 'Navigație abonament' %}">
+      <a href="{% url 'services:professionals' %}">{% translate "Cum revendici firma" %}</a>
+      <a class="nav-action" href="{% url 'services:provider_login' %}">{% translate "Intră în cont" %}</a>
+    </nav>
+    {% include "services/partials/language_switcher.html" %}
+  </header>
+
+  <div class="journal-index subscription-index" aria-label="{% translate 'Cuprinsul abonamentului' %}">
+    <span>{% translate "Profil" %}</span>
+    <span>{% translate "Contact" %}</span>
+    <span>{% translate "Servicii" %}</span>
+    <span>{% translate "Acoperire" %}</span>
+    <span>{% translate "Portofoliu" %}</span>
+  </div>
+
+  <main id="continut" class="subscription-page">
+    <section class="subscription-hero" aria-labelledby="subscription-plan-title">
+      <div class="subscription-title-block">
+        <p class="editorial-kicker">{% translate "Abonamentul profilului profesional" %}</p>
+        <h1 id="subscription-plan-title">{% translate "Tot ce trebuie ca firma ta să fie prezentată clar" %}<span class="accent-period">.</span></h1>
+        <p>{% translate "Prezența juridică de bază rămâne gratuită. Esențial aduce profilul și solicitările, iar Partener adaugă un site propriu creat și administrat pentru firmă." %}</p>
+      </div>
+    </section>
+
+    <section class="subscription-comparison" aria-labelledby="comparison-title">
+      <header class="subscription-comparison-heading">
+        <h2 id="comparison-title">{% translate "Opțiunile disponibile" %}</h2>
+        <p>{% translate "Începi gratuit, alegi Esențial pentru un profil complet sau Partener când vrei și un site propriu, întreținut fără să îți consumi timpul." %}</p>
+      </header>
+      <div class="subscription-plan-grid">
+        <article class="subscription-plan subscription-plan-free">
+          <header>
+            <p>{% translate "Gratuit" %}</p>
+            <div class="subscription-plan-price"><strong>0</strong><span>{% translate "lei" %}</span></div>
+            <small>{% translate "fără cost lunar" %}</small>
+            <h3>{% translate "Prezență de bază în catalog" %}</h3>
+            <p>{% translate "Potrivit pentru firmele care vor să rămână identificabile prin informațiile juridice publice." %}</p>
+          </header>
+          <ul>
+            <li>{% translate "Denumirea juridică a firmei" %}</li>
+            <li>{% translate "Sediul social din datele publice" %}</li>
+            <li>{% translate "Activitatea raportată și serviciul identificat" %}</li>
+            <li>{% translate "Sursa și data informațiilor ONRC" %}</li>
+          </ul>
+          <p class="subscription-plan-limit">{% translate "Fără descriere, date de contact, portofoliu sau solicitări de la clienți." %}</p>
+          <a class="subscription-plan-action subscription-plan-action-secondary" href="{% url 'services:home' %}#cautare">{% translate "Vezi catalogul" %}</a>
+        </article>
+
+        <article class="subscription-plan subscription-plan-essential">
+          <header>
+            <span class="subscription-plan-badge">{% translate "Recomandat" %}</span>
+            <p>{% translate "Esențial" %}</p>
+            <div class="subscription-plan-price"><strong>{{ monthly_price_ron }}</strong><span>{% translate "lei" %}</span></div>
+            <small>{% translate "pe lună" %}</small>
+            <h3>{% translate "Profil complet care aduce cererile mai aproape" %}</h3>
+            <p>{% translate "Pentru firmele verificate care vor să își prezinte munca și să transforme vizitele în conversații cu potențiali clienți." %}</p>
+          </header>
+          <ul>
+            <li>{% translate "Tot ce este inclus în planul Gratuit" %}</li>
+            <li>{% translate "Descriere, adresă profesională, telefon, e-mail și website" %}</li>
+            <li>{% translate "Servicii și localități deservite" %}</li>
+            <li>{% translate "Portofoliu cu până la 8 fotografii" %}</li>
+            <li>{% translate "Solicitări structurate de la clienți într-un inbox privat" %}</li>
+            <li>{% translate "Organizarea solicitărilor și statistici de conversie" %}</li>
+          </ul>
+          <p class="subscription-plan-note">{% translate "Disponibil după revendicarea și verificarea administrativă a firmei." %}</p>
+          {% if simulated_checkout_enabled %}
+            <p class="subscription-simulation-note">{% translate "Simulare fără card, tranzacție sau factură." %}</p>
+            <a class="subscription-plan-action subscription-plan-action-primary" href="{% url 'services:provider_simulated_checkout' %}">{% translate "Testează planul Esențial" %}</a>
+          {% else %}
+            <a class="subscription-plan-action subscription-plan-action-primary" href="{% url 'services:home' %}#cautare">{% translate "Începe revendicarea" %}</a>
+          {% endif %}
+        </article>
+
+        <article class="subscription-plan subscription-plan-partner">
+          <header>
+            <span class="subscription-plan-badge">{% translate "Serviciu gestionat" %}</span>
+            <p>{% translate "Partener" %}</p>
+            <div class="subscription-plan-price"><strong>{{ managed_site_monthly_price_ron }}</strong><span>{% translate "lei" %}</span></div>
+            <small>{% translate "pe lună" %}</small>
+            <h3>{% translate "Un site propriu, construit și îngrijit pentru firma ta" %}</h3>
+            <p>{% translate "Pentru furnizorii care vor un canal de prezentare propriu, fără să se ocupe singuri de partea tehnică." %}</p>
+          </header>
+          <ul>
+            <li>{% translate "Tot ce este inclus în planul Esențial" %}</li>
+            <li>{% translate "Site de prezentare personalizat, cu până la 5 pagini" %}</li>
+            <li>{% translate "Găzduire, certificat SSL, mentenanță tehnică și backup" %}</li>
+            <li>{% translate "Formular pentru cereri de ofertă și solicitări de programare" %}</li>
+            <li>{% translate "Integrare WhatsApp, hartă și datele de contact ale firmei" %}</li>
+            <li>{% translate "Configurare SEO locală de bază și măsurarea vizitelor" %}</li>
+            <li>{% translate "Două solicitări de actualizare a conținutului în fiecare lună" %}</li>
+            <li>{% translate "Raport lunar și recomandări pentru îmbunătățirea prezenței online" %}</li>
+          </ul>
+          <p class="subscription-plan-limit">{% translate "Serviciu disponibil la cerere, după un brief și confirmarea calendarului. Domeniul, licențele, bugetul de promovare și funcțiile dezvoltate special se cotează separat." %}</p>
+          <a class="subscription-plan-action subscription-plan-action-partner" href="{% url 'services:managed_site_inquiry' %}">{% translate "Solicită o discuție despre Partener" %}</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="subscription-benefits" aria-labelledby="benefits-title">
+      <header>
+        <p class="editorial-kicker">{% translate "Beneficiile planului Esențial" %}</p>
+        <h2 id="benefits-title">{% translate "Mai mult decât o simplă apariție în catalog" %}</h2>
+      </header>
+      <ol>
+        <li>
+          <span>01</span>
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 27V9l10-5 10 5v18M11 27V17h10v10M3 27h26"/></svg>
+          <div><h3>{% translate "Descriere și adresă profesională" %}</h3><p>{% translate "Prezintă serviciile firmei și, opțional, adresa completă la care vrei să fii găsit." %}</p></div>
+        </li>
+        <li>
+          <span>02</span>
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 5h5l2 6-3 2c2 4 4 6 8 8l2-3 6 2v5c0 2-2 3-4 3C13 27 5 19 5 8c0-2 1-3 3-3Z"/></svg>
+          <div><h3>{% translate "Date de contact" %}</h3><p>{% translate "Publică telefonul, e-mailul, site-ul și metoda de contact preferată în versiunea aprobată a profilului." %}</p></div>
+        </li>
+        <li>
+          <span>03</span>
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="m18 7 7 7M6 27l12-12M15 5a7 7 0 0 0-9 9l4-4 4 4-4 4a7 7 0 0 0 9-9l7-7 2 2-7 7"/></svg>
+          <div><h3>{% translate "Servicii și localități deservite" %}</h3><p>{% translate "Alege exact lucrările pe care le prestezi și localitățile în care te deplasezi; declarațiile sunt revizuite înainte de publicare." %}</p></div>
+        </li>
+        <li>
+          <span>04</span>
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 7h24v19H4zM4 21l7-7 5 5 4-4 8 8M23 12h.01"/></svg>
+          <div><h3>{% translate "Portofoliu cu până la 8 fotografii" %}</h3><p>{% translate "Arată lucrări proprii prin imagini curățate de metadate, păstrate private până la aprobarea profilului." %}</p></div>
+        </li>
+        <li>
+          <span>05</span>
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 27 7v8c0 7-4.5 11.5-11 14C9.5 26.5 5 22 5 15V7l11-4Z"/><path d="m11 16 3 3 7-7"/></svg>
+          <div><h3>{% translate "Publicare controlată" %}</h3><p>{% translate "Profilul profesional devine vizibil numai după verificarea firmei, aprobarea conținutului și activarea abonamentului." %}</p></div>
+        </li>
+        <li>
+          <span>06</span>
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 7h22v16H12l-7 5V7Z"/><path d="M10 13h12M10 18h8"/></svg>
+          <div><h3>{% translate "Solicitări directe de la clienți" %}</h3><p>{% translate "Primești cereri structurate cu date de contact, descrierea lucrării, bugetul și perioada dorită, într-un inbox privat." %}</p></div>
+        </li>
+        <li>
+          <span>07</span>
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 26V15h5v11M14 26V7h5v19M23 26V11h5v15M3 26h27"/></svg>
+          <div><h3>{% translate "Urmărire și statistici" %}</h3><p>{% translate "Organizezi solicitările pe etape și vezi totalul, cererile noi, activitatea din ultimele 30 de zile și rata de conversie." %}</p></div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="subscription-next-step" aria-labelledby="subscription-next-title">
+      <div>
+        <p class="editorial-kicker">{% translate "Primul pas" %}</p>
+        <h2 id="subscription-next-title">{% translate "Firma este deja în catalog?" %}</h2>
+        <p>{% translate "Caut-o după localitate și serviciu, deschide fișa și pornește revendicarea. Vei putea completa profilul după verificarea administrativă." %}</p>
+      </div>
+      <div class="professionals-actions">
+        <a class="professionals-primary" href="{% url 'services:home' %}#cautare">{% translate "Caută firma în catalog" %}</a>
+        <a class="professionals-secondary" href="{% url 'services:company_registration' %}">{% translate "Înscrie o firmă absentă" %}</a>
+        <a class="professionals-secondary" href="{% url 'services:professionals' %}">{% translate "Vezi procesul complet" %}</a>
+      </div>
+    </section>
+  </main>
+
+  {% include "services/partials/site_footer.html" %}
+</body>
+</html>

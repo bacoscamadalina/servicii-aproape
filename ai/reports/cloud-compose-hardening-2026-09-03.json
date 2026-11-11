@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "validated_at": "2026-09-03",
+  "scope": "Self-contained repository-root Compose and separated preview/production Docker stages",
+  "result": "PASS",
+  "compose": {
+    "repository_root": "PASS",
+    "application_preview": "PASS",
+    "production_with_synthetic_required_configuration": "PASS",
+    "repository_root_runtime": "healthy",
+    "repository_root_service_count": 1,
+    "repository_root_volumes": 0
+  },
+  "images": {
+    "preview": {
+      "bytes": 85184547,
+      "user": "10001:10001",
+      "stop_signal": "SIGTERM",
+      "postgresql_client_present": false
+    },
+    "production": {
+      "bytes": 92320996,
+      "user": "10001:10001",
+      "stop_signal": "SIGTERM",
+      "postgresql_client": "17.11"
+    }
+  },
+  "catalogue": {
+    "businesses": 72881,
+    "variants": 145762,
+    "counties": 42,
+    "categories": 6,
+    "snapshot_bytes": 65368064,
+    "snapshot_owner": "0:0",
+    "snapshot_mode": "0644",
+    "writable_by_runtime_user": false
+  },
+  "http": {
+    "home_status": 200,
+    "home_seconds": 0.010721,
+    "search_status": 200,
+    "search_seconds": 0.033727,
+    "localities_status": 200,
+    "localities_seconds": 0.001314,
+    "post_status": 405
+  },
+  "browser": {
+    "test_methods": 2,
+    "isolated_journeys": 3,
+    "elapsed_seconds": 7.966,
+    "desktop_and_mobile": "PASS",
+    "romanian_and_english": "PASS",
+    "search_detail_and_pagination": "PASS",
+    "console_or_page_errors": 0,
+    "horizontal_overflow_failures": 0
+  },
+  "regression": {
+    "django_tests": 274,
+    "django_skipped_postgresql_only": 10,
+    "django_elapsed_seconds": 71.923,
+    "javascript_suites": 1,
+    "result": "PASS"
+  },
+  "privacy_boundary": "The preview packages only the sanitized immutable catalogue; operational PostgreSQL, accounts, claims, reports, and private media are not copied into the public image."
+}

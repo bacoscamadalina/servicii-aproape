@@ -1,0 +1,41 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block content %}
+  <div id="content-main">
+    <p><a href="{% url 'admin:services_providerregistrationrequest_change' registration.pk %}">← Înapoi la înscriere</a></p>
+    <fieldset class="module aligned">
+      <h2>Date declarate</h2>
+      <div class="form-row"><strong>Firmă:</strong> {{ registration.legal_name }}</div>
+      <div class="form-row"><strong>CUI / CIF:</strong> {{ registration.cui }}</div>
+      <div class="form-row"><strong>Număr declarat:</strong> {{ registration.registration_number }}</div>
+      <div class="form-row"><strong>Serviciu principal declarat:</strong> {{ registration.get_requested_category_display }}</div>
+      <div class="form-row"><strong>Sediu:</strong> {{ locality_label }}, {{ registration.registered_county }}</div>
+      <div class="form-row"><strong>Solicitant:</strong> {{ registration.contact_name }} · {{ registration.email }}</div>
+      <div class="form-row">
+        <strong>Dovadă reprezentare:</strong>
+        {% if evidence %}
+          {{ evidence.get_evidence_type_display }} · {{ evidence.byte_size|filesizeformat }} ·
+          <a href="{% url 'admin:services_providerregistrationrequest_evidence' registration.pk %}">Descarcă documentul privat</a>
+        {% else %}
+          <span class="errornote">Lipsește — înscrierea nu poate continua.</span>
+        {% endif %}
+      </div>
+    </fieldset>
+    <p class="help">Verifică datele într-o sursă juridică autorizată. Această etapă creează sau leagă numai identitatea internă și deschide revendicarea; nu publică profilul ori serviciile.</p>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <fieldset class="module aligned">
+        {% for field in form %}
+          <div class="form-row">
+            {{ field.errors }}
+            <div>{{ field.label_tag }} {{ field }}</div>
+            {% if field.help_text %}<div class="help">{{ field.help_text }}</div>{% endif %}
+          </div>
+        {% endfor %}
+      </fieldset>
+      <div class="submit-row"><input type="submit" value="Înregistrează decizia" class="default"></div>
+    </form>
+  </div>
+{% endblock %}

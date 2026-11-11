@@ -1,0 +1,9 @@
+Use case: photorealistic-natural
+Asset type: production website editorial photo for a Romanian local-services marketplace hero collage
+Primary request: a candid Romanian woman painter and plaster specialist in her mid 30s applying a clean finishing coat to an interior wall during a real home renovation, confident and absorbed in the work.
+Scene/backdrop: bright Romanian apartment under renovation, warm daylight, authentic plaster texture, paint tray and ladder present but unobtrusive.
+Style/medium: premium documentary editorial photography, natural face and skin texture, practical work clothes with a patterned head scarf, subtle film grain, modern European magazine quality.
+Composition/framing: landscape 4:3, medium shot, subject slightly left of center, hand and tool clearly visible, generous wall area for responsive cropping.
+Lighting/mood: soft window light, energetic, skilled, welcoming.
+Constraints: no text, no logos, no watermark, no UI, anatomically correct hands and tool.
+Avoid: posed studio portrait, looking directly at camera, glamour styling, excessive mess, hard hat cliché, plastic stock-photo lighting.

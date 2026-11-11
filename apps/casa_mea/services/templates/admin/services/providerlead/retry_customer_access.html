@@ -1,0 +1,14 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+  <div id="content-main">
+    <h1>Reemite linkul privat al clientului</h1>
+    <p>Solicitarea există deja. Se va crea un link nou, trimis numai la adresa clientului din solicitare. Linkul anterior va deveni invalid, iar data expirării nu se prelungește.</p>
+    <p>După o eroare SMTP, mesajul inițial poate totuși să fi ajuns. Reemiterea îl va invalida și poate produce un e-mail duplicat. Dacă noul e-mail eșuează, poți încerca din nou.</p>
+    <form method="post">
+      {% csrf_token %}
+      <label><input type="checkbox" name="acknowledgement" value="REEMITE" required> Accept invalidarea linkului anterior și posibilitatea unui mesaj duplicat.</label>
+      <div class="submit-row"><input type="submit" value="Reemite linkul" class="default"></div>
+    </form>
+  </div>
+{% endblock %}

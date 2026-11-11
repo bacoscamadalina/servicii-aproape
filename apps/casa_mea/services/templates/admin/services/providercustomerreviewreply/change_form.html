@@ -1,0 +1,5 @@
+{% extends "admin/change_form.html" %}
+{% block object-tools-items %}
+  {% if original.status == "pending" and perms.services.moderate_customer_review_reply %}<li><a href="{% url 'admin:services_providercustomerreviewreply_moderate' original.pk %}">Moderează răspunsul</a></li>{% endif %}
+  {{ block.super }}
+{% endblock %}

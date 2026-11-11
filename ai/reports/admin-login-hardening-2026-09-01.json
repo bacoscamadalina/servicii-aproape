@@ -1,0 +1,62 @@
+{
+  "result": "PASS",
+  "control": {
+    "scope": "Django Admin login",
+    "shared_store": "database",
+    "attempt_limit": 5,
+    "window_minutes": 15,
+    "retention_hours": 24,
+    "cleanup_batch_limit": 100,
+    "persisted_identity": "secret-keyed HMAC digest only",
+    "namespace_isolated_from_provider_login": true,
+    "successful_login_clears_budget": true
+  },
+  "validation": {
+    "focused_sqlite_tests": {
+      "tests": 28,
+      "skipped": 3,
+      "seconds": 28.931,
+      "result": "PASS"
+    },
+    "complete_sqlite_suite": {
+      "tests": 236,
+      "skipped": 10,
+      "seconds": 38.949,
+      "result": "PASS"
+    },
+    "complete_postgresql_suite": {
+      "tests": 236,
+      "skipped": 0,
+      "seconds": 50.159,
+      "result": "PASS"
+    },
+    "postgresql_concurrency": {
+      "connections": 8,
+      "accepted_attempts": 5,
+      "refused_attempts": 3,
+      "result": "PASS"
+    },
+    "django_check": "PASS",
+    "migration_source_drift": "NONE",
+    "production_compose_validation": "PASS",
+    "production_image_build": "PASS",
+    "production_deployment_check": "PASS",
+    "production_image_uid": 10001,
+    "migration_present_in_image": true
+  },
+  "local_database": {
+    "migration_applied": "services.0022_rename_provider_login_throttle",
+    "pending_migrations": [],
+    "catalogue_counties": 42,
+    "current_registry_rows": 72880,
+    "internal_preview_counties": 42,
+    "readable_counties_in_this_environment": 0,
+    "catalogue_integrity_anomalies_excluding_expected_not_public": 0,
+    "publication_approvals": 0,
+    "publication_or_visibility_changes": 0
+  },
+  "launch_gate": {
+    "valid": false,
+    "reason": "All 42 catalogues remain internal previews and this local database has no production restore marker."
+  }
+}

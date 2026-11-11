@@ -1,0 +1,8 @@
+{% extends "admin/change_form.html" %}
+
+{% block object-tools-items %}
+  {% if not original.customer_account_id and not original.retention_applied_at and perms.services.retry_customer_access_notification %}
+    <li><a href="{% url 'admin:services_providerleadbatch_retry_customer_access' original.pk %}">Verifică reemiterea linkului clientului</a></li>
+  {% endif %}
+  {{ block.super }}
+{% endblock %}

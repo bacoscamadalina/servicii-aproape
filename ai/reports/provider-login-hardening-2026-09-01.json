@@ -1,0 +1,60 @@
+{
+  "result": "PASS",
+  "control": {
+    "scope": "provider login",
+    "shared_store": "database",
+    "attempt_limit": 5,
+    "window_minutes": 15,
+    "retention_hours": 24,
+    "cleanup_batch_limit": 100,
+    "persisted_identity": "secret-keyed HMAC digest only",
+    "successful_login_clears_budget": true
+  },
+  "validation": {
+    "focused_sqlite_tests": {
+      "tests": 4,
+      "seconds": 3.886,
+      "result": "PASS"
+    },
+    "postgresql_concurrency_tests": {
+      "tests": 2,
+      "seconds": 0.530,
+      "result": "PASS",
+      "login_connections": 8,
+      "accepted_attempts": 5,
+      "refused_attempts": 3
+    },
+    "complete_sqlite_suite": {
+      "tests": 226,
+      "skipped": 10,
+      "seconds": 34.513,
+      "result": "PASS"
+    },
+    "complete_postgresql_suite": {
+      "tests": 226,
+      "skipped": 0,
+      "seconds": 47.026,
+      "result": "PASS"
+    },
+    "django_check": "PASS",
+    "migration_source_drift": "NONE",
+    "production_image_build": "PASS",
+    "production_deployment_check": "PASS",
+    "production_image_uid": 10001,
+    "migration_present_in_image": true
+  },
+  "local_database": {
+    "migration_applied": "services.0021_providerloginthrottle",
+    "pending_migrations": [],
+    "catalogue_counties": 42,
+    "current_registry_rows": 72880,
+    "internal_preview_counties": 42,
+    "readable_counties_in_production_mode": 0,
+    "catalogue_integrity_anomalies": 0,
+    "publication_or_visibility_changes": 0
+  },
+  "launch_gate": {
+    "valid": false,
+    "reason": "All 42 catalogues remain internal previews and this local database has no production restore marker."
+  }
+}

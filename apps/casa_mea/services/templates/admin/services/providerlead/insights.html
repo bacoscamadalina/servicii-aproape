@@ -1,0 +1,78 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'services/admin_operations.css' %}">
+{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block content %}
+  <main class="lead-insights">
+    <p><a href="{% url 'admin:services_providerlead_changelist' %}">← Înapoi la solicitări</a></p>
+
+    <header class="lead-insights__intro">
+      <h1>Cerere și acoperire</h1>
+      <p>Vezi unde ajung proiectele, câte livrări primesc firmele și câte solicitări primesc răspuns. Datele sunt agregate și nu afișează identitatea sau mesajele clienților.</p>
+    </header>
+
+    <nav aria-label="Fereastra de analiză">
+      <ul class="report-insights__windows">
+        {% for days in window_choices %}
+          <li><a href="?days={{ days }}" {% if lead_insights.window_days == days %}aria-current="page"{% endif %}>Ultimele {{ days }} zile</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+
+    <dl class="lead-insights__summary" aria-label="Rezumatul solicitărilor">
+      <div><dt>Proiecte trimise</dt><dd>{{ lead_insights.total_projects }}</dd></div>
+      <div><dt>Livrări către firme</dt><dd>{{ lead_insights.provider_deliveries }}</dd></div>
+      <div><dt>Solicitări cu răspuns</dt><dd>{{ lead_insights.provider_responses }}</dd></div>
+      <div><dt>Proiecte atribuite</dt><dd>{{ lead_insights.awarded_projects }}</dd></div>
+    </dl>
+
+    <p class="lead-insights__scope"><strong>Interval:</strong> [{{ lead_insights.window_start }}, {{ lead_insights.window_end }}), ora României. Sunt măsurate numai solicitările trimise, nu simplele căutări în catalog.</p>
+
+    <section class="lead-insights__section" aria-labelledby="service-demand-title">
+      <div class="lead-insights__section-heading">
+        <h2 id="service-demand-title">Cerere pe servicii</h2>
+        <p>Separă numărul proiectelor de numărul livrărilor către firme, astfel încât o cerere comparată să nu fie numărată de trei ori.</p>
+      </div>
+      <div class="lead-insights__table-wrap">
+        <table aria-labelledby="service-demand-title">
+          <thead><tr><th scope="col">Serviciu</th><th scope="col">Proiecte</th><th scope="col">Livrări</th><th scope="col">Răspunsuri</th><th scope="col">Atribuite</th></tr></thead>
+          <tbody>
+            {% for item in lead_insights.categories %}
+              <tr><th scope="row">{{ item.label }}</th><td>{{ item.projects }}</td><td>{{ item.provider_deliveries }}</td><td>{{ item.provider_responses }}</td><td>{{ item.awarded_projects }}</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="lead-insights__section" aria-labelledby="local-demand-title">
+      <div class="lead-insights__section-heading">
+        <h2 id="local-demand-title">Localități în care s-au cerut lucrări</h2>
+        <p>Zonele sunt ordonate după numărul proiectelor. Media arată câte livrări către firme a generat fiecare proiect, combinând cererile directe și comparate.</p>
+      </div>
+      {% if lead_insights.demand_areas %}
+        <div class="lead-insights__table-wrap">
+          <table aria-labelledby="local-demand-title">
+            <thead><tr><th scope="col">Județ și localitate</th><th scope="col">Serviciu</th><th scope="col">Proiecte</th><th scope="col">Medie destinatari</th><th scope="col">Răspunsuri</th><th scope="col">Atribuite</th></tr></thead>
+            <tbody>
+              {% for item in lead_insights.demand_areas %}
+                <tr>
+                  <th scope="row"><strong>Județ {{ item.county }}</strong><span>Localitate {{ item.locality }}</span></th>
+                  <td>{{ item.category_label }}</td><td>{{ item.projects }}</td><td>{{ item.average_recipients }}</td><td>{{ item.provider_responses }}</td><td>{{ item.awarded_projects }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p class="lead-insights__empty">Nu există solicitări trimise în intervalul ales. După primul proiect, aici vor apărea serviciul, județul și localitatea agregate.</p>
+      {% endif %}
+    </section>
+  </main>
+{% endblock %}

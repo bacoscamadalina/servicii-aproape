@@ -1,0 +1,11 @@
+# Portable cloud entry: host-specific hardening is an optional local override.
+name: serviciiaproape-preview
+services:
+  web:
+    build:
+      context: .
+      target: preview
+    ports:
+      - "${PREVIEW_HOST_PORT:-8000}:8000"
+    environment:
+      PORT: "8000"

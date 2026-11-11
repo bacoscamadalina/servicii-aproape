@@ -1,0 +1,56 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE|default:'ro' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, noarchive">
+  <title>{% translate "Abonament demo activ" %} — ServiciiAproape</title>
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260914-2">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body class="simulated-checkout-body simulated-checkout-success-body">
+  <!--
+  THESIS: Confirmarea separă limpede accesul acordat de o plată care nu a existat.
+  OWN-WORLD: Nordic Pro folosește hârtie caldă, o singură foaie albă, verde pin și detalii cupru, fără artificii bancare false.
+  STORY: Furnizorul află ce s-a activat, până când este valabil și care este următoarea acțiune în profil.
+  FIRST VIEWPORT: Confirmarea și starea perioadei ocupă centrul; acțiunea către profil închide foaia fără pași suplimentari.
+  FORM: Code-led Operate extension of the incumbent Professional Toolmaker Catalogue; position 1; seed key incumbent-serviciiaproape-toolmaker-catalogue-v1.
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+  -->
+  <a class="skip-link" href="#confirmare-demo">{% translate "Sari la confirmare" %}</a>
+  <header class="site-header provider-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    <div class="provider-header-tools">
+      <div class="provider-account-actions">
+        <a href="{% url 'services:provider_dashboard' %}">{% translate "Profilul firmei" %}</a>
+        <form method="post" action="{% url 'services:provider_logout' %}">{% csrf_token %}<button class="provider-logout" type="submit">{% translate "Ieși din cont" %}</button></form>
+      </div>
+      {% include "services/partials/language_switcher.html" %}
+    </div>
+  </header>
+
+  <main id="confirmare-demo" class="simulated-checkout-success">
+    {% if messages %}<div class="provider-messages" aria-live="polite">{% for message in messages %}<p>{{ message }}</p>{% endfor %}</div>{% endif %}
+    <section aria-labelledby="simulated-success-title">
+      <span class="simulated-success-mark" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M10 25l9 9 19-20"/></svg></span>
+      <h1 id="simulated-success-title">{% translate "Abonamentul demo este activ" %}<i>.</i></h1>
+      <p>{% blocktranslate with company=profile.display_name %}Profilul {{ company }} poate continua acum întregul flux demonstrativ.{% endblocktranslate %}</p>
+      <dl>
+        <div><dt>{% translate "Stare" %}</dt><dd>{{ subscription_state.label }}</dd></div>
+        <div><dt>{% translate "Activ până la" %}</dt><dd>{{ subscription_state.period_ends_at|date:"DATE_FORMAT" }}</dd></div>
+        <div><dt>{% translate "Plată procesată" %}</dt><dd>{% translate "Nu" %}</dd></div>
+      </dl>
+      <p class="simulated-success-note">{% translate "Aceasta este o confirmare de test, nu o chitanță și nu o factură." %}</p>
+      <a href="{% url 'services:provider_dashboard' %}#abonament">{% translate "Continuă configurarea profilului" %}</a>
+    </section>
+  </main>
+
+  {% include "services/partials/site_footer.html" %}
+</body>
+</html>

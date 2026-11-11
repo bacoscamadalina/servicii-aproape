@@ -1,0 +1,124 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{% translate 'Cum folosește ServiciiAproape datele personale și cookie-urile strict necesare.' %}">
+  <title>{% translate "Confidențialitate" %} — ServiciiAproape</title>
+  <link rel="canonical" href="{% if LANGUAGE_CODE == 'en' %}{{ absolute_language_url_en }}{% else %}{{ absolute_language_url_ro }}{% endif %}">
+  <link rel="alternate" hreflang="ro" href="{{ absolute_language_url_ro }}">
+  <link rel="alternate" hreflang="en" href="{{ absolute_language_url_en }}">
+  <link rel="alternate" hreflang="x-default" href="{{ absolute_language_url_ro }}">
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260908-9">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body>
+  <a class="skip-link" href="#continut-legal">{% translate "Sari la conținut" %}</a>
+  <header class="site-header legal-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    {% include "services/partials/language_switcher.html" %}
+  </header>
+
+  <main id="continut-legal" class="legal-page">
+    <header class="legal-title">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4 40 10v12c0 10-6.4 17-16 22C14.4 39 8 32 8 22V10l16-6Z"/><path d="m17 24 5 5 10-11"/></svg>
+      <div>
+        <h1>{% translate "Confidențialitate și date personale" %}<span class="accent-period">.</span></h1>
+        <p>{% blocktranslate with version=legal_policy_version %}Versiune aplicabilă din {{ version }}. Aici explicăm ce date folosim, de ce și ce control ai asupra lor.{% endblocktranslate %}</p>
+      </div>
+    </header>
+
+    <div class="legal-layout">
+      <nav aria-label="{% translate 'Cuprins' %}">
+        <a href="#operator">01 {% translate "Operator" %}</a>
+        <a href="#date">02 {% translate "Date și scopuri" %}</a>
+        <a href="#pastrare">03 {% translate "Păstrare și destinatari" %}</a>
+        <a href="#drepturi">04 {% translate "Drepturile tale" %}</a>
+        <a href="#cookie-uri">05 {% translate "Cookie-uri" %}</a>
+      </nav>
+      <article class="legal-copy">
+        <section id="operator">
+          <h2>{% translate "Cine operează platforma" %}</h2>
+          <p>{% blocktranslate with operator=legal_operator_name address=legal_operator_address %}<strong>{{ operator }}</strong>, cu adresa {{ address }}, stabilește scopurile și mijloacele prelucrării descrise aici.{% endblocktranslate %}</p>
+          <p>{% blocktranslate with email=privacy_email %}Pentru orice întrebare sau cerere privind datele personale, scrie la <a href="mailto:{{ email }}">{{ email }}</a>.{% endblocktranslate %}</p>
+        </section>
+
+        <section id="date">
+          <h2>{% translate "Ce date folosim și de ce" %}</h2>
+          <dl class="legal-facts">
+            <div>
+              <dt>{% translate "Catalog și căutare" %}</dt>
+              <dd>{% translate "Afișăm date profesionale și informații despre firme din surse publice, inclusiv ONRC și Ministerul Finanțelor, pentru a documenta rezultatele locale. Căutările după județ, localitate și categorie sunt transmise prin adresa paginii." %}</dd>
+            </div>
+            <div>
+              <dt>{% translate "Revendicarea unei firme" %}</dt>
+              <dd>{% translate "Folosim numele, rolul, adresa profesională de e-mail, declarația și documentul justificativ pentru verificarea reprezentării, comunicarea deciziei și auditul acesteia. Documentul este privat, accesibil numai personalului autorizat și nu este publicat în catalog." %}</dd>
+            </div>
+            <div>
+              <dt>{% translate "Contul furnizorului" %}</dt>
+              <dd>{% translate "Folosim datele de autentificare și modificările profilului pentru a administra accesul, serviciile, acoperirea, portofoliul și publicarea controlată. Adresa profesională completă este opțională și apare public numai dacă furnizorul o completează, iar versiunea profilului este aprobată și activată." %}</dd>
+            </div>
+            <div>
+              <dt>{% translate "Solicitarea planului Partener" %}</dt>
+              <dd>{% translate "Furnizorul autentificat poate trimite un brief privat despre site-ul dorit și vede în cont starea discuției. Folosim obiectivul, calendarul, website-ul opțional, descrierea și notele operaționale numai pentru analiza solicitării și contactarea furnizorului. E-mailul intern de notificare nu include brief-ul sau datele contului." %}</dd>
+            </div>
+            <div>
+              <dt>{% translate "Sesizări publice" %}</dt>
+              <dd>{% translate "Formularul de sesizare nu solicită nume, e-mail sau telefon. Textul liber este păstrat pentru verificare; nu include în el date personale despre tine sau despre alte persoane." %}</dd>
+            </div>
+            <div>
+              <dt>{% translate "Solicitări către firme" %}</dt>
+              <dd>{% translate "Când soliciți o ofertă directă, trimitem firmei alese numele, e-mailul, telefonul și informațiile despre proiect pe care le introduci. Când alegi cererea comparată, aceleași date sunt transmise tuturor firmelor eligibile care au profil public, abonament activ și acoperire declarată pentru serviciul și localitatea selectate. Fiecare firmă vede numai propria conversație; tu ai un singur spațiu privat pentru comparație. Folosim datele pentru transmiterea solicitării, răspunsurile firmelor, urmărirea stării și prevenirea abuzului." %}</dd>
+              <dd>{% translate "Firmele pot propune în spațiul privat o dată și o oră pentru vizită, cu o notă scurtă. Confirmarea sau refuzul tău sunt vizibile numai firmei implicate; propunerea singură nu reprezintă o programare confirmată." %}</dd>
+            </div>
+            <div>
+              <dt>{% translate "Recenzii după colaborare" %}</dt>
+              <dd>{% translate "După acceptarea unei oferte poți trimite o singură evaluare. Cu acordul tău, publicăm după verificare nota, textul, prenumele și inițiala numelui; adresa de contact și detaliile solicitării rămân private." %}</dd>
+            </div>
+            <div>
+              <dt>{% translate "Statistici pentru firme" %}</dt>
+              <dd>{% translate "Numărăm vizualizările profilului și apăsările pe telefon, e-mail, website sau solicitarea de ofertă pentru a arăta firmei eficiența profilului. Nu stocăm adresa IP. Aceeași interacțiune este numărată cel mult o dată pe zi pentru o sesiune, folosind un identificator pseudonimizat care se schimbă zilnic." %}</dd>
+            </div>
+            <div>
+              <dt>{% translate "Securitate și funcționare" %}</dt>
+              <dd>{% translate "Procesăm informațiile tehnice strict necesare pentru sesiuni, protecția formularelor, prevenirea abuzului și investigarea incidentelor. Jurnalele operaționale sunt concepute să evite datele de cont neesențiale." %}</dd>
+            </div>
+          </dl>
+          <p>{% translate "Temeiul folosit depinde de flux: demersuri solicitate de tine și executarea relației cu furnizorul, obligații legale, consimțământ acolo unde îl cerem explicit și interesul legitim de a securiza și administra catalogul, după evaluarea impactului asupra persoanelor." %}</p>
+        </section>
+
+        <section id="pastrare">
+          <h2>{% translate "Cât păstrăm datele și cine le primește" %}</h2>
+          <p>{% translate "Păstrăm datele numai cât sunt necesare fluxului în care au fost furnizate, securității, auditului deciziilor și obligațiilor legale aplicabile. La expirarea acestor nevoi, datele sunt șterse sau anonimizate în siguranță." %}</p>
+          <p>{% blocktranslate with unverified=retention_unverified_claim_days rejected=retention_rejected_claim_days reports=retention_closed_report_days %}Cererile de revendicare și de înscriere a firmei neconfirmate sau înlocuite sunt anonimizate, iar documentele lor justificative sunt șterse, după {{ unverified }} de zile. Pentru cererile respinse, același lucru se întâmplă după {{ rejected }} de zile. Textul liber și identificatorul tehnic din sesizările închise sunt anonimizate după {{ reports }} de zile. Cererile încă în analiză sunt semnalate pentru verificare umană, nu șterse automat.{% endblocktranslate %}</p>
+          <p>{% blocktranslate with requests=retention_closed_data_request_days %}Registrul cererilor privind datele personale păstrează dovada procesării; numele, contactul, rezumatul și notele interne sunt anonimizate după {{ requests }} de zile de la închiderea cererii.{% endblocktranslate %}</p>
+          <p>{% blocktranslate with leads=retention_closed_provider_lead_days %}Datele de contact, descrierea proiectului, notele private, mesajele și conținutul liber al ofertelor din solicitările finalizate sau refuzate sunt șterse ori anonimizate după {{ leads }} de zile. Linkul privat al clientului este invalidat. Firma aleasă sau firmele incluse în cererea comparată primesc solicitarea și pot păstra separat corespondența conform propriilor obligații.{% endblocktranslate %}</p>
+          <p>{% translate "Datele, orele și notele propunerilor de vizită sunt șterse odată cu solicitarea închisă." %}</p>
+          <p>{% blocktranslate with inquiries=retention_managed_site_inquiry_days %}Website-ul opțional, brief-ul liber și notele operaționale din solicitările pentru planul Partener sunt anonimizate după {{ inquiries }} de zile; starea, istoricul tehnic și dovada consimțământului rămân în registrul administrativ.{% endblocktranslate %}</p>
+          <p>{% translate "Identificatorii pseudonimizați ai interacțiunilor cu profilurile firmelor sunt șterși după fereastra de 90 de zile folosită pentru statistici. Comanda de retenție este verificată înainte de aplicare și nu rulează la deschiderea paginii." %}</p>
+          <p>{% translate "Accesul este limitat la persoanele autorizate care administrează verificările și infrastructura. Furnizorii tehnici pot prelucra date doar pentru operarea platformei și în baza instrucțiunilor operatorului. Nu vindem date personale și nu le folosim pentru publicitate comportamentală." %}</p>
+        </section>
+
+        <section id="drepturi">
+          <h2>{% translate "Drepturile tale" %}</h2>
+          <p>{% translate "În condițiile legii, poți cere accesul, rectificarea, ștergerea, restricționarea sau portabilitatea datelor tale și te poți opune unei prelucrări. Când prelucrarea se bazează pe consimțământ, îl poți retrage fără a afecta folosirea anterioară a datelor." %}</p>
+          <p>{% blocktranslate with email=privacy_email %}Trimite cererea la <a href="mailto:{{ email }}">{{ email }}</a>. Putem solicita informații strict necesare pentru a confirma identitatea solicitantului. Ai și dreptul de a depune o plângere la autoritatea competentă pentru protecția datelor.{% endblocktranslate %}</p>
+        </section>
+
+        <section id="cookie-uri">
+          <h2>{% translate "Cookie-uri strict necesare" %}</h2>
+          <p>{% translate "ServiciiAproape nu folosește cookie-uri de publicitate, profilare sau urmărire între site-uri. Folosim numai cookie-uri proprii pentru autentificare, continuitatea și securitatea sesiunii, protejarea formularelor și deduplicarea zilnică a statisticilor agregate ale profilurilor." %}</p>
+          <p>{% translate "Aceste cookie-uri fac posibilă funcția cerută și nu sunt opționale într-o sesiune autentificată sau la trimiterea unui formular. Le poți bloca ori șterge din browser, dar autentificarea și formularele pot înceta să funcționeze corect." %}</p>
+        </section>
+      </article>
+    </div>
+  </main>
+  {% include "services/partials/site_footer.html" %}
+</body>
+</html>

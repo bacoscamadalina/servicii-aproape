@@ -1,0 +1,61 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'services/admin_operations.css' %}">
+{% endblock %}
+
+{% block content %}
+  <p><a href="{% url 'admin:services_providerpublicationsubmission_change' submission.pk %}">← Înapoi la snapshot</a></p>
+
+  <section>
+    <h2>Conținut publicabil imuabil</h2>
+    <dl>
+      <dt>Nume public</dt><dd>{{ submission.display_name }}</dd>
+      <dt>Descriere</dt><dd>{{ submission.description }}</dd>
+      <dt>Adresă profesională publică</dt><dd>{{ submission.public_address|default:"—" }}</dd>
+      <dt>Telefon public</dt><dd>{{ submission.public_phone|default:"—" }}</dd>
+      <dt>E-mail public</dt><dd>{{ submission.public_email|default:"—" }}</dd>
+      <dt>Website</dt><dd>{{ submission.website|default:"—" }}</dd>
+      <dt>Disponibilitate declarată</dt><dd>{{ submission.get_availability_display }}</dd>
+      <dt>Contact preferat</dt><dd>{{ submission.get_contact_preference_display }}</dd>
+      <dt>Revizie conținut</dt><dd>{{ submission.profile_content_revision }}</dd>
+      <dt>Run ONRC</dt><dd>{{ submission.authorization_run_id }}</dd>
+      <dt>Run catalog</dt><dd>{{ submission.catalogue_run_id }}</dd>
+      <dt>Contract SHA-256</dt><dd><code>{{ submission.contract_sha256 }}</code></dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Servicii aprobate</h2>
+    <ul>{% for label in service_labels %}<li>{{ label }}</li>{% endfor %}</ul>
+    <h2>Acoperire declarată</h2>
+    <ul>{% for label in coverage_labels %}<li>{{ label }}</li>{% endfor %}</ul>
+    <h2>Portofoliu procesat</h2>
+    <ul class="publication-review-portfolio">
+      {% for item in portfolio_items %}
+        <li>
+          <img src="{% url 'services:provider_portfolio_image' item.asset.opaque_id %}" alt="{{ item.caption|default:'Imagine din portofoliu' }}" width="{{ item.asset.width }}" height="{{ item.asset.height }}">
+          <p>Poziția {{ item.position }} · {{ item.caption|default:"Fără descriere" }} · {{ item.asset.width }}×{{ item.asset.height }}</p>
+          <code>{{ item.asset_sha256 }}</code>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for field in form %}
+      <fieldset>
+        <legend>{{ field.label }}</legend>
+        {{ field }}
+        {% if field.help_text %}<p>{{ field.help_text }}</p>{% endif %}
+        {{ field.errors }}
+      </fieldset>
+    {% endfor %}
+    <p><strong>Public</strong> va fi refuzat automat cât timp catalogul ONRC/MF sursă este doar în previzualizare internă.</p>
+    <button type="submit">Înregistrează decizia</button>
+  </form>
+{% endblock %}

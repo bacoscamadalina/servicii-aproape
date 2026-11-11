@@ -1,0 +1,17 @@
+{% load i18n %}
+<footer class="site-footer">
+  <div class="site-footer-identity">
+    <a class="brand-footer" href="{% url 'services:home' %}">ServiciiAproape</a>
+    <span>{% translate "Catalog local de servicii pentru casă" %}</span>
+  </div>
+  {% if not read_only_preview %}
+    <nav aria-label="{% translate 'Informații legale' %}">
+      <a href="{% url 'services:privacy' %}">{% translate "Confidențialitate" %}</a>
+      <a href="{% url 'services:terms' %}">{% translate "Termeni de utilizare" %}</a>
+    </nav>
+    <div class="site-footer-operator">
+      <span>{% translate "Operator" %}</span>
+      <strong>{{ legal_operator_name }}</strong>
+    </div>
+  {% endif %}
+</footer>

@@ -1,0 +1,81 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'services/admin_operations.css' %}">
+{% endblock %}
+
+{% block content %}
+  <main class="privacy-request">
+    <p><a href="{% url 'admin:services_managedsiteinquiry_changelist' %}">← Înapoi la solicitări</a></p>
+
+    <div class="privacy-request__status" aria-label="Starea solicitării">
+      <span><strong>Stare:</strong> {{ item.get_status_display }}</span>
+      <span><strong>Revizie:</strong> {{ item.revision }}</span>
+      <span><strong>Primită:</strong> {{ item.created_at }}</span>
+    </div>
+
+    <div class="privacy-request__grid">
+      <section aria-labelledby="partner-inquiry-facts">
+        <h2 id="partner-inquiry-facts">Brief-ul furnizorului</h2>
+        <dl>
+          <dt>Firmă</dt><dd>{{ item.profile.display_name }}</dd>
+          <dt>Obiectiv</dt><dd>{{ item.get_goal_display }}</dd>
+          <dt>Termen dorit</dt><dd>{{ item.get_desired_launch_display }}</dd>
+          <dt>Site existent</dt><dd>{{ item.current_website|default:"—" }}</dd>
+          <dt>Descriere</dt><dd class="privacy-request__details">{{ item.brief }}</dd>
+          <dt>Notificare internă</dt><dd>{{ item.get_notification_state_display }}</dd>
+        </dl>
+      </section>
+
+      <section aria-labelledby="partner-inquiry-action">
+        <h2 id="partner-inquiry-action">{% if is_terminal %}Flux încheiat{% else %}Următoarea acțiune{% endif %}</h2>
+        <p>Actualizarea urmărește numai discuția comercială pentru serviciul Partener. Nu activați abonamente și nu înregistrați plăți aici.</p>
+        {% if item.retention_applied_at %}
+          <p class="privacy-request__warning" role="alert">Conținutul a trecut prin retenție și nu mai poate fi procesat.</p>
+        {% elif is_terminal %}
+          <p><strong>Rezultat final:</strong> {{ item.get_status_display }}</p>
+        {% else %}
+          <form method="post" novalidate>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {{ form.expected_revision }}
+            <fieldset>
+              <legend>{{ form.action.label }}</legend>
+              {{ form.action }}
+              {{ form.action.errors }}
+            </fieldset>
+            <fieldset>
+              <label for="{{ form.internal_note.id_for_label }}"><strong>{{ form.internal_note.label }}</strong></label>
+              {{ form.internal_note }}
+              <p id="{{ form.internal_note.id_for_label }}_helptext">{{ form.internal_note.help_text }}</p>
+              {{ form.internal_note.errors }}
+            </fieldset>
+            <fieldset>
+              <legend>Confirmare</legend>
+              <label>{{ form.acknowledgement }} {{ form.acknowledgement.label }}</label>
+              {{ form.acknowledgement.errors }}
+            </fieldset>
+            <button type="submit">Înregistrează acțiunea</button>
+          </form>
+        {% endif %}
+      </section>
+    </div>
+
+    <section class="privacy-request__events" aria-labelledby="partner-inquiry-history">
+      <h2 id="partner-inquiry-history">Jurnalul procesării</h2>
+      <ol>
+        {% for event in events %}
+          <li>
+            <strong>Revizia {{ event.revision }}</strong><br>
+            {{ event.get_previous_status_display }} → {{ event.get_new_status_display }} · {{ event.created_at }} · {{ event.actor.get_username }}<br>
+            {{ event.internal_note }}
+          </li>
+        {% empty %}
+          <li>Solicitarea a fost primită și nu are încă acțiuni de procesare.</li>
+        {% endfor %}
+      </ol>
+    </section>
+  </main>
+{% endblock %}

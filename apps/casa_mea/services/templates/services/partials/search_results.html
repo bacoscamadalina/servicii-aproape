@@ -1,0 +1,143 @@
+{% load i18n %}
+{% if write_features_enabled %}
+  <div class="local-request-callout">
+    <div><strong>{% translate "Ai un proiect concret?" %}</strong><span>{% translate "Descrie-l o singură dată și compară răspunsurile firmelor locale." %}</span></div>
+    <a class="result-request-link" href="{% url 'services:provider_lead_batch_create' %}?county={{ form.cleaned_data.county|urlencode }}&amp;locality={{ form.cleaned_data.locality|urlencode }}&amp;category={{ form.cleaned_data.category|urlencode }}">{% translate "Cere oferte" %}</a>
+  </div>
+{% endif %}
+{% if form.is_valid and published_profiles %}
+  <section class="published-providers" aria-labelledby="published-providers-title">
+    <div class="published-providers-intro">
+      <h3 id="published-providers-title">{% translate "Firme cu profil complet" %}</h3>
+      <p>{% translate "Vezi serviciile, zonele deservite, datele de contact și lucrările prezentate de fiecare firmă." %}</p>
+    </div>
+    <div class="published-provider-list">
+      {% for provider in published_profiles %}
+        <article class="published-provider-row">
+          <div class="published-provider-summary">
+            <h4>{{ provider.display_name }}</h4>
+            <p>{{ provider.description|truncatechars:180 }}</p>
+            <span class="published-provider-category">{{ provider.category_labels|join:", " }}</span>
+          </div>
+          <aside class="published-provider-facts">
+            <div><strong>{% translate "Serviciu" %}</strong><span>{{ provider.category_labels|join:", " }}</span></div>
+            <div><strong>{% translate "Localitate" %}</strong><span>{{ provider.searched_locality_label }}, {{ selected_county }}</span></div>
+            <a href="{% url 'services:provider_public_detail' provider.public_id %}?county={{ selected_county|urlencode }}&amp;locality={{ provider.searched_locality_code|urlencode }}&amp;category={{ form.cleaned_data.category|urlencode }}">{% translate "Vezi profilul furnizorului" %} <svg class="ui-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"/></svg></a>
+            <form method="post" action="{% url 'services:provider_shortlist_toggle' provider.public_id %}?county={{ selected_county|urlencode }}&amp;locality={{ provider.searched_locality_code|urlencode }}&amp;category={{ form.cleaned_data.category|urlencode }}">
+              {% csrf_token %}
+              <input type="hidden" name="return_to" value="results">
+              <button class="provider-save-button" type="submit" aria-pressed="{% if provider.public_id in saved_provider_ids %}true{% else %}false{% endif %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg>
+                {% if provider.public_id in saved_provider_ids %}{% translate "Elimină din lista salvată" %}{% else %}{% translate "Salvează firma" %}{% endif %}
+              </button>
+            </form>
+          </aside>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}
+{% if form.is_valid and results %}
+  <div class="provider-list">
+    {% if catalogue_mode == "registry" or catalogue_mode == "registry_preview" %}
+      {% for provider in results %}
+        <article class="provider-row registry-row">
+          <div class="provider-avatar" aria-hidden="true">{{ provider.initials }}</div>
+          <div class="provider-main">
+            <h3>{{ provider.legal_name }}</h3>
+            <p>{% translate "Înregistrare legală ONRC" %}</p>
+            <a class="registry-detail-link" href="{% url 'services:company_detail' provider.business_id %}?county={{ selected_county|urlencode }}&amp;locality={{ selected_locality_code|urlencode }}&amp;category={{ form.cleaned_data.category|urlencode }}{% if registry_page.number > 1 %}&amp;return_page={{ registry_page.number }}{% endif %}">{% translate "Vezi fișa firmei" %} <svg class="ui-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"/></svg></a>
+          </div>
+          <dl>
+            <div>
+              <dt>{% if provider.evidence_kind == "direct_service" %}{% translate "Serviciu confirmat din sursă directă" %}{% elif registry_source.activity_evidence_year %}{% translate "Activitate preponderentă raportată" %}{% else %}{% translate "Categorii derivate din CAEN" %}{% endif %}</dt>
+              <dd>{{ provider.category_labels|join:", " }}</dd>
+            </div>
+            {% if provider.evidence_source_url %}
+              <div>
+                <dt>{% translate "Dovadă revizuită" %}</dt>
+                <dd><a href="{{ provider.evidence_source_url }}" rel="noopener noreferrer">{{ provider.evidence_source_title }}</a> · {{ provider.evidence_summary }} · {% translate "acoperire declarată:" %} {{ provider.coverage_label }} · {% translate "verificat la" %} {{ provider.evidence_retrieved_at|date:"DATE_FORMAT" }}</dd>
+              </div>
+            {% endif %}
+            <div>
+              <dt>{% translate "Sursa" %}</dt>
+              <dd>ONRC · {{ registry_source.snapshot_date|date:"DATE_FORMAT" }}</dd>
+            </div>
+          </dl>
+          <span class="provider-location">{% translate "Sediu social" %} · {{ provider.registered_office_label }}</span>
+        </article>
+      {% endfor %}
+    {% else %}
+      {% for provider in results %}
+        <article class="provider-row">
+          <div class="provider-avatar" aria-hidden="true">{{ provider.initials }}</div>
+          <div class="provider-main">
+            <h3>{{ provider.name }}</h3>
+            <p>{{ provider.trade }}</p>
+          </div>
+          <dl>
+            <div><dt>{% translate "Experiență declarată" %}</dt><dd>{{ provider.experience }}</dd></div>
+            <div><dt>{% translate "Timp de răspuns declarat" %}</dt><dd>{{ provider.response }}</dd></div>
+          </dl>
+          <span class="provider-location">{{ provider.locality }}</span>
+        </article>
+      {% endfor %}
+    {% endif %}
+  </div>
+  {% if catalogue_mode == "registry" or catalogue_mode == "registry_preview" %}
+    <div class="registry-disclosure">
+      {% if registry_source.activity_evidence_year %}
+        {% if registry_source.contains_direct_service_evidence %}
+          <p>{% blocktranslate with evidence_year=registry_source.activity_evidence_year %}<strong>Ce înseamnă aceste rezultate:</strong> firme cu sediul social în localitatea aleasă care fie trec filtrul strict MF {{ evidence_year }}, fie au serviciul autorizat ONRC și confirmat printr-o sursă publică directă, revizuită și cu termen de reverificare. Acoperirea declarată este afișată separat. Rezultatele nu reprezintă recomandări, disponibilitate sau garanția executării unei lucrări.{% endblocktranslate %}</p>
+        {% else %}
+          <p>{% blocktranslate with evidence_year=registry_source.activity_evidence_year %}<strong>Ce înseamnă aceste rezultate:</strong> firme cu sediul social în localitatea aleasă, pentru care activitatea preponderentă raportată în {{ evidence_year }} corespunde unui serviciu autorizat ONRC din categoria selectată. Firmele fără evidență MF {{ evidence_year }} nu apar dacă nu există o dovadă directă revizuită. Rezultatele nu reprezintă recomandări, disponibilitate sau arie de lucru.{% endblocktranslate %}</p>
+        {% endif %}
+      {% else %}
+        <p>{% blocktranslate %}<strong>Ce înseamnă aceste rezultate:</strong> firme înregistrate cu sediul social în localitatea aleasă și activități CAEN asociate categoriilor selectate. Nu reprezintă recomandări, disponibilitate sau arie de lucru.{% endblocktranslate %}</p>
+      {% endif %}
+      <a href="{{ registry_source.dataset_url }}" rel="noopener noreferrer">{% translate "Sursa ONRC" %} · {{ registry_source.license_label }}</a>
+      {% if registry_source.activity_evidence_year %}
+        <a href="{{ registry_source.activity_evidence_dataset_url }}" rel="noopener noreferrer">{% blocktranslate with evidence_year=registry_source.activity_evidence_year %}Activitate preponderentă raportată MF {{ evidence_year }}{% endblocktranslate %} · {{ registry_source.activity_evidence_license_label }}</a>
+      {% endif %}
+    </div>
+    {% if registry_page.has_other_pages %}
+      <nav class="pagination" aria-label="{% translate 'Paginile rezultatelor' %}">
+        {% if registry_page.has_previous %}<a href="?{% if pagination_query %}{{ pagination_query }}&amp;{% endif %}page={{ registry_page.previous_page_number }}#rezultate">{% translate "Pagina anterioară" %}</a>{% else %}<span></span>{% endif %}
+        <span>{% blocktranslate with page_number=registry_page.number page_count=registry_page.paginator.num_pages %}Pagina {{ page_number }} din {{ page_count }}{% endblocktranslate %}</span>
+        {% if registry_page.has_next %}<a href="?{% if pagination_query %}{{ pagination_query }}&amp;{% endif %}page={{ registry_page.next_page_number }}#rezultate">{% translate "Pagina următoare" %}</a>{% else %}<span></span>{% endif %}
+      </nav>
+    {% endif %}
+  {% endif %}
+{% elif form.is_valid and catalogue_mode == "unavailable" %}
+  <div class="form-alert" role="status">{% translate "Catalogul verificat pentru acest județ este momentan indisponibil. Datele demonstrative nu îl înlocuiesc; reîncearcă mai târziu." %}</div>
+{% elif form.is_valid and category_unsupported %}
+  <div class="empty-state">
+    <span class="empty-mark" aria-hidden="true"></span>
+    <div>
+      <h3>{% blocktranslate %}Categoria nu este încă inclusă în catalogul verificat din {{ selected_county }}.{% endblocktranslate %}</h3>
+      <p>{% translate "Alege un serviciu disponibil sau Toate serviciile pentru rezultatele ONRC." %}</p>
+    </div>
+    <a href="{% url 'services:home' %}#cautare">{% translate "Schimbă serviciul" %}</a>
+  </div>
+{% elif form.is_valid and not published_profiles %}
+  <div class="empty-state">
+    <span class="empty-mark" aria-hidden="true"></span>
+    <div>
+      {% if catalogue_mode == "registry" or catalogue_mode == "registry_preview" %}
+        {% if registry_source.activity_evidence_year %}
+          <h3>{% translate "Nu am găsit firme care trec filtrul strict în această localitate." %}</h3>
+          <p>{% blocktranslate with evidence_year=registry_source.activity_evidence_year %}Catalogul cere activitate preponderentă raportată MF {{ evidence_year }} și autorizare ONRC în aceeași categorie. Încearcă fără categorie sau alege altă localitate din județul {{ selected_county }}.{% endblocktranslate %}</p>
+        {% else %}
+          <h3>{% translate "Nu am găsit firme cu sediul social în această localitate." %}</h3>
+          <p>{% blocktranslate %}Încearcă fără categorie sau alege altă localitate din județul {{ selected_county }}.{% endblocktranslate %}</p>
+        {% endif %}
+      {% else %}
+        <h3>{% translate "Nu avem încă exemple demonstrative aici." %}</h3>
+        <p>{% translate "Acest județ nu are încă un catalog ONRC activ; rezultatele de aici sunt doar demonstrative." %}</p>
+      {% endif %}
+    </div>
+    <a href="{% url 'services:home' %}#cautare">{% translate "Modifică căutarea" %}</a>
+  </div>
+{% elif not form.is_valid %}
+  <div class="form-alert" role="alert">{% translate "Completează localitatea și județul pentru a începe căutarea." %}</div>
+{% endif %}

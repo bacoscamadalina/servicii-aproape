@@ -1,0 +1,32 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, noarchive">
+  <title>{% translate "Lucrările mele" %} — ServiciiAproape</title>
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260918-execution">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body class="provider-billing-body">
+  <a class="skip-link" href="#lucrarile-mele">{% translate "Sari la lucrări" %}</a>
+  <header class="site-header provider-header"><a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">{% include "services/partials/editorial_brand_mark.html" %}<span>Servicii<span>Aproape</span></span></a><div class="provider-header-tools"><div class="provider-account-actions"><a href="{% url 'services:provider_password_change' %}">{% translate "Schimbă parola" %}</a><form method="post" action="{% url 'services:provider_logout' %}">{% csrf_token %}<button class="provider-logout" type="submit">{% translate "Ieși din cont" %}</button></form></div>{% include "services/partials/language_switcher.html" %}</div></header>
+  <main id="lucrarile-mele" class="provider-billing-page provider-team-page">
+    <header class="provider-billing-heading"><div><h1>{% translate "Lucrările mele" %}</h1><p>{% blocktranslate with name=profile.display_name %}Lucrările programate pentru tine la {{ name }}.{% endblocktranslate %}</p></div></header>
+    {% if messages %}<div class="provider-messages" aria-live="polite">{% for message in messages %}<p>{{ message }}</p>{% endfor %}</div>{% endif %}
+    {% if work_page %}<ol class="technician-work-list">{% for order in work_page %}<li>
+      <div><time datetime="{{ order.scheduled_start|date:'c' }}">{{ order.scheduled_start|date:"SHORT_DATETIME_FORMAT" }}</time>{% if order.scheduled_end %}<span>{% blocktranslate with end=order.scheduled_end|date:"SHORT_DATETIME_FORMAT" %}Încheiere estimată: {{ end }}{% endblocktranslate %}</span>{% endif %}{% if order.started_at %}<span class="technician-work-status">{% blocktranslate with started=order.started_at|date:"SHORT_DATETIME_FORMAT" %}Început confirmat: {{ started }}{% endblocktranslate %}</span>{% else %}<span class="technician-work-status">{% translate "Așteaptă începerea" %}</span>{% endif %}</div>
+      <div><h2>{{ order.lead.customer_name }}</h2><p>{{ order.accepted_quote.summary }}</p>{% if order.known_assignee_overlap %}<p class="provider-calendar-overlap">{% translate "Ai o altă lucrare în acest interval. Discută programarea cu firma." %}</p>{% endif %}{% if order.lead.project_address %}<p>{% blocktranslate with address=order.lead.project_address %}Loc indicat: {{ address }}{% endblocktranslate %}</p>{% endif %}<a href="tel:{{ order.lead.customer_phone }}">{{ order.lead.customer_phone }}</a>
+        <form method="post" class="technician-work-action">{% csrf_token %}<input type="hidden" name="order_id" value="{{ order.pk }}"><input type="hidden" name="expected_revision" value="{{ order.revision }}">
+          {% if order.started_at %}<input type="hidden" name="action" value="complete"><label><input type="checkbox" name="confirm_completion" required> <span>{% translate "Confirm că această lucrare este terminată." %}</span></label><button type="submit" class="provider-submit">{% translate "Confirmă finalizarea" %}</button>
+          {% else %}<input type="hidden" name="action" value="start"><button type="submit" class="provider-submit" {% if order.scheduled_start > now %}disabled{% endif %}>{% translate "Confirmă începutul" %}</button>{% if order.scheduled_start > now %}<p class="provider-help">{% translate "Poți confirma începutul după ora programată." %}</p>{% endif %}{% endif %}
+        </form>
+      </div>
+    </li>{% endfor %}</ol>{% else %}<section class="provider-team-empty"><h2>{% translate "Nicio lucrare atribuită acum" %}</h2><p>{% translate "Când proprietarul îți atribuie o lucrare programată, o vei găsi aici." %}</p></section>{% endif %}
+    {% if work_page.paginator.num_pages > 1 %}<nav class="provider-billing-register-pagination" aria-label="{% translate 'Paginile lucrărilor' %}">{% if work_page.has_previous %}<a href="?page={{ work_page.previous_page_number }}">{% translate "Pagina anterioară" %}</a>{% endif %}<span>{% blocktranslate with current=work_page.number total=work_page.paginator.num_pages %}Pagina {{ current }} din {{ total }}{% endblocktranslate %}</span>{% if work_page.has_next %}<a href="?page={{ work_page.next_page_number }}">{% translate "Pagina următoare" %}</a>{% endif %}</nav>{% endif %}
+  </main>
+  {% include "services/partials/site_footer.html" %}
+</body>
+</html>

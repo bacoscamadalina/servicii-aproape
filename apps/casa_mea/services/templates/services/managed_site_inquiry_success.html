@@ -1,0 +1,45 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE|default:'ro' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, noarchive">
+  <title>{% translate "Solicitare Partener trimisă" %} — ServiciiAproape</title>
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260915-2">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body class="managed-site-body managed-site-success-body">
+  <a class="skip-link" href="#confirmare-partener">{% translate "Sari la confirmare" %}</a>
+  <header class="site-header provider-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    <div class="provider-header-tools">
+      <div class="provider-account-actions">
+        <a href="{% url 'services:provider_dashboard' %}">{% translate "Profilul firmei" %}</a>
+        <form method="post" action="{% url 'services:provider_logout' %}">{% csrf_token %}<button class="provider-logout" type="submit">{% translate "Ieși din cont" %}</button></form>
+      </div>
+      {% include "services/partials/language_switcher.html" %}
+    </div>
+  </header>
+
+  <main id="confirmare-partener" class="managed-site-success">
+    <section aria-labelledby="managed-site-success-title">
+      <span class="managed-site-success-mark" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M10 25l9 9 19-20"/></svg></span>
+      <h1 id="managed-site-success-title">{% translate "Solicitarea a ajuns la echipă" %}<i>.</i></h1>
+      <p>{% translate "Vom răspunde pe adresa de e-mail a contului furnizorului pentru a clarifica brief-ul și calendarul." %}</p>
+      <div class="managed-site-success-note"><strong>{% translate "Ce s-a întâmplat acum" %}</strong><p>{% translate "Am salvat solicitarea în zona administrativă. Îi poți urmări starea în profilul firmei. Nu am creat o comandă, nu am activat abonamentul și nu am procesat nicio plată." %}</p></div>
+      <div class="managed-site-success-actions">
+        <a href="{% url 'services:provider_dashboard' %}">{% translate "Înapoi la profil" %}</a>
+        <a href="{% url 'services:subscription_plan' %}">{% translate "Revizuiește abonamentele" %}</a>
+      </div>
+    </section>
+  </main>
+
+  {% include "services/partials/site_footer.html" %}
+</body>
+</html>

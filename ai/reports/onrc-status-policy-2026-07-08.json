@@ -1,0 +1,36 @@
+{
+  "report_schema_version": 1,
+  "snapshot_date": "2026-07-08",
+  "policy_version": "1",
+  "policy_state": "approved_for_internal_staging",
+  "policy_approved_at": "2026-08-21",
+  "full_report_sha256": "97f83ba52fa7bfeca7ce92d80623b727c979a7bc84a37f5d8b159d5be26ed95d",
+  "verified_sources": {
+    "firms_sha256": "bb4168ab2facee519d567fb0381a890ece5901bdc4cf22452d1dd17c41c27c0b",
+    "statuses_sha256": "affcf9819b782718a66b55feb5e56924816c49c4ad1d0f9408b5f4268b9cbddf",
+    "status_dictionary_sha256": "c3b4af92691fe6bb47e924e13070b80c605672225c399e1f48ef5b578beadf9b"
+  },
+  "runtime": {
+    "elapsed_seconds": 106.81,
+    "maximum_resident_memory_kib": 63108,
+    "minimum_scratch_bytes": 1563426384,
+    "scratch_database_bytes": 1313312768
+  },
+  "accounting": {
+    "coherent_unique_firms": 4193915,
+    "noncoherent_unique_firms": 3558,
+    "accepted_status_rows": 4637405,
+    "invalid_status_rows": 3,
+    "coherent_status_memberships": 4633692,
+    "noncoherent_status_memberships": 3713,
+    "orphan_status_memberships": 0,
+    "status_combination_count": 2452
+  },
+  "decision_counts": {
+    "eligible_function_only": 1571865,
+    "excluded_radiated": 2170374,
+    "needs_review_mixed_function": 206453,
+    "quarantined_without_function": 245223
+  },
+  "publication_boundary": "Status eligibility is an internal staging gate only; it does not prove availability, competence, service coverage, contactability, or publication eligibility."
+}

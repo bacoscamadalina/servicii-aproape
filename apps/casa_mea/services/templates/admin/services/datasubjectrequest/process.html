@@ -1,0 +1,91 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'services/admin_operations.css' %}">
+{% endblock %}
+
+{% block content %}
+  <main class="privacy-request">
+    <p><a href="{% url 'admin:services_datasubjectrequest_change' item.pk %}">← Înapoi la cerere</a></p>
+
+    <div class="privacy-request__status" aria-label="Starea cererii">
+      <span><strong>Stare:</strong> {{ item.get_status_display }}</span>
+      <span><strong>Revizie:</strong> {{ item.revision }}</span>
+      <span><strong>Termen inițial:</strong> {{ item.due_at }}</span>
+      {% if item.extended_due_at %}<span><strong>Termen notificat:</strong> {{ item.extended_due_at }}</span>{% endif %}
+    </div>
+
+    {% if is_overdue %}
+      <p class="privacy-request__warning" role="alert">Termenul înregistrat este depășit. Continuați soluționarea fără întârziere și documentați cauza.</p>
+    {% endif %}
+
+    <div class="privacy-request__grid">
+      <section aria-labelledby="privacy-request-facts">
+        <h2 id="privacy-request-facts">Cererea primită</h2>
+        <dl>
+          <dt>Drept exercitat</dt><dd>{{ item.get_request_kind_display }}</dd>
+          <dt>Canal</dt><dd>{{ item.get_channel_display }}</dd>
+          <dt>Solicitant</dt><dd>{{ item.requester_name }}</dd>
+          <dt>Contact</dt><dd>{{ item.contact_email }}</dd>
+          <dt>Primită la</dt><dd>{{ item.received_at }}</dd>
+          <dt>Înregistrată de</dt><dd>{{ item.recorded_by.get_username }}</dd>
+          <dt>Rezumat</dt><dd class="privacy-request__details">{{ item.details }}</dd>
+          <dt>Identitate confirmată</dt><dd>{{ item.identity_verified_at|default:"—" }}</dd>
+          <dt>Închisă la</dt><dd>{{ item.closed_at|default:"—" }}</dd>
+        </dl>
+      </section>
+
+      <section aria-labelledby="privacy-request-action">
+        <h2 id="privacy-request-action">{% if is_closed %}Cerere închisă{% else %}Următoarea acțiune{% endif %}</h2>
+        <p>Verificați identitatea numai proporțional cu riscul. Nu păstrați copii de acte în acest registru.</p>
+        <p>O prelungire este permisă o singură dată, înaintea termenului inițial, după informarea persoanei și documentarea motivului.</p>
+        {% if item.status == "in_review" and item.request_kind == "access" or item.status == "in_review" and item.request_kind == "portability" %}
+          <p><strong>Pachet controlat:</strong> exportul JSON folosește numai adresa confirmată și legăturile explicite de proprietate. Exclude parolele, tokenurile, notele de moderare, identitățile operatorilor și datele altor persoane. Este generat în memorie, nu păstrat ca fișier pe server.</p>
+        {% endif %}
+        {% if is_closed %}
+          <p><strong>Rezultat final:</strong> {{ item.get_status_display }}</p>
+        {% else %}
+          <form method="post" novalidate>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {{ form.expected_revision }}
+            <fieldset>
+              <legend>{{ form.action.label }}</legend>
+              {{ form.action }}
+              {{ form.action.errors }}
+            </fieldset>
+            <fieldset>
+              <label for="{{ form.internal_note.id_for_label }}"><strong>{{ form.internal_note.label }}</strong></label>
+              {{ form.internal_note }}
+              <p id="{{ form.internal_note.id_for_label }}_helptext">{{ form.internal_note.help_text }}</p>
+              {{ form.internal_note.errors }}
+            </fieldset>
+            <fieldset>
+              <legend>Confirmare</legend>
+              <label>{{ form.acknowledgement }} {{ form.acknowledgement.label }}</label>
+              {{ form.acknowledgement.errors }}
+            </fieldset>
+            <button type="submit">Înregistrează acțiunea</button>
+          </form>
+        {% endif %}
+      </section>
+    </div>
+
+    <section class="privacy-request__events" aria-labelledby="privacy-request-history">
+      <h2 id="privacy-request-history">Jurnalul procesării</h2>
+      <ol>
+        {% for event in events %}
+          <li>
+            <strong>Revizia {{ event.revision }} · {{ event.get_action_display }}</strong><br>
+            {{ event.get_previous_status_display }} → {{ event.get_new_status_display }} · {{ event.created_at }} · {{ event.actor.get_username }}<br>
+            {{ event.internal_note }}
+          </li>
+        {% empty %}
+          <li>Cererea a fost înregistrată și nu are încă acțiuni de procesare.</li>
+        {% endfor %}
+      </ol>
+    </section>
+  </main>
+{% endblock %}

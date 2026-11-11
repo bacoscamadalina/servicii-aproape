@@ -1,0 +1,53 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>{% translate "Confirmare înscriere firmă" %} — ServiciiAproape</title>
+  <link rel="canonical" href="{% if LANGUAGE_CODE == 'en' %}{{ absolute_language_url_en }}{% else %}{{ absolute_language_url_ro }}{% endif %}">
+  <link rel="alternate" hreflang="ro" href="{{ absolute_language_url_ro }}">
+  <link rel="alternate" hreflang="en" href="{{ absolute_language_url_en }}">
+  <link rel="alternate" hreflang="x-default" href="{{ absolute_language_url_ro }}">
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260908-9">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body>
+  <a class="skip-link" href="#confirmare">{% translate "Sari la confirmare" %}</a>
+  <header class="site-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    {% include "services/partials/language_switcher.html" %}
+  </header>
+  <main id="confirmare" class="claim-confirm-page">
+    <section class="claim-result" aria-labelledby="confirm-title">
+      <span class="claim-result-mark{% if invalid_token %} is-error{% endif %}" aria-hidden="true"></span>
+      <div>
+        {% if invalid_token %}
+          <h1 id="confirm-title">{% translate "Linkul nu mai este activ." %}</h1>
+          <p>{% translate "Linkul este invalid, a expirat sau a fost înlocuit. Trimite o nouă solicitare de înscriere." %}</p>
+          <a class="claim-primary-link" href="{% url 'services:company_registration' %}">{% translate "Reia înscrierea firmei" %}</a>
+        {% elif verified %}
+          <h1 id="confirm-title">{% translate "E-mail confirmat." %}</h1>
+          <p>{% blocktranslate with company_name=registration.legal_name %}Cererea de înscriere pentru <strong>{{ company_name }}</strong> a intrat în verificare administrativă.{% endblocktranslate %}</p>
+          <p>{% translate "Verificăm identitatea juridică înainte de a continua cu revendicarea. Până atunci nu este creat niciun cont și nu apare nicio informație publică nouă." %}</p>
+          <a class="claim-primary-link" href="{% url 'services:professionals' %}">{% translate "Vezi procesul complet" %}</a>
+        {% else %}
+          <h1 id="confirm-title">{% translate "Confirmă adresa de e-mail." %}</h1>
+          <p>{% blocktranslate with company_name=registration.legal_name %}Cererea privește firma <strong>{{ company_name }}</strong>. Continuă numai dacă tu ai inițiat înscrierea.{% endblocktranslate %}</p>
+          <form method="post">
+            {% csrf_token %}
+            <button class="claim-submit" type="submit">{% translate "Confirmă e-mailul" %}</button>
+          </form>
+        {% endif %}
+      </div>
+    </section>
+  </main>
+  {% include "services/partials/site_footer.html" %}
+</body>
+</html>

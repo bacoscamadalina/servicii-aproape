@@ -1,0 +1,52 @@
+{
+  "result": "IMPLEMENTATION_PASS_EXTERNAL_RUN_PENDING",
+  "contract": {
+    "read_only": true,
+    "external_origin_required": true,
+    "tls_verification_can_be_disabled": false,
+    "maximum_response_bytes": 2097152,
+    "deterministic_json": true,
+    "separate_from_liveness": true,
+    "separate_from_launch_readiness": true,
+    "checks": [
+      "canonical HTTP to HTTPS redirect",
+      "Romanian home page",
+      "English home page",
+      "browser security headers",
+      "strict Content-Security-Policy without inline or eval exceptions",
+      "camera, geolocation and microphone Permissions-Policy",
+      "admin login and Secure CSRF cookie",
+      "provider dashboard authentication redirect",
+      "generic private-media path denied",
+      "development-preview copy absent"
+    ]
+  },
+  "validation": {
+    "focused_tests": {
+      "tests": 7,
+      "result": "PASS"
+    },
+    "complete_sqlite_suite": {
+      "tests": 233,
+      "skipped": 10,
+      "seconds": 34.094,
+      "result": "PASS"
+    },
+    "complete_postgresql_suite": {
+      "tests": 233,
+      "skipped": 0,
+      "seconds": 47.129,
+      "result": "PASS"
+    },
+    "production_image_build": "PASS",
+    "command_present_in_production_image": true,
+    "insecure_origin_refusal": "PASS",
+    "django_check": "PASS",
+    "migration_source_drift": "NONE"
+  },
+  "not_performed": [
+    "No real domain, DNS or publicly trusted certificate was available to this task",
+    "No external production origin was contacted",
+    "No catalogue visibility or publication approval was changed"
+  ]
+}

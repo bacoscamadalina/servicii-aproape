@@ -1,0 +1,58 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE|default:'ro' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta name="description" content="{% translate 'Creează contul de client ServiciiAproape și urmărește solicitările și ofertele într-un singur loc.' %}">
+  <title>{% translate "Cont nou de client" %} — ServiciiAproape</title>
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260914-6">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body class="customer-portal-body">
+  <a class="skip-link" href="#customer-register">{% translate "Sari la înregistrare" %}</a>
+  <header class="site-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">{% include "services/partials/editorial_brand_mark.html" %}<span>Servicii<span>Aproape</span></span></a>
+    {% include "services/partials/language_switcher.html" %}
+  </header>
+  <main id="customer-register" class="customer-access-page">
+    <section class="customer-access-intro" aria-labelledby="customer-register-title">
+      <div>
+        <h1 id="customer-register-title">{% translate "Proiectele casei tale, într-un singur loc." %}</h1>
+        <p>{% translate "Cauți firme, trimiți cereri de ofertă și urmărești răspunsurile fără să păstrezi linkuri separate." %}</p>
+      </div>
+      <ol class="customer-access-benefits">
+        <li><strong>{% translate "Caută local" %}</strong><span>{% translate "Alege județul, localitatea și serviciul de care ai nevoie." %}</span></li>
+        <li><strong>{% translate "Compară ofertele" %}</strong><span>{% translate "Vezi răspunsurile firmelor pentru aceeași lucrare." %}</span></li>
+        <li><strong>{% translate "Păstrează legătura" %}</strong><span>{% translate "Conversațiile și starea proiectului rămân în contul tău." %}</span></li>
+      </ol>
+    </section>
+    <section class="customer-form-panel" aria-labelledby="customer-form-title">
+      <header><h2 id="customer-form-title">{% translate "Creează contul" %}</h2><p>{% translate "Accesul este gratuit și se activează imediat." %}</p></header>
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {% if customer_form.non_field_errors %}<div class="form-alert" role="alert">{{ customer_form.non_field_errors }}</div>{% endif %}
+        <div class="customer-form-grid">
+          {% for field in customer_form %}
+            {% if field.is_hidden %}{{ field }}{% else %}
+              <div class="provider-field{% if field.name == 'privacy_consent' %} customer-consent{% endif %}">
+                {% if field.name == 'privacy_consent' %}{{ field }}{% endif %}
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {% if field.name != 'privacy_consent' %}{{ field }}{% endif %}
+                {% if field.help_text %}<div class="provider-help">{{ field.help_text|safe }}</div>{% endif %}
+                {% for error in field.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <button class="provider-submit" type="submit">{% translate "Creează contul de client" %}</button>
+        <p class="customer-form-switch">{% translate "Ai deja cont?" %} <a href="{% url 'services:customer_login' %}">{% translate "Autentifică-te" %}</a></p>
+      </form>
+    </section>
+  </main>
+  {% include "services/partials/site_footer.html" %}
+</body>
+</html>

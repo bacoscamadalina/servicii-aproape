@@ -1,0 +1,44 @@
+{
+  "scope": "Docker infrastructure and synthetic private transfer; not public launch",
+  "real_database_exported": false,
+  "external_cloud_deployed": false,
+  "publication_approvals_changed": false,
+  "docker_build": "passed; 139 static files collected, 417 post-processed",
+  "compose_validation": "passed",
+  "postgresql_tests": {"passed": 201, "skipped": 0, "seconds": 43.782, "keepdb": true},
+  "focused_sqlite_deployment_tests": {"passed": 14, "seconds": 0.778},
+  "javascript_race_test": "passed",
+  "migration_drift": "none",
+  "synthetic_transfer": {
+    "county_scopes": 42,
+    "current_registry_rows": 84,
+    "dump_bytes": 224446,
+    "restore": "passed",
+    "second_restore": "refused without overwrite",
+    "restart_persistence": "42 scopes and 84 rows retained",
+    "publicly_readable_counties": 0
+  },
+  "http_checks": {
+    "romanian_home_ms": 23.1,
+    "english_home_ms": 8.2,
+    "admin_login_ms": 4.8,
+    "hashed_css_ms": 1.5,
+    "local_https_status": 200,
+    "local_https_seconds": 0.013778,
+    "invalid_host_status": 400,
+    "private_media_env_and_backup_paths": 404,
+    "secure_cookie_and_hsts": "passed"
+  },
+  "browser": {
+    "desktop_width": 1280,
+    "mobile_width": 375,
+    "horizontal_overflow": false,
+    "console_warnings_or_errors": 0,
+    "county_locality_search_and_language_switch": "passed",
+    "screenshots": [
+      "apps/casa_mea/.impeccable/review/cloud-desktop.png",
+      "apps/casa_mea/.impeccable/review/cloud-mobile.png"
+    ]
+  },
+  "independent_review": "SHIP scaffolding; real-data migration and public launch deferred"
+}

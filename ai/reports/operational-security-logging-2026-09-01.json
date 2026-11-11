@@ -1,0 +1,78 @@
+{
+  "result": "PASS",
+  "contract": {
+    "logger": "services.security",
+    "format": "JSON",
+    "destination": "container standard error stream",
+    "allowlisted_fields": [
+      "timestamp",
+      "level",
+      "logger",
+      "message",
+      "event",
+      "scope",
+      "exception_type"
+    ],
+    "forbidden_data": [
+      "account identifiers",
+      "e-mail recipients",
+      "passwords",
+      "bearer tokens",
+      "request URLs",
+      "exception messages",
+      "arbitrary LogRecord fields"
+    ],
+    "events": [
+      "account_login_throttled",
+      "provider_password_reset_throttled",
+      "provider_claim_creation_throttled",
+      "provider_claim_delivery_failed",
+      "provider_invitation_delivery_failed",
+      "smtp_probe_failed",
+      "smtp_probe_succeeded"
+    ]
+  },
+  "validation": {
+    "focused_sqlite_tests": {
+      "tests": 36,
+      "skipped": 3,
+      "seconds": 29.386,
+      "result": "PASS"
+    },
+    "complete_sqlite_suite": {
+      "tests": 238,
+      "skipped": 10,
+      "seconds": 39.394,
+      "result": "PASS"
+    },
+    "complete_postgresql_suite": {
+      "tests": 238,
+      "skipped": 0,
+      "seconds": 51.895,
+      "result": "PASS"
+    },
+    "production_compose_validation": "PASS",
+    "production_image_build": "PASS",
+    "production_deployment_check": "PASS",
+    "production_json_event_probe": "PASS",
+    "arbitrary_email_field_excluded_from_probe": true,
+    "django_check": "PASS",
+    "migration_source_drift": "NONE"
+  },
+  "state_changes": {
+    "schema_migration_required": false,
+    "pending_migrations": false,
+    "catalogue_counties": 42,
+    "current_registry_rows": 72880,
+    "internal_preview_counties": 42,
+    "readable_counties_in_this_environment": 0,
+    "publication_approvals": 0,
+    "account_changes": 0,
+    "claim_changes": 0,
+    "publication_or_visibility_changes": 0
+  },
+  "external_follow_up": {
+    "required": true,
+    "reason": "Alert thresholds, log access and retention must be configured on the selected cloud platform."
+  }
+}

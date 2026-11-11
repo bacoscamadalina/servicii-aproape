@@ -1,0 +1,95 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'services/admin_operations.css' %}">
+{% endblock %}
+
+{% block content %}
+  <main class="report-triage">
+    <p><a href="{% url 'admin:services_publicproviderreport_change' report.pk %}">← Înapoi la sesizare</a></p>
+
+    <div class="report-triage__status" aria-label="Starea dosarului">
+      <span><strong>Dosar:</strong> {{ case.get_state_display }}</span>
+      <span><strong>Revizie:</strong> {{ case.revision }}</span>
+      <span><strong>Snapshot raportat:</strong> versiunea {{ report.submission.version }}</span>
+      <span><strong>Vizibilitate curentă:</strong> {{ current_visibility }}</span>
+    </div>
+
+    {% if not snapshot_integrity_valid %}
+      <p class="report-triage__warning" role="alert">Integritatea snapshotului raportat nu mai poate fi confirmată. Analiza obișnuită este blocată.</p>
+    {% elif not snapshot_is_current %}
+      <p class="report-triage__warning">Versiunea raportată nu mai este versiunea curentă. Dosarul rămâne disponibil ca istoric și nu modifică profilul actual.</p>
+    {% endif %}
+
+    <div class="report-triage__grid">
+      <section aria-labelledby="report-facts-heading">
+        <h2 id="report-facts-heading">Sesizarea și versiunea văzută</h2>
+        <dl>
+          <dt>Profil</dt><dd>{{ report.submission.display_name }}</dd>
+          <dt>Motiv</dt><dd>{{ report.get_reason_display }}</dd>
+          <dt>Trimisă la</dt><dd>{{ report.created_at }}</dd>
+          <dt>Descriere</dt><dd class="report-triage__details">{{ report.details }}</dd>
+          <dt>Servicii în snapshot</dt>
+          <dd>{% for service in report.submission.services.all %}{{ service.category }}{% if not forloop.last %}, {% endif %}{% empty %}—{% endfor %}</dd>
+          <dt>Acoperire în snapshot</dt>
+          <dd>{% for place in report.submission.coverage.all %}{{ place.siruta_code }} — {{ place.county }}{% if not forloop.last %}<br>{% endif %}{% empty %}—{% endfor %}</dd>
+          <dt>Contract SHA-256</dt><dd><code>{{ report.submission.contract_sha256 }}</code></dd>
+        </dl>
+      </section>
+
+      <section aria-labelledby="triage-action-heading">
+        <h2 id="triage-action-heading">{% if case.state == "closed" %}Decizie finală{% elif closing %}Închide analiza{% else %}Preia în analiză{% endif %}</h2>
+        <p>Acest flux documentează analiza. Nu retrage profilul, nu schimbă snapshotul și nu dovedește automat o abatere.</p>
+
+        {% if case.state == "closed" %}
+          <p><strong>Concluzie:</strong> {{ case.get_outcome_display }}</p>
+        {% elif not snapshot_integrity_valid %}
+          <p>Acțiunile de analiză sunt indisponibile până la investigarea separată a integrității snapshotului.</p>
+        {% else %}
+          <form method="post" novalidate>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {{ form.expected_revision }}
+            {% if closing %}
+              <fieldset>
+                <legend>{{ form.outcome.label }}</legend>
+                {{ form.outcome }}
+                {{ form.outcome.errors }}
+              </fieldset>
+            {% endif %}
+            <fieldset>
+              <label for="{{ form.internal_note.id_for_label }}"><strong>{{ form.internal_note.label }}</strong></label>
+              {{ form.internal_note }}
+              {% if form.internal_note.help_text %}<p id="{{ form.internal_note.id_for_label }}_helptext">{{ form.internal_note.help_text }}</p>{% endif %}
+              {{ form.internal_note.errors }}
+            </fieldset>
+            <fieldset>
+              <legend>Confirmare</legend>
+              <label>{{ form.acknowledgement }} {{ form.acknowledgement.label }}</label>
+              {{ form.acknowledgement.errors }}
+            </fieldset>
+            <button type="submit">{% if closing %}Înregistrează concluzia{% else %}Preia sesizarea{% endif %}</button>
+          </form>
+        {% endif %}
+      </section>
+    </div>
+
+    <section class="report-triage__events" aria-labelledby="triage-history-heading">
+      <h2 id="triage-history-heading">Jurnalul analizei</h2>
+      <ol>
+        {% for event in events %}
+          <li>
+            <strong>Revizia {{ event.revision }} · {{ event.get_new_state_display }}</strong>
+            {% if event.outcome %} — {{ event.get_outcome_display }}{% endif %}<br>
+            {{ event.created_at }} · {{ event.actor.get_username }}<br>
+            {{ event.internal_note }}
+          </li>
+        {% empty %}
+          <li>Sesizarea nu a fost încă preluată.</li>
+        {% endfor %}
+      </ol>
+    </section>
+  </main>
+{% endblock %}

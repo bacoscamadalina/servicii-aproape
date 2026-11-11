@@ -1,0 +1,91 @@
+{
+  "title": "Alege noua identitate ServiciiAproape",
+  "question": "Trei lumi vizuale complete pentru pagina principală și extinderea treptată în întregul produs.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Semnal local",
+      "kicker": "DIRECȚIA SURPRIZĂ",
+      "lineage": "semnalistică urbană românească, panouri de atelier și indicatoare de cartier",
+      "thesis": "Site-ul devine un sistem viu de orientare: alegi locul, serviciul se aliniază, iar firma potrivită intră în cadru.",
+      "palette": ["#F3F0E8", "#183B36", "#FF6B4A", "#BFE7D7", "#171D1B"],
+      "materials": ["panouri mate", "tipografie cinetică", "fotografie umană decupată"],
+      "viewport": "Un cadru asimetric cu mesajul mare în stânga, căutarea ca bandă de orientare în centru și un profesionist real în dreapta; logo-ul se asamblează din casă, pin și unealtă.",
+      "risk": "Cere animații foarte bine dozate; prea multe mișcări ar transforma orientarea în zgomot.",
+      "raised": [
+        {"from": "Colaj stratificat", "raise": "Logo-ul și serviciile se construiesc din straturi modulare, nu din iconuri generice."},
+        {"from": "Terminal viu", "raise": "Fiecare stare importantă se explică în cuvinte, nu doar prin culoare."},
+        {"from": "Portret coordonat", "raise": "Fiecare ecran folosește maximum trei culori dominante, cu contrast hotărât."}
+      ],
+      "comp": ".impeccable/mocks/decision/servicii-semnal-local.webp"
+    },
+    {
+      "id": "model-pick",
+      "label": "Harta vie",
+      "kicker": "ALEGEREA IMPECCABLE",
+      "lineage": "hărți de transport, ghiduri locale și trasee desenate în timp real",
+      "thesis": "Căutarea locală este însăși povestea: județul, localitatea și serviciul formează un traseu vizual până la firmă.",
+      "palette": ["#FBF7EE", "#143F39", "#E85D3F", "#76B9A6", "#F2C14E"],
+      "materials": ["linii topografice", "marcaje supradimensionate", "fotografie editorială caldă"],
+      "viewport": "O hartă abstractă ocupă fundalul, formularul este o rută în trei opriri, iar rezultatul promis apare ca destinație; logo-ul desenează o casă dintr-o singură linie.",
+      "risk": "Este cea mai familiară direcție pentru un produs local și trebuie executată impecabil ca să nu pară o aplicație generică de hărți.",
+      "comp": ".impeccable/mocks/decision/servicii-harta-vie.webp"
+    },
+    {
+      "id": "challenger-annual",
+      "label": "Ediția locală",
+      "verdict": "competitive",
+      "lineage": "anual de design tipărit pe hârtie necretată",
+      "thesis": "Fiecare pagină arată ca o ediție atent curatoriată a orașului, cu fotografii ample și informația înregistrată precis.",
+      "palette": ["#F7F4EE", "#181A19", "#D9D8F0", "#D96042", "#C8CCC6"],
+      "materials": ["hârtie necretată", "repere de tipar", "ștampilă circulară animată"],
+      "viewport": "O fotografie amplă a unui profesionist este tratată ca planșă editorială, căutarea stă pe o bandă exactă, iar logo-ul devine o ștampilă modernă care se rotește lent.",
+      "case": "Câștigă la claritate și rafinament, dar este mai puțin caldă și spontană decât direcțiile locale.",
+      "risk": "Dacă fotografia și spațiul alb nu sunt excelente, poate părea din nou rigidă.",
+      "comp": ".impeccable/mocks/decision/servicii-editia-locala.webp",
+      "hero": "https://impeccable.style/worlds/cards/design-annual-s-plate-section-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/design-annual-s-plate-section.webp"
+    },
+    {
+      "id": "challenger-papercut",
+      "label": "Colaj stratificat",
+      "verdict": "declined",
+      "lineage": "decupaj de hârtie colorată în straturi",
+      "thesis": "Serviciile se așază în straturi colorate, fiecare alegere completând imaginea casei.",
+      "palette": ["#FFF4D7", "#193A34", "#E84B38", "#F1B934", "#6FAF98"],
+      "materials": ["hârtie mată", "forme decupate", "suprapuneri plate"],
+      "viewport": "O casă mare din straturi se completează pe măsură ce alegi județul, localitatea și serviciul.",
+      "case": "Foarte memorabilă, dar riscă să pară artizanală sau copilăroasă pentru firmele care gestionează lucrări și facturi.",
+      "kept": "Construcția modulară a logo-ului și tranzițiile prin suprapunere.",
+      "risk": "Poate reduce percepția de instrument profesional dacă paleta devine prea jucăușă.",
+      "hero": "https://impeccable.style/worlds/cards/craft-making-lowicz-layered-papercut-hero.webp"
+    },
+    {
+      "id": "challenger-terminal",
+      "label": "Terminal viu",
+      "verdict": "declined",
+      "lineage": "terminal fosforescent și jurnal de sistem",
+      "thesis": "Căutarea devine un dialog rapid în care fiecare alegere imprimă următorul pas.",
+      "palette": ["#07100D", "#8BFFB0", "#D9FFE3"],
+      "materials": ["sticlă întunecată", "text luminos", "urme de mișcare"],
+      "viewport": "Un transcript interactiv conduce vizitatorul de la județ la firmă.",
+      "case": "Are energie, dar publicul larg nu se identifică suficient cu limbajul tehnic și reduce claritatea produsului.",
+      "kept": "Stările se exprimă explicit în text și reacționează instantaneu.",
+      "risk": "Pare un instrument pentru dezvoltatori, nu un serviciu pentru casă.",
+      "hero": "https://impeccable.style/worlds/cards/signals-instruments-phosphor-terminal-midnight-hero.webp"
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "buildPath": {"value": "comp", "toggle": true},
+  "canon": true,
+  "canonCard": {
+    "label": "Marketplace contemporan",
+    "thesis": "Varianta familiară: fotografie mare, formular clar, secțiuni aerisite și componente moderne executate foarte bine.",
+    "palette": ["#FFFFFF", "#173B36", "#F16B4A", "#EEF3EF"],
+    "materials": ["fotografie curată", "panouri moi", "iconografie simplă"],
+    "viewport": "Navigație compactă, mesaj și fotografie în hero, formularul de căutare imediat sub ele.",
+    "risk": "Este ușor de folosit, dar seamănă cel mai mult cu alte platforme de servicii.",
+    "comp": ".impeccable/mocks/decision/servicii-canon.webp"
+  },
+  "steer": true
+}

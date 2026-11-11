@@ -1,0 +1,8 @@
+{% extends "admin/change_form.html" %}
+
+{% block object-tools-items %}
+  {% if original.status == "review_pending" and perms.services.review_provider_registration %}
+    <li><a href="{% url 'admin:services_providerregistrationrequest_review' original.pk %}" class="historylink">Verifică identitatea</a></li>
+  {% endif %}
+  {{ block.super }}
+{% endblock %}

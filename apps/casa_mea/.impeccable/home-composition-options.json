@@ -1,0 +1,46 @@
+{
+  "title": "Alege compoziția pentru Ediția locală",
+  "question": "Identitatea rămâne aceeași. Alegem doar arhitectura primei pagini pe care o voi transforma în cod.",
+  "options": [
+    {
+      "id": "plate",
+      "label": "Planșa editorială",
+      "kicker": "COMPOZIȚIA 01",
+      "lineage": "fotografie centrală și titlu editorial",
+      "thesis": "Povestea și omul conduc, iar căutarea traversează planșa ca instrument principal.",
+      "palette": ["#F7F4EE", "#181A19", "#D9D8F0", "#D96042"],
+      "materials": ["hârtie necretată", "fotografie amplă", "ștampilă animată"],
+      "viewport": "Titlu mare în stânga, profesionistul în dreapta și căutarea peste marginea inferioară a fotografiei.",
+      "risk": "Echilibrată și elegantă, dar mai apropiată de structura clasică a unui hero.",
+      "comp": ".impeccable/mocks/decision/servicii-editia-locala.webp"
+    },
+    {
+      "id": "index",
+      "label": "Indexul viu",
+      "kicker": "COMPOZIȚIA 02",
+      "lineage": "index tipografic și planșă fotografică",
+      "thesis": "Mesajul și căutarea domină primul ecran; fotografia și dovezile locale continuă lectura.",
+      "palette": ["#F7F4EE", "#181A19", "#D9D8F0", "#FF6655"],
+      "materials": ["registru tipografic", "fotografie orizontală", "rigle fine"],
+      "viewport": "Titlu pe toată lățimea, căutare imediat sub el, fotografie mare și o coloană laterală cu repere clare.",
+      "risk": "Foarte clară și energică, dar titlul cere mult spațiu pe ecranele mici.",
+      "comp": ".impeccable/mocks/home-editia-index.webp"
+    },
+    {
+      "id": "rail",
+      "label": "Atelierul editorial",
+      "kicker": "COMPOZIȚIA 03",
+      "lineage": "copertă de anual și rail de navigare",
+      "thesis": "Navigația devine o semnătură laterală, iar fotografia arată meseria chiar în momentul lucrului.",
+      "palette": ["#F7F4EE", "#181A19", "#D9D8F0", "#FF6655"],
+      "materials": ["rail editorial", "fotografie de acțiune", "index de servicii"],
+      "viewport": "Rail vertical în stânga, mesaj și fotografie de acțiune în centru, căutare lată și servicii vizibile la baza ecranului.",
+      "risk": "Cea mai distinctă, dar rail-ul trebuie transformat atent într-un header compact pe mobil.",
+      "comp": ".impeccable/mocks/home-editia-rail.webp"
+    }
+  ],
+  "reroll": false,
+  "canon": false,
+  "steer": true,
+  "buildPath": {"value": "comp", "toggle": false}
+}

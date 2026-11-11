@@ -1,0 +1,78 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE|default:'ro' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, noarchive">
+  <title>{% translate "Simulare abonament" %} — ServiciiAproape</title>
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260914-2">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body class="simulated-checkout-body">
+  <!--
+  THESIS: Abonarea demonstrativă este o repetiție controlată și transparentă, nu o imitație ambiguă a unei plăți reale.
+  OWN-WORLD: Nordic Pro păstrează hârtia minerală, verdele pin, cuprul rar, titlurile Nimbus Narrow și controalele Carlito.
+  STORY: Furnizorul vede exact planul, înțelege că nu oferă date financiare, confirmă simularea și primește 30 de zile de acces demo.
+  FIRST VIEWPORT: Rezumatul planului și avertizarea fără plată conduc în stânga; confirmarea unică și acțiunea stau într-o foaie albă în dreapta.
+  FORM: Code-led Operate extension of the incumbent Professional Toolmaker Catalogue; position 1; seed key incumbent-serviciiaproape-toolmaker-catalogue-v1.
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+  -->
+  <a class="skip-link" href="#checkout-demo">{% translate "Sari la simulare" %}</a>
+  <header class="site-header provider-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    <div class="provider-header-tools">
+      <div class="provider-account-actions">
+        <a href="{% url 'services:provider_dashboard' %}">{% translate "Profilul firmei" %}</a>
+        <form method="post" action="{% url 'services:provider_logout' %}">{% csrf_token %}<button class="provider-logout" type="submit">{% translate "Ieși din cont" %}</button></form>
+      </div>
+      {% include "services/partials/language_switcher.html" %}
+    </div>
+  </header>
+
+  <main id="checkout-demo" class="simulated-checkout-page">
+    <a class="simulated-checkout-back" href="{% url 'services:provider_dashboard' %}#abonament">{% translate "Înapoi la profil" %}</a>
+    <div class="simulated-checkout-layout">
+      <section class="simulated-checkout-intro" aria-labelledby="simulated-checkout-title">
+        <h1 id="simulated-checkout-title">{% translate "Testează planul Esențial" %}<i>.</i></h1>
+        <p><strong>{% translate "Simulare fără plată." %}</strong> {% blocktranslate with company=profile.display_name %}Parcurgi experiența de abonare pentru {{ company }} fără procesator de plăți și fără să introduci date financiare.{% endblocktranslate %}</p>
+        <dl class="simulated-checkout-summary">
+          <div><dt>{% translate "Plan" %}</dt><dd>{% translate "Esențial" %}</dd></div>
+          <div><dt>{% translate "Preț prezentat" %}</dt><dd>{{ monthly_price_ron }} {% translate "lei / lună" %}</dd></div>
+          <div><dt>{% translate "Perioadă demonstrativă" %}</dt><dd>{% translate "30 de zile" %}</dd></div>
+        </dl>
+        <p class="simulated-checkout-truth"><strong>{% translate "Important" %}</strong> — {% translate "valoarea este afișată doar pentru testarea interfeței. Nu se retrag bani și nu se creează o obligație de plată." %}</p>
+      </section>
+
+      <section class="simulated-checkout-sheet" aria-labelledby="simulation-confirmation-title">
+        <div class="simulated-payment-method" aria-hidden="true">
+          <span>{% translate "Metodă demonstrativă" %}</span>
+          <strong>{% translate "Card de test" %}</strong>
+          <p>•••• 4242</p>
+        </div>
+        <h2 id="simulation-confirmation-title">{% translate "Confirmă simularea" %}</h2>
+        <p>{% translate "Nu cerem numărul cardului, data expirării, codul CVV sau adresa de facturare." %}</p>
+        <form method="post" novalidate>
+          {% csrf_token %}
+          {{ checkout_form.expected_revision }}
+          {% if checkout_form.non_field_errors %}<div class="form-alert" role="alert">{{ checkout_form.non_field_errors }}</div>{% endif %}
+          <div class="simulated-checkout-consent{% if checkout_form.acknowledgement.errors %} has-errors{% endif %}">
+            {{ checkout_form.acknowledgement }}
+            <label for="{{ checkout_form.acknowledgement.id_for_label }}">{{ checkout_form.acknowledgement.label }}</label>
+          </div>
+          {% if checkout_form.acknowledgement.errors %}<div class="field-errors" role="alert">{{ checkout_form.acknowledgement.errors }}</div>{% endif %}
+          <button type="submit">{% translate "Simulează și activează 30 de zile" %}</button>
+        </form>
+        <small>{% translate "Activarea este înregistrată ca eveniment demonstrativ și poate fi înlocuită ulterior cu integrarea reală de plată." %}</small>
+      </section>
+    </div>
+  </main>
+
+  {% include "services/partials/site_footer.html" %}
+</body>
+</html>

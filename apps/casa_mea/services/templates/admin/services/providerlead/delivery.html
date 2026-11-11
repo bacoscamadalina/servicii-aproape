@@ -1,0 +1,75 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'services/admin_operations.css' %}">
+{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block content %}
+  <main class="delivery-health">
+    <p><a href="{% url 'admin:services_providerlead_changelist' %}">← Înapoi la solicitări</a></p>
+
+    <header class="delivery-health__intro">
+      <h1>Livrarea notificărilor</h1>
+      <p>Starea actuală a solicitărilor active. Sunt afișate numai numere, fără nume, adrese de e-mail sau descrieri ale lucrărilor. Această pagină nu trimite mesaje și nu schimbă solicitări.</p>
+    </header>
+
+    <section class="delivery-health__status{% if not delivery.valid %} is-alert{% endif %}" aria-label="Starea livrării">
+      <strong>{% if delivery.valid %}Nu sunt livrări nerezolvate{% else %}Sunt livrări de verificat{% endif %}</strong>
+      <p>{% if delivery.valid %}Notificările solicitărilor active nu prezintă erori înregistrate. Revino după trimiterea unor proiecte noi.{% else %}Folosește listele de mai jos pentru cazurile recuperabile. Linkurile expirate și stările neuniforme necesită verificare separată.{% endif %}</p>
+    </section>
+
+    <section class="delivery-health__section" aria-labelledby="delivery-provider-title">
+      <h2 id="delivery-provider-title">Notificări către firme</h2>
+      <ul class="delivery-health__rows">
+        <li>
+          <div><strong>E-mail eșuat</strong><p>Solicitarea există în panoul firmei, dar notificarea nu a fost livrată.</p></div>
+          <span class="delivery-health__count">{{ delivery.provider.failed }}</span>
+          {% if delivery.provider.failed %}<a href="{% url 'admin:services_providerlead_changelist' %}?provider_delivery=failed">Vezi solicitările active</a>{% endif %}
+        </li>
+        <li>
+          <div><strong>Trimitere în așteptare</strong><p>Verifică aceste stări dacă rămân neschimbate după procesarea solicitării.</p></div>
+          <span class="delivery-health__count">{{ delivery.provider.pending }}</span>
+          {% if delivery.provider.pending %}<a href="{% url 'admin:services_providerlead_changelist' %}?provider_delivery=pending">Vezi solicitările active</a>{% endif %}
+        </li>
+      </ul>
+    </section>
+
+    <section class="delivery-health__section" aria-labelledby="delivery-customer-title">
+      <h2 id="delivery-customer-title">Linkuri private pentru clienți fără cont</h2>
+      <p>O solicitare trimisă mai multor firme este numărată o singură dată pentru client.</p>
+      <ul class="delivery-health__rows">
+        <li>
+          <div><strong>Cereri directe · se pot reemite</strong><p>Linkul este încă valabil, dar e-mailul inițial a eșuat.</p></div>
+          <span class="delivery-health__count">{{ delivery.customer_single.recoverable }}</span>
+          {% if delivery.customer_single.recoverable %}<a href="{% url 'admin:services_providerlead_changelist' %}?customer_access=needs_reissue">Vezi cererile</a>{% endif %}
+        </li>
+        <li>
+          <div><strong>Cereri comparative · se pot reemite</strong><p>Un singur link deschide toate răspunsurile proiectului.</p></div>
+          <span class="delivery-health__count">{{ delivery.customer_comparison.recoverable }}</span>
+          {% if delivery.customer_comparison.recoverable %}<a href="{% url 'admin:services_providerleadbatch_changelist' %}?customer_access=needs_reissue">Vezi comparațiile</a>{% endif %}
+        </li>
+        <li>
+          <div><strong>Cereri directe · link expirat</strong><p>Nu poate fi reemis prin fluxul existent. Verifică situația fără a prelungi automat accesul.</p></div>
+          <span class="delivery-health__count">{{ delivery.customer_single.expired }}</span>
+          {% if delivery.customer_single.expired %}<a href="{% url 'admin:services_providerlead_changelist' %}?customer_access=expired">Vezi cererile</a>{% endif %}
+        </li>
+        <li>
+          <div><strong>Cereri comparative · link expirat</strong><p>Proiectul nu mai are un link de acces reemisibil.</p></div>
+          <span class="delivery-health__count">{{ delivery.customer_comparison.expired }}</span>
+          {% if delivery.customer_comparison.expired %}<a href="{% url 'admin:services_providerleadbatch_changelist' %}?customer_access=expired">Vezi comparațiile</a>{% endif %}
+        </li>
+        <li>
+          <div><strong>Comparații cu stare neuniformă</strong><p>Destinatarii aceleiași cereri au stări diferite. Nu reemite automat linkul.</p></div>
+          <span class="delivery-health__count">{{ delivery.customer_comparison.mixed }}</span>
+          {% if delivery.customer_comparison.mixed %}<a href="{% url 'admin:services_providerleadbatch_changelist' %}?customer_access=mixed">Vezi comparațiile</a>{% endif %}
+        </li>
+      </ul>
+    </section>
+
+    <p class="delivery-health__note">Datele sunt calculate la încărcarea paginii și exclud solicitările ale căror date private au fost eliminate prin retenție.</p>
+  </main>
+{% endblock %}

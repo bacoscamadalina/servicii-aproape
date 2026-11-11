@@ -1,0 +1,130 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{% blocktranslate with company_name=company.legal_name %}Solicită revendicarea profilului {{ company_name }} pe ServiciiAproape.{% endblocktranslate %}">
+  <meta name="robots" content="noindex">
+  <title>{% blocktranslate with company_name=company.legal_name %}Revendică {{ company_name }}{% endblocktranslate %} — ServiciiAproape</title>
+  <link rel="canonical" href="{% if LANGUAGE_CODE == 'en' %}{{ absolute_language_url_en }}{% else %}{{ absolute_language_url_ro }}{% endif %}">
+  <link rel="alternate" hreflang="ro" href="{{ absolute_language_url_ro }}">
+  <link rel="alternate" hreflang="en" href="{{ absolute_language_url_en }}">
+  <link rel="alternate" hreflang="x-default" href="{{ absolute_language_url_ro }}">
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260908-9">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body>
+  <a class="skip-link" href="#formular-revendicare">{% translate "Sari la revendicare" %}</a>
+  <header class="site-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    {% include "services/partials/language_switcher.html" %}
+  </header>
+
+  <main id="formular-revendicare" class="claim-page">
+    <a class="detail-back" href="{{ detail_url }}">
+      <svg class="ui-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M17 10H4M9 5l-5 5 5 5"/></svg>
+      {% translate "Înapoi la fișa firmei" %}
+    </a>
+
+    {% if claim_sent %}
+      <section class="claim-result" aria-labelledby="claim-result-title">
+        <span class="claim-result-mark" aria-hidden="true"></span>
+        <div>
+          <h1 id="claim-result-title">{% translate "Cererea a intrat în verificare." %}</h1>
+          <p>{% blocktranslate %}Datele contului pentru <strong>{{ claim_email }}</strong> au fost înregistrate. Nu trebuie să confirmi niciun link primit prin e-mail.{% endblocktranslate %}</p>
+          <p>{% translate "Te vei putea autentifica folosind e-mailul și parola alese după ce administratorul aprobă dreptul de reprezentare." %}</p>
+          <a class="claim-primary-link" href="{{ detail_url }}">{% translate "Revino la fișa firmei" %}</a>
+        </div>
+      </section>
+    {% else %}
+      <div class="claim-layout">
+        <section class="claim-intro" aria-labelledby="claim-title">
+          <h1 id="claim-title">{% blocktranslate with company_name=company.legal_name %}Revendică profilul {{ company_name }}{% endblocktranslate %}</h1>
+          <p>{% translate "Completează datele contului și dovada reprezentării. Contul devine activ numai după aprobarea administratorului, iar datele ONRC rămân neschimbate." %}</p>
+          <dl>
+            <div><dt>{% translate "Firma" %}</dt><dd>{{ company.legal_name }}</dd></div>
+            <div><dt>{% translate "Sediu social" %}</dt><dd>{{ locality_label }}, {{ county }}</dd></div>
+            <div><dt>{% translate "Următorul pas" %}</dt><dd>{% translate "Verificarea administrativă a reprezentării" %}</dd></div>
+          </dl>
+        </section>
+
+        <section class="claim-form-panel" aria-labelledby="form-title">
+          <h2 id="form-title">{% translate "Date pentru verificare" %}</h2>
+          <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            {{ claim_form.website }}
+            {% if claim_form.non_field_errors %}<div class="form-alert">{{ claim_form.non_field_errors }}</div>{% endif %}
+            <div class="claim-field">
+              <label for="{{ claim_form.last_name.id_for_label }}">{{ claim_form.last_name.label }}</label>
+              {{ claim_form.last_name }}
+              {% for error in claim_form.last_name.errors %}<span class="claim-error">{{ error }}</span>{% endfor %}
+            </div>
+            <div class="claim-field">
+              <label for="{{ claim_form.first_name.id_for_label }}">{{ claim_form.first_name.label }}</label>
+              {{ claim_form.first_name }}
+              {% for error in claim_form.first_name.errors %}<span class="claim-error">{{ error }}</span>{% endfor %}
+            </div>
+            <div class="claim-field">
+              <label for="{{ claim_form.username.id_for_label }}">{{ claim_form.username.label }}</label>
+              {{ claim_form.username }}
+              {% for error in claim_form.username.errors %}<span class="claim-error">{{ error }}</span>{% endfor %}
+            </div>
+            <div class="claim-field">
+              <label for="{{ claim_form.role.id_for_label }}">{{ claim_form.role.label }}</label>
+              {{ claim_form.role }}
+              {% for error in claim_form.role.errors %}<span class="claim-error">{{ error }}</span>{% endfor %}
+            </div>
+            <div class="claim-field">
+              <label for="{{ claim_form.email.id_for_label }}">{{ claim_form.email.label }}</label>
+              {{ claim_form.email }}
+              {% for error in claim_form.email.errors %}<span class="claim-error">{{ error }}</span>{% endfor %}
+            </div>
+            <div class="claim-field">
+              <label for="{{ claim_form.password1.id_for_label }}">{{ claim_form.password1.label }}</label>
+              {{ claim_form.password1 }}
+              <small>{{ claim_form.password1.help_text }}</small>
+              {% for error in claim_form.password1.errors %}<span class="claim-error">{{ error }}</span>{% endfor %}
+            </div>
+            <div class="claim-field">
+              <label for="{{ claim_form.password2.id_for_label }}">{{ claim_form.password2.label }}</label>
+              {{ claim_form.password2 }}
+              {% for error in claim_form.password2.errors %}<span class="claim-error">{{ error }}</span>{% endfor %}
+            </div>
+            <div class="claim-field">
+              <label for="{{ claim_form.evidence_type.id_for_label }}">{{ claim_form.evidence_type.label }}</label>
+              {{ claim_form.evidence_type }}
+              {% for error in claim_form.evidence_type.errors %}<span class="claim-error">{{ error }}</span>{% endfor %}
+            </div>
+            <div class="claim-field">
+              <label for="{{ claim_form.evidence_document.id_for_label }}">{{ claim_form.evidence_document.label }}</label>
+              {{ claim_form.evidence_document }}
+              <small>{{ claim_form.evidence_document.help_text }}</small>
+              {% for error in claim_form.evidence_document.errors %}<span class="claim-error">{{ error }}</span>{% endfor %}
+            </div>
+            <div class="claim-consent">
+              {{ claim_form.representation_declaration }}
+              <label for="{{ claim_form.representation_declaration.id_for_label }}">{{ claim_form.representation_declaration.label }}</label>
+            </div>
+            {% for error in claim_form.representation_declaration.errors %}<span class="claim-error">{{ error }}</span>{% endfor %}
+            <div class="claim-consent">
+              {{ claim_form.privacy_consent }}
+              <label for="{{ claim_form.privacy_consent.id_for_label }}">{% translate "Confirm că am citit informațiile despre" %} <a href="{% url 'services:privacy' %}">{% translate "prelucrarea datelor personale" %}</a>.</label>
+            </div>
+            {% for error in claim_form.privacy_consent.errors %}<span class="claim-error">{{ error }}</span>{% endfor %}
+            <button class="claim-submit" type="submit">{% translate "Trimite cererea spre verificare" %}</button>
+          </form>
+          <p class="claim-privacy">{% translate "Parola este stocată numai în formă criptografică. Documentul justificativ este privat și nu apare în catalog." %}</p>
+        </section>
+      </div>
+    {% endif %}
+  </main>
+
+  {% include "services/partials/site_footer.html" %}
+</body>
+</html>

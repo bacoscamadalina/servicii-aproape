@@ -1,0 +1,32 @@
+{% load i18n %}
+{% if quote.lines.all %}
+  <div class="customer-quote-lines">
+    <table>
+      <caption>{% translate "Detaliile ofertei" %}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{% translate "Lucrare sau material" %}</th>
+          <th scope="col">{% translate "Cantitate" %}</th>
+          <th scope="col">{% translate "Preț unitar" %}</th>
+          <th scope="col">{% translate "Valoare" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for line in quote.lines.all %}
+          <tr>
+            <th scope="row">{{ line.description }}</th>
+            <td data-label="{% translate 'Cantitate' %}">{{ line.quantity|floatformat:"-2" }} {{ line.unit }}</td>
+            <td data-label="{% translate 'Preț unitar' %}">{{ line.unit_price_ron|floatformat:2 }} {% translate "lei" %}</td>
+            <td data-label="{% translate 'Valoare' %}">{{ line.total_ron|floatformat:2 }} {% translate "lei" %}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <th scope="row" colspan="3">{% translate "Total ofertă" %}</th>
+          <td data-label="{% translate 'Total ofertă' %}">{{ quote.amount_ron|floatformat:2 }} {% translate "lei" %}</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+{% endif %}

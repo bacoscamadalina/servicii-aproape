@@ -1,0 +1,82 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{% translate 'Condițiile de utilizare și limitele catalogului ServiciiAproape.' %}">
+  <title>{% translate "Termeni de utilizare" %} — ServiciiAproape</title>
+  <link rel="canonical" href="{% if LANGUAGE_CODE == 'en' %}{{ absolute_language_url_en }}{% else %}{{ absolute_language_url_ro }}{% endif %}">
+  <link rel="alternate" hreflang="ro" href="{{ absolute_language_url_ro }}">
+  <link rel="alternate" hreflang="en" href="{{ absolute_language_url_en }}">
+  <link rel="alternate" hreflang="x-default" href="{{ absolute_language_url_ro }}">
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260908-9">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body>
+  <a class="skip-link" href="#continut-legal">{% translate "Sari la conținut" %}</a>
+  <header class="site-header legal-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    {% include "services/partials/language_switcher.html" %}
+  </header>
+
+  <main id="continut-legal" class="legal-page">
+    <header class="legal-title">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 6h28v36H10z"/><path d="M17 15h14M17 23h14M17 31h9"/></svg>
+      <div>
+        <h1>{% translate "Termeni de utilizare" %}<span class="accent-period">.</span></h1>
+        <p>{% blocktranslate with version=legal_policy_version %}Versiune aplicabilă din {{ version }}. Folosind platforma, accepți regulile și limitele explicate mai jos.{% endblocktranslate %}</p>
+      </div>
+    </header>
+
+    <div class="legal-layout">
+      <nav aria-label="{% translate 'Cuprins' %}">
+        <a href="#catalog">01 {% translate "Rolul catalogului" %}</a>
+        <a href="#verificare">02 {% translate "Verificarea furnizorilor" %}</a>
+        <a href="#conturi">03 {% translate "Conturi și conținut" %}</a>
+        <a href="#utilizare">04 {% translate "Utilizare permisă" %}</a>
+        <a href="#raspundere">05 {% translate "Răspundere și contact" %}</a>
+      </nav>
+      <article class="legal-copy">
+        <section id="catalog">
+          <h2>{% translate "Un catalog informativ, nu o recomandare" %}</h2>
+          <p>{% translate "ServiciiAproape ajută vizitatorii să găsească firme și furnizori pentru casă după localitate și categorie. Prezența într-un rezultat nu constituie recomandare, certificare a calității, ofertă sau garanție a disponibilității." %}</p>
+          <p>{% translate "Sediul social dintr-o localitate nu dovedește automat că firma prestează acolo. Acoperirea declarată de furnizor este afișată separat de datele registrului și numai după fluxul de verificare al platformei." %}</p>
+        </section>
+
+        <section id="verificare">
+          <h2>{% translate "Verifică înainte de a contracta" %}</h2>
+          <p>{% translate "Datele publice pot fi incomplete, întârziate sau schimbate la sursă. Înainte de a cumpăra un serviciu, verifică identitatea, calificările, autorizațiile, asigurarea, prețul, termenul, garanția și contractul direct cu furnizorul." %}</p>
+          <p>{% translate "ServiciiAproape nu este parte în contractul dintre vizitator și furnizor, nu încasează plata lucrării și nu controlează executarea ei. Orice etichetă de verificare descrie doar verificarea concretă explicată lângă profil." %}</p>
+        </section>
+
+        <section id="conturi">
+          <h2>{% translate "Conturile furnizorilor și conținutul publicat" %}</h2>
+          <p>{% translate "Furnizorul trebuie să ofere informații corecte, actuale și relevante și să publice numai texte și imagini asupra cărora are drepturile necesare. Accesul la o firmă nu poate fi transmis unei persoane neautorizate." %}</p>
+          <p>{% translate "Putem cere dovezi, respinge modificări, suspenda vizibilitatea sau retrage un profil când informațiile nu mai pot fi susținute, când există risc de confuzie ori când regulile platformei sunt încălcate." %}</p>
+        </section>
+
+        <section id="utilizare">
+          <h2>{% translate "Utilizare permisă" %}</h2>
+          <p>{% translate "Poți folosi căutarea și fișele pentru informare și pentru a contacta furnizori în legătură cu un proiect real. Nu este permisă extragerea masivă de date, ocolirea limitelor tehnice, accesul neautorizat, trimiterea de conținut ilegal ori înșelător sau folosirea platformei pentru hărțuire și spam." %}</p>
+          <p>{% translate "Poți trimite proiectul direct unei firme sau, prin cererea comparată, către toate firmele eligibile cu profil public, abonament activ și acoperire declarată pentru serviciul și localitatea alese. Selecția nu este un clasament sau o recomandare. Poți discuta separat cu fiecare firmă și poți accepta o singură ofertă pentru proiect." %}</p>
+          <p>{% translate "Poți publica o singură recenzie pentru o ofertă acceptată prin platformă. Recenzia trebuie să descrie experiența proprie, fără date personale inutile, afirmații ilegale sau conținut înșelător; verificarea înainte de publicare nu transformă evaluarea într-o recomandare a platformei." %}</p>
+          <p>{% translate "Elementele originale de design, textele editoriale și codul platformei sunt protejate. Drepturile asupra datelor provenite din surse terțe rămân supuse regulilor acelor surse." %}</p>
+        </section>
+
+        <section id="raspundere">
+          <h2>{% translate "Disponibilitate, modificări și contact" %}</h2>
+          <p>{% translate "Depunem eforturi rezonabile pentru continuitate și corectitudine, dar serviciul poate fi întrerupt pentru mentenanță, securitate sau evenimente în afara controlului operatorului. Putem actualiza acești termeni când platforma sau cerințele legale se schimbă; versiunea și data aplicării rămân vizibile aici." %}</p>
+          <p>{% blocktranslate with operator=legal_operator_name email=privacy_email %}Platforma este operată de <strong>{{ operator }}</strong>. Pentru întrebări privind acești termeni, scrie la <a href="mailto:{{ email }}">{{ email }}</a>.{% endblocktranslate %}</p>
+        </section>
+      </article>
+    </div>
+  </main>
+  {% include "services/partials/site_footer.html" %}
+</body>
+</html>

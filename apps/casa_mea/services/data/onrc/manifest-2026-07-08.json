@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "source": "Oficiul Național al Registrului Comerțului",
+  "snapshot_date": "2026-07-08",
+  "dataset_url": "https://data.gov.ro/dataset/firme-08-07-2026",
+  "nomenclatures_url": "https://data.gov.ro/dataset/nomenclatoare-08-07-2026",
+  "license": "CC BY 4.0",
+  "resources": {
+    "firms": {
+      "name": "OD_FIRME.CSV",
+      "filename": "od_firme.csv",
+      "size_bytes": 690469553,
+      "sha256": "bb4168ab2facee519d567fb0381a890ece5901bdc4cf22452d1dd17c41c27c0b",
+      "url": "https://data.gov.ro/dataset/6f73f5a0-f981-4676-85fa-3a66a963984e/resource/fc12eb5c-ce0f-46f1-8ef9-216925d3009d/download/od_firme.csv"
+    },
+    "activities": {
+      "name": "OD_CAEN_AUTORIZAT.CSV",
+      "filename": "od_caen_autorizat.csv",
+      "size_bytes": 425473922,
+      "sha256": "bd9ed5da7743026b3f68ae63546611ac9d97e5fa726bc5a7c667db2d0663e117",
+      "url": "https://data.gov.ro/dataset/6f73f5a0-f981-4676-85fa-3a66a963984e/resource/0ea68d7f-a840-4d4a-a78e-aa5fd5cd7a60/download/od_caen_autorizat.csv"
+    },
+    "statuses": {
+      "name": "OD_STARE_FIRMA.CSV",
+      "filename": "od_stare_firma.csv",
+      "size_bytes": 91243639,
+      "sha256": "affcf9819b782718a66b55feb5e56924816c49c4ad1d0f9408b5f4268b9cbddf",
+      "url": "https://data.gov.ro/dataset/6f73f5a0-f981-4676-85fa-3a66a963984e/resource/7b1f9db0-ed3a-44c4-8043-f42a2e5a8a93/download/od_stare_firma.csv"
+    },
+    "caen_dictionary": {
+      "name": "N_CAEN.CSV",
+      "filename": "n_caen.csv",
+      "size_bytes": 276396,
+      "sha256": "45f207eb6634eea667c8450e20ac8197743ba7ec2371d19a269b20e24f07b34f",
+      "url": "https://data.gov.ro/dataset/e7d37f81-ca9b-498e-b672-8b971c202e39/resource/97eb648a-4c4c-4473-81c5-6e79d2e54576/download/n_caen.csv"
+    },
+    "status_dictionary": {
+      "name": "N_STARE_FIRMA.CSV",
+      "filename": "n_stare_firma.csv",
+      "size_bytes": 12740,
+      "sha256": "c3b4af92691fe6bb47e924e13070b80c605672225c399e1f48ef5b578beadf9b",
+      "url": "https://data.gov.ro/dataset/e7d37f81-ca9b-498e-b672-8b971c202e39/resource/c0115456-723a-43e1-9ed4-5c0e93fd089c/download/n_stare_firma.csv"
+    },
+    "caen_versions": {
+      "name": "N_VERSIUNE_CAEN.CSV",
+      "filename": "n_versiune_caen.csv",
+      "size_bytes": 90,
+      "sha256": "3e4f61cf2c3696bc281997a44d5072acfbfe51b5c5a5ce74d3aaba5cdd499ef7",
+      "url": "https://data.gov.ro/dataset/e7d37f81-ca9b-498e-b672-8b971c202e39/resource/ffdc75b7-8504-454b-8ba3-7869f33579e1/download/n_versiune_caen.csv"
+    }
+  },
+  "siruta_catalogue": {
+    "source_date": "2025-01-01",
+    "repository_path": "services/data/localities.json",
+    "size_bytes": 492698,
+    "sha256": "a5c5170ce2c00616fa170442c7fe7316d56186c96f75cbf9b00cc5d65993a4ef"
+  },
+  "siruta_hierarchy": {
+    "source_date": "2025-01-01",
+    "repository_path": "services/data/localities_hierarchy.json",
+    "size_bytes": 2132049,
+    "sha256": "dc2eba53d0ea516b8c7a8dfc73ba1d1ca0b40c1e00caecd69d00e04fb762059c"
+  }
+}

@@ -1,0 +1,120 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{% translate 'Află cum revendici firma și publici un profil verificat pe ServiciiAproape.' %}">
+  <title>{% translate "Pentru profesioniști" %} — ServiciiAproape</title>
+  <link rel="canonical" href="{% if LANGUAGE_CODE == 'en' %}{{ absolute_language_url_en }}{% else %}{{ absolute_language_url_ro }}{% endif %}">
+  <link rel="alternate" hreflang="ro" href="{{ absolute_language_url_ro }}">
+  <link rel="alternate" hreflang="en" href="{{ absolute_language_url_en }}">
+  <link rel="alternate" hreflang="x-default" href="{{ absolute_language_url_ro }}">
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260909-7">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body class="professionals-body">
+  <a class="skip-link" href="#continut">{% translate "Sari la conținut" %}</a>
+  <header class="site-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    <nav aria-label="{% translate 'Navigație profesioniști' %}">
+      <a href="{% url 'services:home' %}#cautare">{% translate "Catalogul de firme" %}</a>
+      <a href="{% url 'services:subscription_plan' %}">{% translate "Abonament" %}</a>
+      <a class="nav-action" href="{% url 'services:provider_login' %}">{% translate "Intră în cont" %}</a>
+    </nav>
+    {% include "services/partials/language_switcher.html" %}
+  </header>
+
+  <div class="journal-index" aria-label="{% translate 'Etapele accesului pentru profesioniști' %}">
+    <span>{% translate "Revendicare" %}</span>
+    <span>{% translate "Cont" %}</span>
+    <span>{% translate "Verificare" %}</span>
+    <span>{% translate "Autentificare" %}</span>
+    <span>{% translate "Profil" %}</span>
+  </div>
+
+  <main id="continut" class="professionals-page">
+    <section class="professionals-hero" aria-labelledby="professionals-title">
+      <div>
+        <p class="editorial-kicker">{% translate "Pentru firme și profesioniști locali" %}</p>
+        <h1 id="professionals-title">{% translate "Fă serviciile firmei ușor de găsit acolo unde lucrezi" %}<span class="accent-period">.</span></h1>
+      </div>
+      <div class="professionals-intro">
+        <div class="professionals-intro-heading">
+          <span class="professionals-intro-icon" aria-hidden="true">
+            <svg viewBox="0 0 40 40"><path d="M8 33V14l12-7 12 7v19M15 33V22h10v11M5 33h30"/><path d="M15 16h.01M25 16h.01"/></svg>
+          </span>
+          <div>
+            <h2>{% translate "Alege cum vrei să începi" %}</h2>
+            <p>{% translate "Revendică o firmă existentă sau solicită înscrierea uneia noi." %}</p>
+          </div>
+        </div>
+        <div class="professionals-actions">
+          <a class="professionals-choice professionals-primary" href="{% url 'services:home' %}#cautare">
+            <span><small>{% translate "Firma există în catalog" %}</small><strong>{% translate "Caută firma în catalog" %}</strong></span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="professionals-choice professionals-secondary" href="{% url 'services:company_registration' %}">
+            <span><small>{% translate "Firma nu apare în catalog" %}</small><strong>{% translate "Firma lipsește? Înscrie-o" %}</strong></span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+        <p class="professionals-verification-note">{% translate "În ambele cazuri alegi datele contului și trimiți privat dovada dreptului de reprezentare. Nu este necesar un link de confirmare; contul se activează numai după verificarea administrativă." %}</p>
+        <nav class="professionals-support-links" aria-label="{% translate 'Resurse pentru profesioniști' %}">
+          <a href="{% url 'services:subscription_plan' %}">{% translate "Vezi costul abonamentului" %}</a>
+          <a href="{% url 'services:provider_login' %}">{% translate "Ai deja cont? Intră în panou" %}</a>
+        </nav>
+      </div>
+    </section>
+
+    <section class="professional-roadmap" aria-labelledby="roadmap-title">
+      <div class="professional-roadmap-heading">
+        <p class="editorial-kicker">{% translate "Traseul real" %}</p>
+        <h2 id="roadmap-title">{% translate "De la fișa ONRC la profilul public" %}</h2>
+      </div>
+      <ol>
+        <li>
+          <span>01</span>
+          <div><h3>{% translate "Caută firma" %}</h3><p>{% translate "Alege județul, localitatea și serviciul, apoi deschide fișa firmei din catalogul activ." %}</p></div>
+        </li>
+        <li>
+          <span>02</span>
+          <div><h3>{% translate "Demonstrează reprezentarea" %}</h3><p>{% translate "Completează rolul și încarcă un document ONRC recent, o împuternicire semnată sau un document oficial al firmei. Nu încărca actul de identitate." %}</p></div>
+        </li>
+        <li>
+          <span>03</span>
+          <div><h3>{% translate "Trimite și așteaptă verificarea" %}</h3><p>{% translate "Cererea intră direct în verificarea administrativă. Administratorul validează dreptul de reprezentare înainte de activarea contului." %}</p></div>
+        </li>
+        <li>
+          <span>04</span>
+          <div><h3>{% translate "Autentifică-te și completează profilul" %}</h3><p>{% translate "După aprobare intri direct cu e-mailul și parola alese. În panou poți declara serviciile, aria de acoperire și portofoliul, care trec separat prin revizuire înainte de publicare." %}</p></div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="professional-unlisted" aria-labelledby="unlisted-title">
+      <div>
+        <p class="editorial-kicker">{% translate "Firma nu este în catalog" %}</p>
+        <h2 id="unlisted-title">{% translate "Poți începe și fără o fișă existentă" %}</h2>
+        <p>{% translate "Ne trimiți denumirea juridică, CUI-ul, numărul din registrul comerțului, sediul social, datele contului și dovada privată a reprezentării. Administratorul verifică identitatea și mută solicitarea în fluxul normal de revendicare." %}</p>
+      </div>
+      <a class="professionals-primary" href="{% url 'services:company_registration' %}">{% translate "Solicită înscrierea firmei" %}</a>
+    </section>
+
+    <aside class="professional-boundary" aria-labelledby="boundary-title">
+      <div>
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 27 7v8c0 7-4.5 11.5-11 14C9.5 26.5 5 22 5 15V7l11-4Z"/><path d="m11 16 3 3 7-7"/></svg>
+        <h2 id="boundary-title">{% translate "Ce rămâne separat" %}</h2>
+      </div>
+      <p>{% translate "Datele juridice preluate din ONRC nu pot fi rescrise din panoul furnizorului. O revendicare confirmată nu este o recomandare ServiciiAproape și nu publică automat profilul." %}</p>
+    </aside>
+  </main>
+
+  {% include "services/partials/site_footer.html" %}
+</body>
+</html>

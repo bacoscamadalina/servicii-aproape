@@ -1,0 +1,11 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_urls %}
+
+{% block object-tools-items %}
+  {% if original.decision == "pending" and not original.superseded_at and perms.services.review_provider_service_area %}
+    <li>
+      <a href="{% url 'admin:services_providerserviceareasubmission_review' original.pk %}" class="historylink">Verifică revizia</a>
+    </li>
+  {% endif %}
+  {{ block.super }}
+{% endblock %}

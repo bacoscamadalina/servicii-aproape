@@ -1,0 +1,187 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{% blocktranslate with provider_name=provider.display_name %}Profilul furnizorului {{ provider_name }} pe ServiciiAproape.{% endblocktranslate %}">
+  <title>{{ provider.display_name }} — ServiciiAproape</title>
+  <link rel="canonical" href="{% if LANGUAGE_CODE == 'en' %}{{ absolute_language_url_en }}{% else %}{{ absolute_language_url_ro }}{% endif %}">
+  <link rel="alternate" hreflang="ro" href="{{ absolute_language_url_ro }}">
+  <link rel="alternate" hreflang="en" href="{{ absolute_language_url_en }}">
+  <link rel="alternate" hreflang="x-default" href="{{ absolute_language_url_ro }}">
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260916-4">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body class="provider-showcase-body">
+  <!--
+  THESIS: The public provider profile is an ordered local project sheet that makes
+  identity, service fit, direct contact and proof of work easy to scan.
+  OWN-WORLD: It extends ServiciiAproape's warm, ruled “Jurnalul de cartier” system.
+  STORY: A visitor identifies the provider, confirms service and locality, then reaches
+  provider-supplied contact without confusing declarations with endorsement.
+  FIRST VIEWPORT: Provider identity and exact service fit lead; contact follows immediately,
+  before the long-form company presentation.
+  FORM: Code-led surface refinement, seed 86a22236; one compact editorial fact sheet.
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+  -->
+  <a class="skip-link" href="#profil-public">{% translate "Sari la profil" %}</a>
+  <header class="site-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    <nav aria-label="{% translate 'Navigație principală' %}">
+      <a class="nav-saved" href="{% url 'services:provider_shortlist' %}">{% translate "Firme salvate" %}{% if saved_provider_count %}<span>{{ saved_provider_count }}</span>{% endif %}</a>
+    </nav>
+    {% include "services/partials/language_switcher.html" %}
+  </header>
+
+  <div class="journal-index detail-index" aria-label="{% translate 'Rubricile profilului' %}">
+    <span>{% translate "Profil" %}</span>
+    <span>{% translate "Servicii" %}</span>
+    <span>{% translate "Contact" %}</span>
+    <span>{% translate "Portofoliu" %}</span>
+  </div>
+
+  <main id="profil-public" class="public-provider-detail">
+    <a class="detail-back" href="{{ back_url }}">
+      <svg class="ui-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M17 10H4M9 5l-5 5 5 5"/></svg>
+      {% translate "Înapoi la rezultate" %}
+    </a>
+
+    <section class="public-provider-identity provider-showcase-hero" aria-labelledby="public-provider-name">
+      <div class="provider-identity-copy">
+        <div class="company-monogram" aria-hidden="true">{{ provider.initials }}</div>
+        <div>
+          <h1 id="public-provider-name">{{ provider.display_name }}</h1>
+          {% if provider.legal_name != provider.display_name %}<p>{{ provider.legal_name }}</p>{% endif %}
+          {% if provider.preview %}<span class="preview-label provider-preview-disclosure">{% translate "Previzualizare internă a profilului" %}</span>{% endif %}
+        </div>
+      </div>
+      <form class="provider-hero-save" method="post" action="{% url 'services:provider_shortlist_toggle' provider.public_id %}?{{ request.GET.urlencode }}">
+        {% csrf_token %}
+        <input type="hidden" name="return_to" value="profile">
+        <button type="submit" aria-label="{% if provider_is_saved %}{% translate 'Elimină din lista salvată' %}{% else %}{% translate 'Salvează firma' %}{% endif %}" title="{% if provider_is_saved %}{% translate 'Elimină din lista salvată' %}{% else %}{% translate 'Salvează firma' %}{% endif %}" aria-pressed="{% if provider_is_saved %}true{% else %}false{% endif %}">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg>
+        </button>
+      </form>
+      <div class="provider-hero-summary">
+        <dl class="provider-hero-facts">
+          <div><dt>{% translate "Serviciu" %}</dt><dd>{{ provider.category_labels|join:", " }}</dd></div>
+          <div><dt>{% translate "Localitate" %}</dt><dd>{{ provider.searched_locality_label }}</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <div class="public-provider-sheet">
+      <aside class="public-provider-contact" aria-labelledby="contact-title">
+        <h2 id="contact-title"><svg class="section-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h4l2 5-3 2a15 15 0 0 0 4 4l2-3 5 2v4c0 2-2 4-4 4A18 18 0 0 1 3 7c0-2 2-4 4-4Z"/></svg>{% translate "Contactează firma" %}</h2>
+
+        <a class="provider-request-quote" href="{{ request_quote_url }}" data-provider-engagement="quote_request">
+          <span><strong>{% translate "Solicită o ofertă" %}</strong><small>{% translate "Trimite detaliile lucrării prin ServiciiAproape" %}</small></span>
+          <svg class="ui-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"/></svg>
+        </a>
+
+        <div class="provider-contact-methods">
+          <section>
+            <span>{% translate "Telefon" %}</span>
+            {% if provider.public_phone %}
+              <a class="provider-contact-action" href="tel:{{ provider.public_phone }}" data-provider-engagement="phone" aria-label="{% translate 'Sună firma la' %} {{ provider.public_phone }}"><strong>{{ provider.public_phone }}</strong><svg class="ui-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"/></svg></a>
+            {% else %}
+              <strong class="provider-contact-missing">{% translate "Nu a fost publicat" %}</strong>
+            {% endif %}
+          </section>
+          <section>
+            <span>{% translate "E-mail de contact" %}</span>
+            {% if provider.public_email %}
+              <a class="provider-contact-action provider-contact-action-secondary" href="mailto:{{ provider.public_email }}" data-provider-engagement="email" aria-label="{% translate 'Trimite e-mail firmei la' %} {{ provider.public_email }}"><strong>{{ provider.public_email }}</strong><svg class="ui-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"/></svg></a>
+            {% else %}
+              <strong class="provider-contact-missing">{% translate "Nu a fost publicat" %}</strong>
+            {% endif %}
+          </section>
+        </div>
+
+        <h3>{% translate "Adresă și online" %}</h3>
+        <dl class="provider-contact-directory">
+          <div><dt>{% translate "Adresă profesională declarată" %}</dt><dd>{% if provider.public_address %}{{ provider.public_address }}{% else %}<span>{% translate "Nu a fost publicată" %}</span>{% endif %}</dd></div>
+          <div><dt>{% translate "Website" %}</dt><dd>{% if provider.website %}<a href="{{ provider.website }}" rel="noopener noreferrer" data-provider-engagement="website">{{ provider.website }}</a>{% else %}<span>{% translate "Nu a fost publicat" %}</span>{% endif %}</dd></div>
+        </dl>
+
+        <h3>{% translate "Zone deservite" %}</h3>
+        <ul class="provider-coverage-list">
+          {% for area in provider.coverage_areas %}
+            <li class="provider-coverage-item">
+              <div><span>{% translate "Județ" %}</span><strong>{{ area.county }}</strong></div>
+              <div><span>{% translate "Localitate" %}</span><strong>{{ area.locality }}</strong></div>
+            </li>
+          {% endfor %}
+        </ul>
+        <p>{% translate "Informațiile și zonele deservite sunt furnizate de firmă." %}</p>
+      </aside>
+
+      <section class="public-provider-about" aria-labelledby="about-title">
+        <h2 id="about-title"><svg class="section-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V7l8-4 8 4v13H4Z"/><path d="M8 20v-6h8v6M8 9h.01M12 9h.01M16 9h.01"/></svg>{% translate "Despre firmă" %}</h2>
+        <p>{{ provider.description }}</p>
+      </section>
+    </div>
+
+    {% if customer_reviews %}
+      <section class="public-provider-reviews" aria-labelledby="reviews-title">
+        <header>
+          <div>
+            <h2 id="reviews-title">{% translate "Recenzii de la clienți" %}</h2>
+            <p>{% translate "Evaluări provenite din solicitări și oferte acceptate prin platformă." %}</p>
+          </div>
+          <div class="provider-review-score"><strong>{{ review_average|floatformat:1 }}</strong><span>/ 5 · {% blocktranslate count counter=review_count %}o recenzie{% plural %}{{ counter }} recenzii{% endblocktranslate %}</span></div>
+        </header>
+        <div class="provider-review-list">
+          {% for review in customer_reviews %}
+            <article>
+              <div><strong>{{ review.rating }}/5</strong><span>{{ review.reviewer_display_name }}</span></div>
+              <p>{{ review.body }}</p>
+              {% if review.provider_reply.status == "approved" %}<div class="public-provider-review-reply"><strong>{% translate "Răspunsul firmei" %}</strong><p>{{ review.provider_reply.body }}</p></div>{% endif %}
+            </article>
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+
+    <section class="public-provider-portfolio" aria-labelledby="portfolio-title">
+      <div>
+        <div>
+          <h2 id="portfolio-title"><svg class="section-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16"/><circle cx="9" cy="10" r="2"/><path d="m4 18 5-4 3 2 3-3 5 5"/></svg>{% translate "Lucrări realizate" %}</h2>
+        </div>
+        <p>{% translate "Fotografii încărcate de firmă pentru a prezenta lucrările și serviciile realizate." %}</p>
+      </div>
+      <div class="public-portfolio-grid">
+        {% for image in provider.portfolio %}
+          <figure>
+            <img src="{% url 'services:provider_portfolio_image' image.opaque_id %}" alt="{% if image.caption %}{{ image.caption }}{% else %}{% translate 'Lucrare din portofoliul furnizorului' %}{% endif %}" width="{{ image.width }}" height="{{ image.height }}" loading="lazy" decoding="async">
+            {% if image.caption %}<figcaption>{{ image.caption }}</figcaption>{% endif %}
+          </figure>
+        {% endfor %}
+      </div>
+    </section>
+
+    <aside class="public-profile-report" aria-labelledby="report-profile-title">
+      <div>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 22 20H2L12 3Z"/><path d="M12 9v5M12 17h.01"/></svg>
+        <div>
+          <h2 id="report-profile-title">{% translate "Ai observat o problemă în acest profil?" %}</h2>
+          <p>{% translate "Semnalează informații incorecte, date de contact nefuncționale sau conținut nepotrivit." %}</p>
+        </div>
+      </div>
+      <a href="{{ report_url }}">{% translate "Raportează profilul" %}</a>
+    </aside>
+  </main>
+
+  {% include "services/partials/site_footer.html" %}
+  <form class="visually-hidden" data-provider-engagement-tracker data-endpoint="{% url 'services:provider_engagement' provider.public_id %}?{{ request.GET.urlencode }}" aria-hidden="true">
+    {% csrf_token %}
+  </form>
+  <script src="{% static 'services/provider_engagement.js' %}?v=20260910-1" defer></script>
+</body>
+</html>

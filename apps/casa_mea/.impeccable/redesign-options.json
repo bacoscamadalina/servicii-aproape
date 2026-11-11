@@ -1,0 +1,105 @@
+{
+  "title": "Alege noua direcție ServiciiAproape",
+  "question": "A doua selecție explorează semnalistică de traseu, editorial local și echipament urban.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Stația de traseu",
+      "kicker": "DIRECȚIA PROPUSĂ",
+      "lineage": "stații de drum europene și semnalistică rutieră diurnă",
+      "thesis": "Căutarea devine o oprire simplă pe traseu: alegi zona, serviciul și pleci mai departe cu o direcție clară.",
+      "palette": ["#f7f4eb", "#193f4a", "#55766d", "#df8535"],
+      "materials": ["email alb", "aluminiu periat", "indicatoare monoline"],
+      "viewport": "Un traseu orizontal unește județul, localitatea și serviciul; iconurile mari și precise fac formularul lizibil dintr-o privire.",
+      "risk": "Poate părea prea apropiat de o aplicație de mobilitate dacă serviciile pentru casă nu sunt bine ancorate în iconografie.",
+      "raised": [
+        {"from": "Semnalistica industrială", "raise": "Fiecare zonă este etichetată direct și fără ambiguitate."},
+        {"from": "Harta de metrou", "raise": "Traseul păstrează ordinea județ–localitate–serviciu la orice lățime."},
+        {"from": "Pagina de bandă desenată", "raise": "Primul ecran primește mai mult ritm și o ierarhie mai memorabilă."}
+      ],
+      "comp": ".impeccable/mocks/decision/route-station.webp"
+    },
+    {
+      "id": "model-pick",
+      "label": "Jurnalul de cartier",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "suplimente locale de weekend și directoare editoriale",
+      "thesis": "Platforma arată ca o publicație locală contemporană, cu servicii ordonate editorial și iconuri ca mici viniete.",
+      "palette": ["#f8f3e8", "#213842", "#a4533f", "#789184"],
+      "materials": ["hârtie de ziar premium", "cerneală mată", "viniete gravate"],
+      "viewport": "Titlul și formularul împart o pagină editorială asimetrică, iar serviciile apar ca rubrici, nu ca blocuri grele.",
+      "risk": "Este foarte lizibil și cald, dar poate părea mai puțin tehnologic decât un marketplace convențional.",
+      "comp": ".impeccable/mocks/decision/neighborhood-journal.webp"
+    },
+    {
+      "id": "challenger-workwear",
+      "label": "Echipamentul urban",
+      "verdict": "competitive",
+      "lineage": "etichetare industrială, uniforme de lucru și taguri de inventar",
+      "thesis": "O interfață albă și precisă folosește etichete directe, pictograme robuste și un singur accent portocaliu de siguranță.",
+      "palette": ["#faf9f5", "#1d2529", "#df6f2d", "#aeb7b2"],
+      "materials": ["bumbac tehnic", "etichete cusute", "taguri portocalii"],
+      "viewport": "Formularul se comportă ca o bandă de echipament: trei module clare, iconuri robuste și o acțiune portocalie.",
+      "case": "Identificarea masculină este foarte puternică; pierde puțin la căldura necesară unui serviciu pentru publicul larg.",
+      "risk": "Ghilimelele și marcajele industriale pot deveni reci dacă sunt folosite excesiv.",
+      "comp": ".impeccable/mocks/decision/urban-workwear.webp",
+      "hero": "https://impeccable.style/worlds/cards/textiles-weave-drape-fashion-industrial-quote-grammar-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/textiles-weave-drape-fashion-industrial-quote-grammar.webp"
+    },
+    {
+      "id": "challenger-transit",
+      "label": "Rețeaua metropolitană",
+      "verdict": "declined",
+      "lineage": "diagrame de transport urban",
+      "thesis": "Localitățile și serviciile formează o rețea clară de trasee și intersecții.",
+      "palette": ["#172f4d", "#f6f2e9", "#d34b3f", "#db9a35"],
+      "materials": ["email porțelanat", "linii de traseu"],
+      "viewport": "Județul, localitatea și serviciul apar ca trei stații conectate.",
+      "case": "Mecanismul este foarte clar, dar fondul nocturn contrazice cerința pentru o interfață mai luminoasă.",
+      "kept": "Ordinea alegerilor trebuie să rămână vizibilă ca un traseu continuu.",
+      "risk": "Prea întunecat și prea apropiat de o aplicație de transport.",
+      "hero": "https://impeccable.style/worlds/cards/wayfinding-cartography-signage-midnight-transit-diagram-hero.webp"
+    },
+    {
+      "id": "challenger-comic",
+      "label": "Pagina în mișcare",
+      "verdict": "declined",
+      "lineage": "benzi desenate tipărite în patru culori",
+      "thesis": "Fiecare pas al căutării primește propriul cadru și propria energie.",
+      "palette": ["#f4edda", "#203344", "#c94836", "#ddb43e"],
+      "materials": ["pulp", "puncte de tipar", "casete editoriale"],
+      "viewport": "Căutarea curge prin trei cadre și se încheie cu o acțiune puternică.",
+      "case": "Are ritm, însă expresia pop riscă să reducă încrederea în datele reale ale firmelor.",
+      "kept": "Prima vedere trebuie să aibă o secvență ușor de reținut.",
+      "risk": "Poate părea jucăuș și zgomotos.",
+      "hero": "https://impeccable.style/worlds/cards/pop-culture-shelf-benday-comic-page-hero.webp"
+    },
+    {
+      "id": "challenger-city",
+      "label": "Orașul pliat",
+      "verdict": "declined",
+      "lineage": "hartă urbană textilă și cartiere suprapuse",
+      "thesis": "Cartierele devin straturi moi care se deschid spre serviciile disponibile.",
+      "palette": ["#f3efe5", "#24394d", "#cb9b43", "#80999b"],
+      "materials": ["țesătură", "cusături", "hărți pliate"],
+      "viewport": "Formularul se desface dintr-o hartă simplificată a zonei.",
+      "case": "Este cald și local, dar metafora este prea ilustrativă pentru o platformă bazată pe date.",
+      "kept": "Spațiile pot fi mai moi fără a deveni rotunjite și decorative.",
+      "risk": "Riscul de a părea o poveste, nu un instrument.",
+      "hero": "https://impeccable.style/worlds/cards/dream-surreal-impossible-worlds-sleeping-city-fold-hero.webp"
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "buildPath": {"value": "comp", "toggle": true},
+  "canon": true,
+  "canonCard": {
+    "label": "Marketplace clasic",
+    "thesis": "O interfață familiară de servicii locale, executată curat și fără metaforă vizuală.",
+    "palette": ["#ffffff", "#1f2937", "#2563eb", "#f59e0b"],
+    "materials": ["grilă curată", "carduri funcționale", "iconuri standard"],
+    "viewport": "Titlu, formular mare de căutare și grilă de categorii într-o structură convențională.",
+    "risk": "Clar, dar greu de diferențiat de alte platforme de servicii.",
+    "comp": ".impeccable/mocks/decision/canon.webp"
+  },
+  "steer": true
+}

@@ -1,0 +1,112 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% blocktranslate with service=category_label locality=selected_locality county=selected_county asvar meta_description %}Găsește firme pentru {{ service }} în {{ locality }}, județul {{ county }}. Compară profiluri complete și consultă înregistrările locale din catalog.{% endblocktranslate %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ meta_description }}">
+  {% if catalogue_mode != "registry" %}<meta name="robots" content="noindex, follow">{% endif %}
+  <title>{{ category_label }} {% translate "în" %} {{ selected_locality }}, {{ selected_county }} — ServiciiAproape</title>
+  <link rel="canonical" href="{% if LANGUAGE_CODE == 'en' %}{{ absolute_language_url_en }}{% else %}{{ absolute_language_url_ro }}{% endif %}">
+  <link rel="alternate" hreflang="ro" href="{{ absolute_language_url_ro }}">
+  <link rel="alternate" hreflang="en" href="{{ absolute_language_url_en }}">
+  <link rel="alternate" hreflang="x-default" href="{{ absolute_language_url_ro }}">
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260914-1">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-service-atelier">
+</head>
+<body class="local-service-body local-service-atelier-body">
+  <!--
+    THESIS: O nevoie locală primește propria pagină clară, nu o listă SEO generică.
+    OWN-WORLD: Nordic Pro — hârtie minerală, pin închis, cupru și suprafețe albe precise.
+    STORY: Vizitatorul confirmă serviciul și locul, vede rezultatele reale, apoi schimbă ușor criteriul.
+    FIRST VIEWPORT: Breadcrumb, titlu local amplu, explicație factuală și rezumatul catalogului înaintea listei.
+    FORM: Established-world, code-led Persuade surface extension.
+    FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+  -->
+  <a class="skip-link" href="#rezultate">{% translate "Sari la rezultate" %}</a>
+  <header class="site-header local-service-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    <nav aria-label="{% translate 'Navigație principală' %}">
+      <a href="{% url 'services:home' %}#cautare">{% translate "Caută" %}</a>
+      {% if not read_only_preview %}<a class="nav-saved" href="{% url 'services:provider_shortlist' %}">{% translate "Firme salvate" %}{% if saved_provider_count %}<span>{{ saved_provider_count }}</span>{% endif %}</a>{% endif %}
+      {% if not read_only_preview %}<a class="nav-action" href="{% url 'services:professionals' %}">{% translate "Pentru profesioniști" %}</a>{% endif %}
+    </nav>
+    {% include "services/partials/language_switcher.html" %}
+  </header>
+
+  <main class="local-service-page">
+    <nav class="local-breadcrumb" aria-label="{% translate 'Fir de navigare' %}">
+      <a href="{% url 'services:home' %}">{% translate "Acasă" %}</a>
+      <span aria-hidden="true">/</span>
+      <span>{{ selected_county }}</span>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{{ selected_locality }}</span>
+    </nav>
+
+    <section class="local-service-hero" aria-labelledby="local-service-title">
+      <div class="local-service-intro">
+        <h1 id="local-service-title">{{ category_label }}<br> <span>{% translate "în" %} {{ selected_locality }}</span><i>.</i></h1>
+        <p>{% blocktranslate with locality=selected_locality %}Compară profilurile complete ale firmelor care declară că lucrează în {{ locality }} și consultă separat firmele înregistrate local cu activitate relevantă în catalog.{% endblocktranslate %}</p>
+      </div>
+      {% blocktranslate with service=category_label asvar service_photo_alt %}Fotografie ilustrativă pentru {{ service }}{% endblocktranslate %}
+      <figure class="local-service-media">
+        <img src="{% static art_photo %}" alt="{{ service_photo_alt }}" width="1100" height="733">
+        <figcaption>{% translate "Imagine ilustrativă. Nu reprezintă o lucrare a firmelor listate." %}</figcaption>
+      </figure>
+      <aside class="local-service-summary" aria-label="{% translate 'Criteriile paginii' %}">
+        <div>
+          <span>{% translate "Serviciu" %}</span>
+          <strong>{{ category_label }}</strong>
+          <small>{{ category_description }}</small>
+        </div>
+        <div>
+          <span>{% translate "Loc" %}</span>
+          <strong>{{ selected_locality }}</strong>
+          <small>{% blocktranslate with county=selected_county %}Județul {{ county }}{% endblocktranslate %}</small>
+        </div>
+        <a href="{% url 'services:home' %}?county={{ selected_county|urlencode }}&amp;locality={{ selected_locality_code|urlencode }}&amp;category={{ form.cleaned_data.category|urlencode }}#cautare">
+          {% translate "Schimbă localitatea sau serviciul" %}
+          <svg class="ui-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"/></svg>
+        </a>
+      </aside>
+    </section>
+
+    <section class="results local-service-results" id="rezultate" aria-live="polite">
+      <div class="section-heading">
+        <div>
+          <h2>{% blocktranslate with service=category_label locality=selected_locality %}Firme pentru {{ service }} în {{ locality }}{% endblocktranslate %}</h2>
+          {% if catalogue_mode == "registry_preview" %}
+            <p>{% translate "Catalog intern în verificare; această pagină nu este indexată." %}</p>
+          {% elif catalogue_mode == "registry" %}
+            <p>{% translate "Profiluri complete și înregistrări legale, prezentate separat." %}</p>
+          {% elif catalogue_mode == "demo" %}
+            <p>{% translate "Exemple demonstrative; această pagină nu este indexată." %}</p>
+          {% endif %}
+        </div>
+        {% if results %}<span class="result-count">{% blocktranslate count counter=result_count %}{{ result_count_display }} înregistrare{% plural %}{{ result_count_display }} înregistrări{% endblocktranslate %}</span>{% endif %}
+      </div>
+      {% include "services/partials/search_results.html" %}
+    </section>
+
+    <section class="local-service-alternatives" aria-labelledby="local-alternatives-title">
+      <div>
+        <h2 id="local-alternatives-title">{% blocktranslate with locality=selected_locality %}Alte servicii în {{ locality }}{% endblocktranslate %}</h2>
+        <p>{% translate "Păstrează localitatea și alege un alt tip de lucrare." %}</p>
+      </div>
+      <nav aria-label="{% translate 'Alte servicii locale' %}">
+        {% for slug, label, local_url in alternative_categories %}
+          <a href="{{ local_url }}">{{ label }} <svg class="ui-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"/></svg></a>
+        {% endfor %}
+      </nav>
+    </section>
+  </main>
+
+  {% include "services/partials/site_footer.html" %}
+</body>
+</html>

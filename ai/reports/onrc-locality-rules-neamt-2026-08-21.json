@@ -1,0 +1,74 @@
+{
+  "report_schema_version": 1,
+  "snapshot_date": "2026-07-08",
+  "validated_at": "2026-08-21",
+  "county": "Neamț",
+  "validation_state": "hierarchy_validated_application_approved_for_neamt",
+  "validated_by": "independent exhaustive SIRUTA hierarchy review",
+  "source_candidates_sha256": "fcf9cc2a1a07bb96948170340376c9b9c4fff403b571dce8f0b3a25a36368eac",
+  "proposal_artifact_sha256": "61f4ad36008a5725dd5fc7e5779392bc7a7c0b3f766016c0f6dcd829629a10dc",
+  "proposal_rules_sha256": "0dc69cc7bab9c9a15be51b2d1901b1bec0df7cc431a268b59d0e6347b07a8574",
+  "siruta_catalogue_sha256": "a5c5170ce2c00616fa170442c7fe7316d56186c96f75cbf9b00cc5d65993a4ef",
+  "siruta_hierarchy_sha256": "dc2eba53d0ea516b8c7a8dfc73ba1d1ca0b40c1e00caecd69d00e04fb762059c",
+  "proposed_uplift": {
+    "candidate_groups": 8,
+    "coherent_firms": 29968,
+    "piatra_neamt": {
+      "siruta_code": "120735",
+      "method": "municipality_prefix_with_county_name_alias",
+      "candidate_groups": 2,
+      "coherent_firms": 23606
+    },
+    "town_centres": [
+      {
+        "name": "Târgu Neamț",
+        "siruta_code": "121064",
+        "candidate_groups": 2,
+        "coherent_firms": 4551
+      },
+      {
+        "name": "Bicaz",
+        "siruta_code": "120977",
+        "candidate_groups": 2,
+        "coherent_firms": 1048
+      },
+      {
+        "name": "Roznov",
+        "siruta_code": "124126",
+        "candidate_groups": 2,
+        "coherent_firms": 763
+      }
+    ]
+  },
+  "negative_validation": {
+    "satellite_candidate_groups_rejected": 12,
+    "satellite_coherent_firms_rejected": 155,
+    "municipality_satellite_groups_outside_rule_syntax": 1,
+    "municipality_satellite_firms_outside_rule_syntax": 5,
+    "wrong_parent_examples_rejected": [
+      "Loc. Slobozia, Oraș Roznov",
+      "Loc. Chintinici, Oraș Roznov",
+      "Loc. Izvoru Muntelui, Oraș Bicaz",
+      "Loc. Dodeni, Oraș Bicaz",
+      "Loc. Capșa, Oraș Bicaz",
+      "Loc. Humulești, Oraș Târgu Neamț",
+      "Loc. Humuleștii Noi, Oraș Târgu Neamț",
+      "Loc. Blebea, Oraș Târgu Neamț"
+    ]
+  },
+  "invariants": {
+    "exact_first_preserved": true,
+    "name_alias_county_scoped": true,
+    "name_alias_comparison_only": true,
+    "town_rule_requires_child_tip_17": true,
+    "town_rule_requires_parent_tip_2": true,
+    "town_rule_requires_exact_parent_name": true,
+    "town_rule_requires_child_parent_same_name": true,
+    "town_rule_application_counties": ["neamț"],
+    "eforie_sud_eforie_false_positive_rejected": true,
+    "target_must_be_unique_in_county": true,
+    "duplicate_alias_sources_rejected": true,
+    "alias_cycles_rejected": true,
+    "application_approved_for_neamt": true
+  }
+}

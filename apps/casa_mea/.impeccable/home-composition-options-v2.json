@@ -1,0 +1,46 @@
+{
+  "title": "Ediția locală — un set mai viu",
+  "question": "Am eliminat rigiditatea: mai multă culoare, oameni surprinși în lucru și un logo cu personalitate.",
+  "options": [
+    {
+      "id": "coral",
+      "label": "Coperta coral",
+      "kicker": "VARIANTA NOUĂ 01",
+      "lineage": "copertă editorială și fotografie de acțiune",
+      "thesis": "Un mesaj memorabil pe o suprafață coral conduce direct spre profesionist și căutare.",
+      "palette": ["#FFF8EA", "#0B3B34", "#FF654F", "#D8B9FF", "#77D6B1"],
+      "materials": ["hârtie caldă", "fotografie documentară", "sigiliu rotativ"],
+      "viewport": "Câmp coral în stânga, electrician surprins în lucru în dreapta și căutarea care unește cele două zone.",
+      "risk": "Culoarea este curajoasă și trebuie păstrată ca accent major, nu repetată pe fiecare pagină.",
+      "comp": ".impeccable/mocks/home-editia-v2-coral.webp"
+    },
+    {
+      "id": "documentary",
+      "label": "Povestea din casă",
+      "kicker": "VARIANTA NOUĂ 02",
+      "lineage": "reportaj local și interfață editorială",
+      "thesis": "Vedem direct lucrarea într-o casă reală, iar căutarea se așază ca o pagină peste momentul surprins.",
+      "palette": ["#FFF8EA", "#0B3B34", "#FF654F", "#D8B9FF", "#A5E3C6"],
+      "materials": ["fotografie cinematografică", "foaie suprapusă", "note scrise de mână"],
+      "viewport": "Imagine amplă de reportaj, foaie editorială suprapusă în colțul stâng și căutare clară în primul ecran.",
+      "risk": "Are nevoie de fotografii excelente și autentice pentru fiecare campanie importantă.",
+      "comp": ".impeccable/mocks/home-editia-v2-documentary.webp"
+    },
+    {
+      "id": "collage",
+      "label": "Comunitatea în mișcare",
+      "kicker": "VARIANTA NOUĂ 03",
+      "lineage": "colaj editorial și povești locale",
+      "thesis": "Mai multe meserii și oameni formează o singură hartă vizuală a comunității locale.",
+      "palette": ["#FFF8EA", "#0B3B34", "#FF654F", "#D8B9FF", "#B9E8D2"],
+      "materials": ["colaj fotografic", "note editoriale", "index vertical"],
+      "viewport": "Mesaj și căutare în stânga, trei fotografii dinamice în dreapta și servicii indexate discret la bază.",
+      "risk": "Este cea mai expresivă; trebuie redusă atent pe mobil ca să rămână clară și rapidă.",
+      "comp": ".impeccable/mocks/home-editia-v2-collage.webp"
+    }
+  ],
+  "reroll": false,
+  "canon": false,
+  "steer": true,
+  "buildPath": {"value": "comp", "toggle": false}
+}

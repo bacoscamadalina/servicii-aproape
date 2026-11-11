@@ -1,0 +1,72 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'services/admin_operations.css' %}">
+{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block content %}
+  <main class="category-policy">
+    <p><a href="{% url 'admin:services_servicecategorypolicy_changelist' %}">← Înapoi la registrul politicilor</a></p>
+
+    <header class="category-policy__intro">
+      <h1>Disponibilitatea serviciilor</h1>
+      <p>Controlează ce găsesc vizitatorii și unde pot intra firme noi. Taxonomia CAEN, serviciile deja salvate și publicațiile istorice nu sunt rescrise de aici.</p>
+    </header>
+
+    <dl class="category-policy__legend" aria-label="Semnificația stărilor">
+      <div><dt>Activă</dt><dd>Apare în căutare și acceptă firme noi.</dd></div>
+      <div><dt>Înscrieri noi oprite</dt><dd>Rămâne în căutare; firmele noi nu o pot selecta.</dd></div>
+      <div><dt>Ascunsă</dt><dd>Dispare din descoperirea publică și din înscrieri, fără ștergeri.</dd></div>
+    </dl>
+
+    <div class="category-policy__list">
+      {% for row in rows %}
+        <details class="category-policy__row" name="category-policy"{% if row.open %} open{% endif %}>
+          <summary class="category-policy__summary">
+            <span class="category-policy__identity">
+              <strong id="category-{{ row.policy.category }}">{{ row.label }}</strong>
+              <small>{{ row.description }}</small>
+            </span>
+            <span class="category-policy__current"><small>Stare</small><strong>{{ row.policy.get_state_display }}</strong></span>
+            <span class="category-policy__current"><small>Ordine</small><strong>{{ row.policy.display_order }}</strong></span>
+            <span class="category-policy__current"><small>Revizie</small><strong>{{ row.policy.revision }}</strong></span>
+            <span class="category-policy__disclosure" aria-hidden="true">Deschide</span>
+          </summary>
+          <div class="category-policy__editor">
+            {% if row.policy.updated_by %}<p class="category-policy__updated">Ultima modificare: {{ row.policy.updated_at|date:"d.m.Y H:i" }} de {{ row.policy.updated_by }}</p>{% endif %}
+            <form method="post" class="category-policy__form" aria-labelledby="category-{{ row.policy.category }}">
+            {% csrf_token %}
+            {{ row.form.category }}
+            {{ row.form.expected_revision }}
+            {% if row.form.non_field_errors %}<div class="category-policy__errors">{{ row.form.non_field_errors }}</div>{% endif %}
+            <fieldset>
+              <legend>{{ row.form.state.label }}</legend>
+              {{ row.form.state }}
+              {{ row.form.state.errors }}
+            </fieldset>
+            <div class="category-policy__field category-policy__field--order">
+              {{ row.form.display_order.label_tag }}
+              {{ row.form.display_order }}
+              <small>{{ row.form.display_order.help_text }}</small>
+              {{ row.form.display_order.errors }}
+            </div>
+            <div class="category-policy__field category-policy__field--reason">
+              {{ row.form.reason.label_tag }}
+              {{ row.form.reason }}
+              <small>{{ row.form.reason.help_text }}</small>
+              {{ row.form.reason.errors }}
+            </div>
+            <label class="category-policy__acknowledgement">{{ row.form.acknowledgement }}<span>{{ row.form.acknowledgement.label }}</span></label>
+            {{ row.form.acknowledgement.errors }}
+              <button type="submit">Salvează politica</button>
+            </form>
+          </div>
+        </details>
+      {% endfor %}
+    </div>
+  </main>
+{% endblock %}

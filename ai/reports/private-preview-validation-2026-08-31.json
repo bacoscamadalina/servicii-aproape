@@ -1,0 +1,55 @@
+{
+  "result": "PASS",
+  "scope": "Private development Docker image; no external cloud deployment",
+  "snapshot": {
+    "captured_at": "2026-08-31T14:27:53.937561+00:00",
+    "businesses": 72881,
+    "counties": 42,
+    "categories": 6,
+    "query_variants": 145762,
+    "bytes": 65368064,
+    "sha256": "d514308442f214d65c3700be722687da7bda334307837d60a1147963cc02084e",
+    "source_access": "repeatable-read/read-only; every county audited",
+    "private_accounts_or_media_exported": false
+  },
+  "regression_tests": {
+    "postgresql": {"tests": 212, "skipped": 0, "seconds": 49.099, "result": "PASS"},
+    "sqlite_offline_container": {"tests": 212, "skipped_postgresql_only": 9, "seconds": 37.835, "result": "PASS"},
+    "locality_race_javascript": "PASS",
+    "django_check": "PASS",
+    "migration_drift": "none (verified on isolated PostgreSQL)"
+  },
+  "runtime": {
+    "http_searches": 84,
+    "http_requests": 141,
+    "median_ms": 24.2,
+    "maximum_ms": 53.2,
+    "source_server_vs_snapshot_searches": 21,
+    "source_result_identity_and_order": "identical",
+    "direct_docker_no_network_port_8087": "healthy",
+    "production_target_build_and_snapshot_exclusion": "PASS",
+    "non_root_uid": 10001,
+    "orm_backend": "dummy",
+    "container_recreation_without_data_volume": "PASS",
+    "private_routes": "404",
+    "write_methods": "405",
+    "response_cookies": "none",
+    "robots_header": "noindex, nofollow, noarchive"
+  },
+  "browser": {
+    "flows": ["county-dependent locality selection", "Sabaoani gardening", "company detail", "RO/EN context preservation", "Cluj pagination", "detail return to page 2"],
+    "desktop_and_mobile": "PASS; no horizontal overflow",
+    "console_errors": 0,
+    "screenshots": [
+      "apps/casa_mea/.impeccable/review/private-preview-desktop-home.png",
+      "apps/casa_mea/.impeccable/review/private-preview-mobile-detail.png"
+    ]
+  },
+  "independent_review": "SHIP; national completeness blocker fixed and regression-tested",
+  "limitations": [
+    "Historical snapshot; later updates and revocations require a new export and image build",
+    "Cloud must provide private access controls and HTTPS",
+    "No account/admin/claim/write workflows in this development viewer",
+    "Actual private corporate cloud is not accessible from this task"
+  ]
+}

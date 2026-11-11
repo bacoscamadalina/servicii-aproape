@@ -1,0 +1,91 @@
+{
+  "report_schema_version": 1,
+  "activated_at": "2026-08-21",
+  "provider": "ONRC",
+  "visibility": "internal_preview",
+  "categories": [
+    "constructii",
+    "curatenie",
+    "gradinarit",
+    "instalatii",
+    "reparatii",
+    "tamplarie"
+  ],
+  "catalogues": [
+    {
+      "county": "Iași",
+      "run_id": 7,
+      "scope_key": "d03e241ff4d36e33b9eeb3d82796f93d0cf5d2f899e5bf90476ca511128918a4",
+      "staged_businesses_distinct": 11622,
+      "staged_statuses": 11622,
+      "staged_caen": 77657,
+      "staged_category_relations": 25259,
+      "category_counts": {
+        "constructii": 8519,
+        "instalatii": 7031,
+        "gradinarit": 1169,
+        "curatenie": 2551,
+        "tamplarie": 5358,
+        "reparatii": 631
+      },
+      "central_locality": {
+        "siruta": "95079",
+        "name": "Iași",
+        "all_distinct": 5812,
+        "category_counts": {
+          "constructii": 4029,
+          "instalatii": 3518,
+          "gradinarit": 612,
+          "curatenie": 1397,
+          "tamplarie": 2581,
+          "reparatii": 397
+        }
+      },
+      "quarantine_records": 1,
+      "idempotent_reimport_changed": false
+    },
+    {
+      "county": "Neamț",
+      "run_id": 8,
+      "scope_key": "477a3b5e178f9123ffd3f4e8b7aac8598f74c1a9c0e1f4191ba2c08cd5f3fbf0",
+      "staged_businesses_distinct": 5013,
+      "staged_statuses": 5013,
+      "staged_caen": 27526,
+      "staged_category_relations": 9776,
+      "category_counts": {
+        "constructii": 3691,
+        "instalatii": 2593,
+        "gradinarit": 401,
+        "curatenie": 682,
+        "tamplarie": 2209,
+        "reparatii": 200
+      },
+      "central_locality": {
+        "siruta": "120735",
+        "name": "Piatra-Neamț",
+        "all_distinct": 1284,
+        "category_counts": {
+          "constructii": 839,
+          "instalatii": 743,
+          "gradinarit": 99,
+          "curatenie": 234,
+          "tamplarie": 482,
+          "reparatii": 88
+        }
+      },
+      "quarantine_records": 0,
+      "idempotent_reimport_changed": false
+    }
+  ],
+  "reader_validation": {
+    "six_central_category_queries_checked": true,
+    "expected_counts_visible": true,
+    "expected_pagination_visible": true,
+    "category_labels_visible": true,
+    "unsupported_state_absent": true,
+    "page_size": 20,
+    "horizontal_overflow": false
+  },
+  "public_activation": false,
+  "publication_approval_count": 0
+}

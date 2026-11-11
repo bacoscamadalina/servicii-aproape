@@ -1,0 +1,15 @@
+{
+  "activated_at": "2026-08-24T10:47:45+03:00",
+  "activation_plan_sha256": "da7463621f17a1fb10f25be3b6245cdb82ff55ec40c84f185680e8b948d8384e",
+  "active_businesses": 67283,
+  "active_counties": 42,
+  "active_scope_contract_version": 2,
+  "alla_trans_logistics_active_records": 0,
+  "changed_pointers": 42,
+  "mf_manifest_sha256": "1c47b3ed35d86998249b94fd2bb932766ed4b1d45c8f2c04c4247f0f13ac4242",
+  "publication_approval_count": 0,
+  "public_scope_count": 0,
+  "refinement_report_sha256": "edc25af856ddfb196248000fccee859823cd0516f89088544cf2c714439591ae",
+  "stale_predecessor_replay_blocked": true,
+  "visibility": "internal_preview"
+}

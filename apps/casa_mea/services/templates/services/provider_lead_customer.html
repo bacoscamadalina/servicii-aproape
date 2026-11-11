@@ -1,0 +1,136 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <title>{% translate "Solicitarea mea" %} — ServiciiAproape</title>
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260922-quote-lines">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body class="customer-workspace-body">
+  <a class="skip-link" href="#solicitarea-mea">{% translate "Sari la solicitare" %}</a>
+  <header class="site-header provider-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    {% if customer_portal %}<a class="customer-workspace-back" href="{% url 'services:customer_dashboard' %}">{% translate "Proiectele mele" %}</a>{% endif %}
+    {% include "services/partials/language_switcher.html" %}
+  </header>
+
+  <main id="solicitarea-mea" class="customer-workspace">
+    {% if customer_portal %}<a class="detail-back" href="{% url 'services:customer_dashboard' %}">← {% translate "Înapoi la proiectele mele" %}</a>{% endif %}
+    <header class="customer-workspace-heading">
+      <div>
+        <h1>{% translate "Solicitarea mea" %}</h1>
+        <p>{% blocktranslate with provider_name=lead.submission.display_name %}Conversația privată cu {{ provider_name }}.{% endblocktranslate %}</p>
+      </div>
+      <span class="provider-lead-status is-{{ lead.status }}">{{ lead.get_status_display }}</span>
+    </header>
+
+    {% if messages %}<div class="provider-messages" aria-live="polite">{% for message in messages %}<p>{{ message }}</p>{% endfor %}</div>{% endif %}
+
+    <div class="customer-workspace-grid">
+      <section class="customer-project-summary" aria-labelledby="project-title">
+        <h2 id="project-title">{% translate "Proiectul transmis" %}</h2>
+        <p>{{ lead.description }}</p>
+        <dl>
+          <div><dt>{% translate "Firmă" %}</dt><dd>{{ lead.submission.display_name }}</dd></div>
+          <div><dt>{% translate "Serviciu" %}</dt><dd>{{ category_label }}</dd></div>
+          <div><dt>{% translate "Localitate" %}</dt><dd>{{ locality }}, {{ lead.county }}</dd></div>
+          <div><dt>{% translate "Buget orientativ" %}</dt><dd>{{ lead.get_budget_display }}</dd></div>
+          <div><dt>{% translate "Începere" %}</dt><dd>{{ lead.get_desired_start_display }}</dd></div>
+        </dl>
+      </section>
+
+      <section class="customer-quote{% if latest_quote %} has-quote{% endif %}" aria-labelledby="quote-title">
+        <h2 id="quote-title">{% translate "Oferta firmei" %}</h2>
+        {% if latest_quote %}
+          <div class="customer-quote-price"><strong>{{ latest_quote.amount_ron|floatformat:2 }}</strong><span>{% translate "lei" %}</span></div>
+          <p>{{ latest_quote.summary }}</p>
+          {% include "services/partials/quote_lines.html" with quote=latest_quote %}
+          <dl>
+            <div><dt>{% translate "Durată estimată" %}</dt><dd>{{ latest_quote.estimated_duration }}</dd></div>
+            <div><dt>{% translate "Valabilă până la" %}</dt><dd>{{ latest_quote.valid_until|date:"DATE_FORMAT" }}</dd></div>
+          </dl>
+          <span class="customer-quote-state is-{{ latest_quote.status }}">{{ latest_quote.get_status_display }}</span>
+          {% if latest_quote.status == "sent" and not quote_is_expired %}
+            <form method="post" class="customer-quote-actions">
+              {% csrf_token %}<input type="hidden" name="quote_id" value="{{ latest_quote.pk }}">
+              <button class="provider-submit" type="submit" name="action" value="accepted">{% translate "Acceptă oferta" %}</button>
+              <button class="secondary-action" type="submit" name="action" value="declined">{% translate "Refuză oferta" %}</button>
+            </form>
+          {% elif quote_is_expired and latest_quote.status == "sent" %}
+            <p class="form-alert">{% translate "Această ofertă a expirat. Poți cere firmei o ofertă actualizată în conversație." %}</p>
+          {% endif %}
+        {% else %}
+          <div class="customer-quote-empty"><p>{% translate "Firma nu a trimis încă o ofertă. Vei primi un e-mail când apare o actualizare." %}</p></div>
+        {% endif %}
+      </section>
+    </div>
+
+    {% include "services/partials/work_order_summary.html" %}
+    {% include "services/partials/customer_visit.html" with visit=latest_visit %}
+
+    {% if customer_may_review or customer_review or review_form.errors %}
+      <section class="customer-review-panel" aria-labelledby="customer-review-title">
+        {% if customer_review %}
+          <div>
+            <h2 id="customer-review-title">{% translate "Recenzia ta" %}</h2>
+            <p>{% translate "Îți mulțumim. Evaluarea nu poate fi modificată și devine publică numai după verificare." %}</p>
+          </div>
+          <div class="customer-review-receipt">
+            <strong>{{ customer_review.rating }}/5</strong>
+            <span>{{ customer_review.get_status_display }}</span>
+            <p>{{ customer_review.body }}</p>
+          </div>
+        {% else %}
+          <div>
+            <h2 id="customer-review-title">{% translate "Spune cum a fost colaborarea" %}</h2>
+            <p>{% translate "Evaluarea ta îi ajută pe alți clienți să aleagă informat. Recenzia va fi verificată înainte de publicare." %}</p>
+          </div>
+          <form method="post" class="customer-review-form" novalidate>
+            {% csrf_token %}<input type="hidden" name="action" value="review">
+            {% if review_form.non_field_errors %}<div class="form-alert">{{ review_form.non_field_errors }}</div>{% endif %}
+            <fieldset>
+              <legend>{{ review_form.rating.label }}</legend>
+              {{ review_form.rating }}
+              {% for error in review_form.rating.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}
+            </fieldset>
+            <div class="provider-field"><label for="{{ review_form.body.id_for_label }}">{{ review_form.body.label }}</label>{{ review_form.body }}{% if review_form.body.help_text %}<p class="provider-help">{{ review_form.body.help_text }}</p>{% endif %}{% for error in review_form.body.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}</div>
+            <div class="provider-consent">{{ review_form.consent }}<label for="{{ review_form.consent.id_for_label }}">{{ review_form.consent.label }}</label></div>
+            {% for error in review_form.consent.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}
+            <button class="provider-submit" type="submit">{% translate "Trimite recenzia" %}</button>
+          </form>
+        {% endif %}
+      </section>
+    {% endif %}
+
+    <section class="lead-conversation" aria-labelledby="conversation-title">
+      <header><h2 id="conversation-title">{% translate "Conversație" %}</h2><p>{% translate "Mesajele rămân private între tine și firmă." %}</p></header>
+      {% if conversation %}
+        <ol class="lead-message-list">
+          {% for item in conversation %}
+            <li class="is-{{ item.sender_role }}"><div><strong>{{ item.get_sender_role_display }}</strong><time datetime="{{ item.created_at|date:'c' }}">{{ item.created_at|date:"SHORT_DATETIME_FORMAT" }}</time><p>{{ item.body }}</p></div></li>
+          {% endfor %}
+        </ol>
+      {% else %}
+        <p class="lead-conversation-empty">{% translate "Nu există încă mesaje. Poți cere o clarificare folosind formularul de mai jos." %}</p>
+      {% endif %}
+      <form method="post" class="lead-message-form" novalidate>
+        {% csrf_token %}<input type="hidden" name="action" value="message">
+        {% if message_form.non_field_errors %}<div class="form-alert">{{ message_form.non_field_errors }}</div>{% endif %}
+        <div class="provider-field"><label for="{{ message_form.body.id_for_label }}">{{ message_form.body.label }}</label>{{ message_form.body }}{% for error in message_form.body.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}</div>
+        <button class="provider-submit" type="submit">{% translate "Trimite mesajul" %}</button>
+      </form>
+    </section>
+    <p class="customer-access-note">{% translate "Acest link oferă acces la datele solicitării. Nu îl distribui altor persoane." %}</p>
+  </main>
+  {% include "services/partials/site_footer.html" %}
+</body>
+</html>

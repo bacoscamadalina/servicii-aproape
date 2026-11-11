@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-21",
+  "visibility": "internal_preview",
+  "publication_active": false,
+  "snapshot_date": "2026-07-08",
+  "counties": 42,
+  "new_counties_imported": 40,
+  "categories": ["constructii", "instalatii", "gradinarit", "curatenie", "tamplarie", "reparatii"],
+  "source_scan": {
+    "firm_rows": 4202257,
+    "activity_rows": 19287520,
+    "status_rows": 4637408,
+    "scratch_database_bytes": 1718509568
+  },
+  "active_preview": {
+    "distinct_registered_businesses": 275679,
+    "category_business_counts": {
+      "constructii": 197265,
+      "instalatii": 155871,
+      "gradinarit": 30039,
+      "curatenie": 57867,
+      "tamplarie": 117587,
+      "reparatii": 13321
+    }
+  },
+  "validation": {
+    "all_new_runs_succeeded": true,
+    "batch_rerun_changed": false,
+    "atomic_preview_swaps": 40,
+    "public_scopes": 0,
+    "sqlite_tests": 58,
+    "postgres_concurrency_tests": 2,
+    "browser_cases": {
+      "Cluj-Napoca_constructii": 6114,
+      "Bucuresti_sector_1_instalatii": 5831,
+      "Brasov_gradinarit": 917,
+      "Tulcea_reparatii": 60
+    },
+    "mobile_cards_per_page": 20,
+    "mobile_horizontal_overflow": false,
+    "browser_console_errors": 0
+  },
+  "semantics": "Firme cu sediul social în localitatea selectată și categorii derivate din CAEN; nu dovedește aria deservită, disponibilitatea, competența sau calitatea."
+}

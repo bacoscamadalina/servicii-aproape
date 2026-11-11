@@ -1,0 +1,14 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+  <div id="content-main">
+    <h1>Retrimite notificarea eșuată</h1>
+    <p>Solicitarea rămâne disponibilă în panoul firmei chiar dacă e-mailul nu a ajuns. Retrimiterea este permisă numai cât notificarea este marcată ca eșuată.</p>
+    <p>Un server de e-mail poate accepta mesajul înainte să raporteze o eroare; în acest caz, retrimiterea poate produce un duplicat.</p>
+    <form method="post">
+      {% csrf_token %}
+      <label><input type="checkbox" name="acknowledgement" value="RETRIMITE" required> Am verificat starea și accept posibilitatea unui e-mail duplicat.</label>
+      <div class="submit-row"><input type="submit" value="Retrimite notificarea" class="default"></div>
+    </form>
+  </div>
+{% endblock %}

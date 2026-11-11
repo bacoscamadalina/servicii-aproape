@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "validated_at": "2026-09-03",
+  "scope": "Packaged read-only preview browser regression gate",
+  "runtime": {
+    "language": "Python 3.14",
+    "playwright": "1.62.0",
+    "browser": "Chromium 151.0.7922.34",
+    "origin": "localhost-only Docker preview"
+  },
+  "results": {
+    "test_methods": 2,
+    "isolated_journeys": 3,
+    "elapsed_seconds": 9.465,
+    "desktop_viewport": "1280x900",
+    "mobile_viewport": "390x844",
+    "browser_console_errors": 0,
+    "page_errors": 0,
+    "horizontal_overflow_failures": 0,
+    "outcome": "PASS"
+  },
+  "contracts": [
+    "county selection loads authoritative localities",
+    "desktop service control does not shift after locality status appears",
+    "Iasi locality and construction filters survive submission",
+    "company detail and return navigation preserve context",
+    "Cluj pagination and detail return preserve page two",
+    "Romanian to English switching preserves the complete query",
+    "desktop and mobile pages have no horizontal overflow"
+  ],
+  "privacy": {
+    "private_database_contacted": false,
+    "accounts_used": false,
+    "successful_run_artifacts_retained": false,
+    "failure_artifacts": "sanitized preview screenshot and Playwright trace only"
+  }
+}

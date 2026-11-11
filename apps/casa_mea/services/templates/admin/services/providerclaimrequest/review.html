@@ -1,0 +1,29 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+  <div id="content-main">
+    <p><strong>Firmă:</strong> {{ claim.legal_name_at_request }}</p>
+    <p><strong>Solicitant:</strong> {{ claim.contact_name }} — {{ claim.email }}</p>
+    <p><strong>Rol declarat:</strong> {{ claim.role }}</p>
+    <p>
+      <strong>Dovadă reprezentare:</strong>
+      {% if evidence %}
+        {{ evidence.get_evidence_type_display }} · {{ evidence.byte_size|filesizeformat }} ·
+        <a href="{% url 'admin:services_providerclaimrequest_evidence' claim.pk %}">Descarcă documentul privat</a>
+      {% else %}
+        <span class="errornote">Lipsește — revendicarea nu poate fi aprobată.</span>
+      {% endif %}
+    </p>
+    <p>Datele contului au fost furnizate la trimiterea cererii. Decizia de mai jos trebuie bazată exclusiv pe verificarea separată a dreptului de reprezentare.</p>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <fieldset class="module aligned">
+        {{ form.as_div }}
+      </fieldset>
+      <div class="submit-row">
+        <input type="submit" value="Înregistrează decizia" class="default">
+      </div>
+    </form>
+  </div>
+{% endblock %}

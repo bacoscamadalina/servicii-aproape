@@ -1,0 +1,79 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE|default:'ro' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, noarchive">
+  <title>{% translate "Discuție despre planul Partener" %} — ServiciiAproape</title>
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260915-2">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body class="managed-site-body">
+  <a class="skip-link" href="#cerere-partener">{% translate "Sari la formular" %}</a>
+  <header class="site-header provider-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    <div class="provider-header-tools">
+      <div class="provider-account-actions">
+        <a href="{% url 'services:provider_dashboard' %}">{% translate "Profilul firmei" %}</a>
+        <form method="post" action="{% url 'services:provider_logout' %}">{% csrf_token %}<button class="provider-logout" type="submit">{% translate "Ieși din cont" %}</button></form>
+      </div>
+      {% include "services/partials/language_switcher.html" %}
+    </div>
+  </header>
+
+  <main id="cerere-partener" class="managed-site-page">
+    <a class="managed-site-back" href="{% url 'services:subscription_plan' %}">{% translate "Înapoi la abonamente" %}</a>
+    <div class="managed-site-layout">
+      <section class="managed-site-intro" aria-labelledby="managed-site-title">
+        <h1 id="managed-site-title">{% translate "Hai să pregătim site-ul firmei tale" %}<i>.</i></h1>
+        <p>{% blocktranslate with company=profile.display_name %}Spune-ne ce ar trebui să facă site-ul pentru {{ company }}. Brief-ul ajunge privat la echipa ServiciiAproape și devine punctul de plecare pentru o discuție concretă.{% endblocktranslate %}</p>
+        <ol>
+          <li><span>01</span><div><strong>{% translate "Trimiți direcția" %}</strong><p>{% translate "Alegi obiectivul, calendarul orientativ și descrii ce ai nevoie." %}</p></div></li>
+          <li><span>02</span><div><strong>{% translate "Clarificăm împreună" %}</strong><p>{% translate "Te contactăm pe e-mailul contului pentru conținut, domeniu și calendar." %}</p></div></li>
+          <li><span>03</span><div><strong>{% translate "Primești propunerea" %}</strong><p>{% translate "Stabilim exact livrabilele înainte de orice activare sau cost." %}</p></div></li>
+        </ol>
+        <p class="managed-site-truth"><strong>{% translate "Fără plată acum" %}</strong> — {% translate "formularul nu creează o comandă, nu activează planul și nu solicită date de card." %}</p>
+      </section>
+
+      <section class="managed-site-sheet" aria-labelledby="managed-site-form-title">
+        <header>
+          <p>{% translate "Plan Partener" %}</p>
+          <h2 id="managed-site-form-title">{% translate "Spune-ne ce ai nevoie" %}</h2>
+        </header>
+        <form method="post" novalidate>
+          {% csrf_token %}
+          {{ inquiry_form.website }}
+          {% if inquiry_form.non_field_errors %}<div class="form-alert" role="alert">{{ inquiry_form.non_field_errors }}</div>{% endif %}
+          <div class="managed-site-fields">
+            {% for field in inquiry_form.visible_fields %}
+              {% if field.name != 'consent' %}
+                <div class="managed-site-field managed-site-field-{{ field.name }}{% if field.errors %} has-errors{% endif %}">
+                  <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                  {{ field }}
+                  {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
+                  {% if field.errors %}<div class="field-errors" role="alert">{{ field.errors }}</div>{% endif %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <div class="managed-site-consent{% if inquiry_form.consent.errors %} has-errors{% endif %}">
+            {{ inquiry_form.consent }}
+            <label for="{{ inquiry_form.consent.id_for_label }}">{{ inquiry_form.consent.label }}</label>
+          </div>
+          {% if inquiry_form.consent.errors %}<div class="field-errors" role="alert">{{ inquiry_form.consent.errors }}</div>{% endif %}
+          <button type="submit">{% translate "Trimite solicitarea pentru Partener" %}</button>
+        </form>
+        <small>{% blocktranslate with price=managed_site_monthly_price_ron %}Prețul orientativ al planului este {{ price }} lei pe lună. Orice cost separat este discutat și acceptat înainte de începerea lucrului.{% endblocktranslate %}</small>
+      </section>
+    </div>
+  </main>
+
+  {% include "services/partials/site_footer.html" %}
+</body>
+</html>

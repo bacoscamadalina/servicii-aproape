@@ -1,0 +1,58 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>{% translate "Datele emitentului" %} — ServiciiAproape</title>
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260918-billing-identity">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body class="provider-billing-body">
+  <a class="skip-link" href="#facturare">{% translate "Sari la datele emitentului" %}</a>
+  <header class="site-header provider-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">{% include "services/partials/editorial_brand_mark.html" %}<span>Servicii<span>Aproape</span></span></a>
+    <div class="provider-header-tools">
+      <div class="provider-account-actions">
+        <a href="{% url 'services:provider_leads' %}">{% translate "Solicitări" %}</a>
+        <a href="{% url 'services:provider_dashboard' %}">{% translate "Profilul firmei" %}</a>
+        <form method="post" action="{% url 'services:provider_logout' %}">{% csrf_token %}<button class="provider-logout" type="submit">{% translate "Ieși din cont" %}</button></form>
+      </div>
+      {% include "services/partials/language_switcher.html" %}
+    </div>
+  </header>
+
+  <main id="facturare" class="provider-billing-page">
+    <header class="provider-billing-heading">
+      <div><h1>{% translate "Datele emitentului" %}</h1><p>{% blocktranslate with profile_name=profile.display_name %}Informații declarate de {{ profile_name }}, păstrate separat de profilul public.{% endblocktranslate %}</p></div>
+      <a href="{% url 'services:provider_leads' %}">{% translate "Înapoi la solicitări" %}</a>
+    </header>
+    {% if messages %}<div class="provider-messages" aria-live="polite">{% for message in messages %}<p>{{ message }}</p>{% endfor %}</div>{% endif %}
+    <div class="provider-billing-layout">
+      <section class="provider-billing-form" aria-labelledby="issuer-form-title">
+        <header><h2 id="issuer-form-title">{% translate "Completează datele firmei" %}</h2><p>{% translate "Verifică informațiile înainte de salvare. Aceste valori nu sunt preluate automat din ONRC și nu sunt încă validate pentru facturare." %}</p></header>
+        <form method="post" novalidate>
+          {% csrf_token %}<input type="hidden" name="action" value="save_billing_identity">{{ form.expected_revision }}
+          {% if form.non_field_errors %}<div class="form-alert">{{ form.non_field_errors }}</div>{% endif %}
+          {% for field in form.visible_fields %}
+            <div class="provider-field"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% for error in field.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}</div>
+          {% endfor %}
+          <button class="provider-submit" type="submit">{% translate "Salvează datele declarate" %}</button>
+        </form>
+      </section>
+      <aside class="provider-billing-boundary" aria-labelledby="issuer-boundary-title">
+        <h2 id="issuer-boundary-title">{% translate "Ce se întâmplă după salvare" %}</h2>
+        {% if identity %}<p>{% blocktranslate with revision=identity.revision date=identity.updated_at|date:"SHORT_DATETIME_FORMAT" %}Revizia {{ revision }} a fost salvată la {{ date }}.{% endblocktranslate %}</p>{% else %}<p>{% translate "Nu există încă date declarate pentru emitent." %}</p>{% endif %}
+        <ul>
+          <li>{% translate "Datele rămân private firmei și nu modifică înregistrarea ONRC." %}</li>
+          <li>{% translate "Ciornele interne ale lucrărilor nu devin automat facturi." %}</li>
+          <li>{% translate "Emiterea fiscală, RO e-Factura și înregistrarea plăților nu sunt active." %}</li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+</body>
+</html>

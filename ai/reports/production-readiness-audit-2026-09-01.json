@@ -1,0 +1,51 @@
+{
+  "result": "IMPLEMENTATION_PASS_LAUNCH_NOT_READY",
+  "implementation": {
+    "identity_free_json": true,
+    "read_only": true,
+    "explicit_official_county_allowlist": true,
+    "separate_from_liveness_and_bootstrap": true,
+    "independent_review": "SHIP"
+  },
+  "validation": {
+    "focused_cloud_tests": {"tests": 24, "seconds": 2.687, "result": "PASS"},
+    "complete_docker_tests": {"tests": 222, "skipped": 9, "seconds": 36.446, "result": "PASS"},
+    "complete_postgresql_tests": {"tests": 222, "skipped": 0, "seconds": 43.659, "result": "PASS"},
+    "django_check": "PASS",
+    "migration_source_drift": "NONE"
+  },
+  "pre_migration_backup": {
+    "directory": "deploy/backups/pre-migrations-2026-09-01",
+    "database_bytes": 80925909,
+    "manifest_validation": "PASS",
+    "directory_mode": "0700",
+    "artifact_modes": "0600",
+    "private_and_gitignored": true
+  },
+  "local_migrations": {
+    "applied": [
+      "services.0018_publicproviderreport",
+      "services.0019_publicproviderreportcase_and_events",
+      "services.0020_alter_publicproviderreport_options_and_more"
+    ],
+    "pending_afterwards": []
+  },
+  "local_catalogue_probe": {
+    "declared_counties": 42,
+    "elapsed_seconds": 5.181,
+    "catalogue_checked": true,
+    "ready_counties": 0,
+    "not_public_counties": 42,
+    "catalogue_integrity_anomalies": 0,
+    "triage_integrity_anomalies": 0,
+    "pending_migrations": [],
+    "production_restore_marker": false,
+    "valid": false,
+    "interpretation": "Expected fail-closed result: all catalogues pass integrity but remain internal previews, and the local database is not a restored production target."
+  },
+  "not_performed": [
+    "No publication approval or visibility was changed",
+    "No cloud deployment was performed",
+    "No real SMTP, DNS, TLS, off-host backup or external monitor was configured"
+  ]
+}

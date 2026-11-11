@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "source_siruta_sha256": "a5c5170ce2c00616fa170442c7fe7316d56186c96f75cbf9b00cc5d65993a4ef",
+  "source_siruta_hierarchy_sha256": "dc2eba53d0ea516b8c7a8dfc73ba1d1ca0b40c1e00caecd69d00e04fb762059c",
+  "review_state": "hierarchy_validated",
+  "reviewed_at": "2026-08-21",
+  "reviewed_by": "independent exhaustive SIRUTA hierarchy review",
+  "application_approved_at": "2026-08-21",
+  "application_approved_by": "pilot importer integration review",
+  "administrative_name_aliases": [
+    {
+      "county": "neamț",
+      "source": "piatra neamț",
+      "target": "piatra-neamț",
+      "rationale": "ONRC omite cratima din numele municipiului; ținta este localitatea centrală TIP 9, copilul municipiului omonim TIP 1 din același județ.",
+      "proposal_enabled": true,
+      "application_approved": true,
+      "application_approved_at": "2026-08-21",
+      "application_approved_by": "Neamț exhaustive hierarchy review"
+    }
+  ],
+  "rules": [
+    {
+      "id": "municipality_prefix",
+      "proposal_enabled": true,
+      "application_approved": true,
+      "form": "Municipiul {localitate}",
+      "rationale": "Prefix explicit; ținta trebuie să fie localitatea centrală TIP 9, copilul municipiului omonim TIP 1/4 din același județ."
+    },
+    {
+      "id": "town_prefix",
+      "proposal_enabled": true,
+      "application_approved": true,
+      "form": "Oraș/Orașul {localitate}",
+      "rationale": "Prefix explicit; ținta trebuie să fie localitatea centrală TIP 17, copilul orașului omonim TIP 2 din același județ."
+    },
+    {
+      "id": "commune_prefix",
+      "proposal_enabled": true,
+      "application_approved": true,
+      "form": "Comuna {localitate}",
+      "rationale": "Prefix explicit; ținta trebuie să fie satul reședință TIP 22, copilul comunei omonime TIP 3 din același județ."
+    },
+    {
+      "id": "village_with_parent",
+      "proposal_enabled": true,
+      "application_approved": true,
+      "form": "Sat {localitate}, Comuna/Oraș/Municipiul {părinte}",
+      "rationale": "Numele copilului, numele părintelui, SIRSUP și tipurile administrative trebuie să corespundă simultan; unicitatea numelui copilului nu este suficientă."
+    },
+    {
+      "id": "town_locality_with_parent",
+      "proposal_enabled": true,
+      "application_approved": true,
+      "application_counties": ["neamț"],
+      "application_approved_at": "2026-08-21",
+      "application_approved_by": "Neamț exhaustive hierarchy review",
+      "form": "Loc. {localitate}, Oraș {părinte}",
+      "rationale": "Forma administrativă explicită trebuie să indice localitatea centrală și orașul-părinte omonim; ținta cere simultan TIP 17, părinte TIP 2 și legătura SIRSUP."
+    }
+  ]
+}

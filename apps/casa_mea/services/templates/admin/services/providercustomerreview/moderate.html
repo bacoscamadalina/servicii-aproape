@@ -1,0 +1,34 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'services/admin_operations.css' %}">
+{% endblock %}
+
+{% block content %}
+  <p><a href="{% url 'admin:services_providercustomerreview_change' review.pk %}">← Înapoi la recenzie</a></p>
+  <section>
+    <h2>Recenzie trimisă de client</h2>
+    <dl>
+      <dt>Furnizor</dt><dd>{{ review.profile.display_name }}</dd>
+      <dt>Autor public</dt><dd>{{ review.reviewer_display_name }}</dd>
+      <dt>Evaluare</dt><dd>{{ review.rating }}/5</dd>
+      <dt>Conținut</dt><dd>{{ review.body }}</dd>
+      <dt>Stare</dt><dd>{{ review.get_status_display }}</dd>
+      <dt>Solicitare eligibilă</dt><dd>#{{ review.lead_id }} · ofertă acceptată prin platformă</dd>
+    </dl>
+  </section>
+  {% if review.status == "pending" %}
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      {% for field in form %}
+        <fieldset><legend>{{ field.label }}</legend>{{ field }}{% if field.help_text %}<p>{{ field.help_text }}</p>{% endif %}{{ field.errors }}</fieldset>
+      {% endfor %}
+      <button type="submit">Înregistrează decizia</button>
+    </form>
+  {% else %}
+    <p>Această recenzie are deja o decizie finală.</p>
+  {% endif %}
+{% endblock %}

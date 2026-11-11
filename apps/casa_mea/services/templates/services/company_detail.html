@@ -1,0 +1,110 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{% blocktranslate with company_name=company.legal_name %}Fișă informativă pentru {{ company_name }}, bazată pe surse oficiale și dovezi publice revizuite.{% endblocktranslate %}">
+  <title>{{ company.legal_name }} — ServiciiAproape</title>
+  <link rel="canonical" href="{% if LANGUAGE_CODE == 'en' %}{{ absolute_language_url_en }}{% else %}{{ absolute_language_url_ro }}{% endif %}">
+  <link rel="alternate" hreflang="ro" href="{{ absolute_language_url_ro }}">
+  <link rel="alternate" hreflang="en" href="{{ absolute_language_url_en }}">
+  <link rel="alternate" hreflang="x-default" href="{{ absolute_language_url_ro }}">
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260916-4">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body class="company-record-body company-design-nordic">
+  <a class="skip-link" href="#fisa-firmei">{% translate "Sari la fișa firmei" %}</a>
+  <header class="site-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    {% include "services/partials/language_switcher.html" %}
+  </header>
+
+  <main id="fisa-firmei" class="company-detail">
+    {% include "services/partials/snapshot_notice.html" %}
+    <a class="detail-back" href="{{ back_url }}">
+      <svg class="ui-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M17 10H4M9 5l-5 5 5 5"/></svg>
+      {% translate "Înapoi la rezultate" %}
+    </a>
+
+    <section class="company-record-hero" aria-labelledby="company-name">
+      <div class="company-record-title">
+        <div class="company-monogram" aria-hidden="true">{{ company.initials }}</div>
+        <div>
+          {% if preview %}<p class="preview-label">{% translate "Previzualizare internă a catalogului" %}</p>{% endif %}
+          <h1 id="company-name">{{ company.legal_name }}</h1>
+          <p>{% translate "Informații publice despre firmă" %}</p>
+        </div>
+      </div>
+      {% if save_url %}<form class="company-record-save" method="post" action="{{ save_url }}">
+        {% csrf_token %}
+        <input type="hidden" name="return_to" value="detail">
+        <button type="submit" aria-label="{% if company_is_saved %}{% translate 'Elimină din lista salvată' %}{% else %}{% translate 'Salvează firma' %}{% endif %}" title="{% if company_is_saved %}{% translate 'Elimină din lista salvată' %}{% else %}{% translate 'Salvează firma' %}{% endif %}" aria-pressed="{% if company_is_saved %}true{% else %}false{% endif %}">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg>
+        </button>
+      </form>{% endif %}
+      <figure class="company-record-art company-record-art--{{ art_category }}">
+        <img src="{% static art_photo %}" alt="" width="1100" height="733" decoding="async">
+        <figcaption>{% translate "Fotografie ilustrativă · nu reprezintă o lucrare a firmei." %}</figcaption>
+      </figure>
+      <dl class="company-record-summary">
+        <div><dt>{% translate "Serviciu" %}</dt><dd>{{ company.category_labels|join:", " }}</dd></div>
+        <div><dt>{% translate "Sediu social" %}</dt><dd>{{ locality_label }}, {{ county }}</dd></div>
+      </dl>
+    </section>
+
+    <div class="company-record-content">
+      <section class="company-services" aria-labelledby="services-title">
+        <h2 id="services-title"><svg class="section-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.2 6.2 17.8 9.8M4 20l6.2-6.2M12.4 4.6a5 5 0 0 0-6.8 6.8l2.8-2.8 3 3-2.8 2.8a5 5 0 0 0 6.8-6.8L20 3l1 1-4.6 4.6"/></svg>{% translate "Servicii identificate" %}</h2>
+        <p>{% translate "Activitatea publică raportată pentru această firmă se încadrează în următoarele servicii pentru casă." %}</p>
+        <ul class="company-category-list">
+          {% for label in company.category_labels %}<li>{{ label }}</li>{% endfor %}
+        </ul>
+
+        {% if company.evidence_source_url %}
+          <div class="direct-evidence">
+            <h3>{% translate "Dovadă publică directă" %}</h3>
+            <p>{{ company.evidence_summary }}</p>
+            <dl>
+              <div><dt>{% translate "Arie declarată de sursă" %}</dt><dd>{{ company.coverage_label }}</dd></div>
+              <div><dt>{% translate "Verificată la" %}</dt><dd>{{ company.evidence_retrieved_at|date:"DATE_FORMAT" }}</dd></div>
+            </dl>
+            <a href="{{ company.evidence_source_url }}" rel="noopener noreferrer">{{ company.evidence_source_title }}</a>
+          </div>
+        {% endif %}
+      </section>
+
+      <aside class="company-source" aria-labelledby="source-title">
+        <h2 id="source-title"><svg class="section-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16v13H4V7Zm2-3h12l2 3H4l2-3Z"/><path d="M9 11h6"/></svg>{% translate "Date publice" %}</h2>
+        <dl>
+          <div><dt>{% translate "Sediu social" %}</dt><dd>{{ locality_label }}, {{ county }}</dd></div>
+          <div><dt>{% translate "Registrul firmelor" %}</dt><dd>ONRC · {{ detail.snapshot_date|date:"DATE_FORMAT" }}</dd></div>
+          {% if detail.activity_evidence_year %}<div><dt>{% translate "Activitate raportată" %}</dt><dd>{% blocktranslate with evidence_year=detail.activity_evidence_year %}MF · anul {{ evidence_year }}{% endblocktranslate %}</dd></div>{% endif %}
+        </dl>
+        <details class="company-source-details">
+          <summary>{% translate "Vezi sursele datelor" %}</summary>
+          <div class="source-links">
+            <a href="{{ detail.dataset_url }}" rel="noopener noreferrer">{% translate "Sursa ONRC" %} · {{ detail.license_label }}</a>
+            {% if detail.activity_evidence_dataset_url %}<a href="{{ detail.activity_evidence_dataset_url }}" rel="noopener noreferrer">{% translate "Sursa MF" %} · {{ detail.activity_evidence_license_label }}</a>{% endif %}
+          </div>
+        </details>
+      </aside>
+    </div>
+
+    {% if not read_only_preview %}<section class="claim-preview" aria-labelledby="claim-title">
+      <div>
+        <h2 id="claim-title"><svg class="section-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M17 12v3M20 12v2"/></svg>{% translate "Este firma ta?" %}</h2>
+        <p>{% translate "După verificare, vei putea adăuga descrierea, datele de contact și fotografii ale lucrărilor." %}</p>
+      </div>
+      <a href="{{ claim_url }}">{% translate "Revendică firma" %}<svg class="ui-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"/></svg></a>
+    </section>{% endif %}
+  </main>
+
+  {% include "services/partials/site_footer.html" %}
+</body>
+</html>

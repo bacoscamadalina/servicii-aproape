@@ -1,0 +1,14 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+  <div id="content-main">
+    <p>Vei invalida invitația anterioară pentru <strong>{{ claim.legal_name_at_request }}</strong> și vei trimite un link nou, valabil 24 de ore.</p>
+    <p>Continuă numai după ce ai confirmat solicitarea cu reprezentantul firmei.</p>
+    <form method="post">
+      {% csrf_token %}
+      <div class="submit-row">
+        <input type="submit" value="Rotește și trimite invitația" class="default">
+      </div>
+    </form>
+  </div>
+{% endblock %}

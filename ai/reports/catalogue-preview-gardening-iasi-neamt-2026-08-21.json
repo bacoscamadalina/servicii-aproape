@@ -1,0 +1,48 @@
+{
+  "report_schema_version": 1,
+  "activated_at": "2026-08-21",
+  "provider": "ONRC",
+  "visibility": "internal_preview",
+  "category": {
+    "slug": "gradinarit",
+    "label": "Grădină & exterior",
+    "caen_mapping": [
+      {"version": "2", "code": "8130", "label": "Activități de întreținere peisagistică"},
+      {"version": "3", "code": "8130", "label": "Activități de întreținere peisagistică"}
+    ]
+  },
+  "catalogues": [
+    {
+      "county": "Iași",
+      "run_id": 5,
+      "scope_key": "6e1d456cf6b2d474155351cb7ee6da07dd1773e52471d3672757555cd983a3dc",
+      "staged_businesses_distinct": 10267,
+      "staged_caen": 65897,
+      "staged_category_relations": 16719,
+      "category_counts": {"constructii": 8519, "instalatii": 7031, "gradinarit": 1169},
+      "central_locality": {"siruta": "95079", "name": "Iași", "all": 5004, "gradinarit": 612, "pages": 31},
+      "quarantine_records": 1,
+      "idempotent_reimport_changed": false
+    },
+    {
+      "county": "Neamț",
+      "run_id": 6,
+      "scope_key": "85cbe27f254e8799006dca8454129f68579a2a8bc8f761d68d7bc83cfd64e56f",
+      "staged_businesses_distinct": 4395,
+      "staged_caen": 23724,
+      "staged_category_relations": 6685,
+      "category_counts": {"constructii": 3691, "instalatii": 2593, "gradinarit": 401},
+      "central_locality": {"siruta": "120735", "name": "Piatra-Neamț", "all": 1100, "gradinarit": 99, "pages": 5},
+      "quarantine_records": 0,
+      "idempotent_reimport_changed": false
+    }
+  ],
+  "reader_validation": {
+    "page_size": 20,
+    "category_label_visible": true,
+    "unsupported_state_absent": true,
+    "horizontal_overflow": false
+  },
+  "public_activation": false,
+  "publication_approval_count": 0
+}

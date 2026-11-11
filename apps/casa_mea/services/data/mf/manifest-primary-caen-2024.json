@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "provider": "Ministerul Finanțelor",
+  "dataset_year": 2024,
+  "dataset_url": "https://data.gov.ro/dataset/situatii_financiare_2024",
+  "license": "CC BY 4.0",
+  "retrieved_at": "2026-08-24T10:17:00+03:00",
+  "semantic_basis": {
+    "title": "Ordinul ministrului finanțelor nr. 107/2025 și anexele sale",
+    "url": "https://legislatie.just.ro/Public/DetaliiDocumentAfis/293858",
+    "meaning": "mf_2024_reported_predominant_activity",
+    "note": "Formularul cere codul CAEN privind activitatea preponderentă efectiv desfășurată pentru exercițiul financiar 2024."
+  },
+  "parser_contract": {
+    "encoding": "utf-8-sig",
+    "data_delimiter": ",",
+    "schema_delimiter": ";",
+    "required_leading_columns": ["CUI", "CAEN"],
+    "caen_version": "2",
+    "meaning": "mf_2024_reported_predominant_activity"
+  },
+  "resources": [
+    {
+      "kind": "data_bl_bs_sl",
+      "filename": "web_bl_bs_sl_an2024.txt",
+      "size_bytes": 8907815,
+      "sha256": "6426a132816841ea7974ca1dc85370b6d2027662e71e228a2a252f8c7a8fd4d3",
+      "url": "https://data.gov.ro/dataset/d3caacb6-2c08-445e-94e6-8d36d00ab250/resource/f89140dc-20dd-494f-912a-d1a482188885/download/web_bl_bs_sl_an2024.txt"
+    },
+    {
+      "kind": "schema_bl_bs_sl",
+      "filename": "web_bl_bs_sl_an2024.csv",
+      "size_bytes": 482,
+      "sha256": "07f42f7f7ef309036563a4963731a2fe7730ce52b573c7352c7b98d7b9bd4269",
+      "url": "https://data.gov.ro/dataset/d3caacb6-2c08-445e-94e6-8d36d00ab250/resource/26cf312b-27ed-4695-b9c6-fba978ae7a9d/download/web_bl_bs_sl_an2024.csv"
+    },
+    {
+      "kind": "data_uu",
+      "filename": "web_uu_an2024.txt",
+      "size_bytes": 77227907,
+      "sha256": "0cc2496a17b3a7bf3405294ac26cda85f5aa2e258717027d63119e78492d21aa",
+      "url": "https://data.gov.ro/dataset/d3caacb6-2c08-445e-94e6-8d36d00ab250/resource/25098618-f6a5-4610-8c7f-c0bdb801635f/download/web_uu_an2024.txt"
+    },
+    {
+      "kind": "schema_uu",
+      "filename": "web_uu_an2024.csv",
+      "size_bytes": 483,
+      "sha256": "c24bcdbd423ebc5c6d619ac0a9ce5bb2ff21121c151336609d1fb6c4cfa0d8ef",
+      "url": "https://data.gov.ro/dataset/d3caacb6-2c08-445e-94e6-8d36d00ab250/resource/7bb0d893-2ba7-46d7-aeb0-07fb310c9a02/download/web_uu_an2024.csv"
+    }
+  ]
+}

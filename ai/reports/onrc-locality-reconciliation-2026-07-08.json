@@ -1,0 +1,49 @@
+{
+  "snapshot_date": "2026-07-08",
+  "source_siruta_sha256": "a5c5170ce2c00616fa170442c7fe7316d56186c96f75cbf9b00cc5d65993a4ef",
+  "source_siruta_hierarchy_sha256": "dc2eba53d0ea516b8c7a8dfc73ba1d1ca0b40c1e00caecd69d00e04fb762059c",
+  "candidate_inventory": {
+    "source_rows": 4202257,
+    "invalid_rows": 65,
+    "coherent_unique_firms": 4193915,
+    "candidate_groups": 29474,
+    "elapsed_seconds": 145.39,
+    "maximum_resident_memory_kib": 98932,
+    "scratch_database_bytes": 1178718208,
+    "artifact_sha256": "fcf9cc2a1a07bb96948170340376c9b9c4fff403b571dce8f0b3a25a36368eac",
+    "baseline_status_unique_firms": {
+      "exact": 773651,
+      "ambiguous": 248,
+      "unmatched": 3419853,
+      "missing": 16,
+      "missing_country": 147
+    }
+  },
+  "deterministic_alias_proposal": {
+    "validation_state": "hierarchy_validated",
+    "validated_at": "2026-08-21",
+    "validation_scope": "25,053 proposals exhaustively checked against official SIRUTA S1 2025 hierarchy",
+    "artifact_sha256": "d74fc2afde48890089760728362a15c575f20d1cc33323c7383dd8bb8e1f1c6f",
+    "application_approved": true,
+    "application_approved_at": "2026-08-21",
+    "application_approved_by": "pilot importer integration review",
+    "application_scope": "internal staging only; no publication or coverage inference",
+    "baseline_exact_unique_firms": 773651,
+    "hierarchy_validated_additional_unique_firms": 2972458,
+    "projected_if_application_approved_unique_firms": 3746109,
+    "unresolved_unmatched_firms": 447395,
+    "unresolved_unmatched_groups": 4315,
+    "proposal_groups_by_method": {
+      "municipality_prefix": 241,
+      "town_prefix": 213,
+      "commune_prefix": 2820,
+      "village_with_parent": 21779
+    },
+    "proposal_firms_by_method": {
+      "municipality_prefix": 1779658,
+      "town_prefix": 56351,
+      "commune_prefix": 37815,
+      "village_with_parent": 1098634
+    }
+  }
+}

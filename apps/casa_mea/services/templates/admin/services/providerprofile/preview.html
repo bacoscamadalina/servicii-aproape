@@ -1,0 +1,171 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260908-9">
+{% endblock %}
+
+{% block content %}
+  <div id="admin-provider-preview" class="admin-provider-preview">
+    <nav class="admin-preview-nav" aria-label="Navigare previzualizare">
+      <a href="{% url 'admin:services_providerprofile_changelist' %}">← Înapoi la conturile furnizorilor</a>
+      <span>Doar pentru administrare</span>
+    </nav>
+
+    <section class="admin-preview-notice" aria-labelledby="admin-preview-notice-title">
+      <div class="admin-preview-notice-mark" aria-hidden="true"></div>
+      <div>
+        <h1 id="admin-preview-notice-title">Previzualizare administrativă</h1>
+        <p>Vezi ciorna curentă a contului. Această pagină nu publică profilul, nu aprobă serviciile și nu te autentifică în locul furnizorului.</p>
+      </div>
+    </section>
+
+    <section class="public-provider-identity" aria-labelledby="provider-preview-name">
+      <div class="company-monogram" aria-hidden="true">{{ initials }}</div>
+      <div>
+        <h2 id="provider-preview-name">{{ profile.display_name }}</h2>
+        <span class="preview-label">Ciornă privată</span>
+        <p>{{ legal_name }} · informații furnizate de titularul contului</p>
+      </div>
+    </section>
+
+    <div class="admin-preview-status-grid" aria-label="Starea contului și a publicării">
+      <section>
+        <h3>Cont</h3>
+        {% if membership %}
+          <strong>{{ membership.get_state_display }}</strong>
+          <p>{{ membership.user.email|default:membership.user.username }}</p>
+          <dl>
+            <div><dt>Utilizator activ</dt><dd>{{ membership.user.is_active|yesno:"Da,Nu" }}</dd></div>
+            <div><dt>Activat la</dt><dd>{{ membership.activated_at|date:"d.m.Y, H:i"|default:"—" }}</dd></div>
+          </dl>
+        {% else %}
+          <strong>Fără acces curent</strong>
+          <p>Nu există o invitație sau o apartenență activă pentru acest profil.</p>
+        {% endif %}
+      </section>
+      <section>
+        <h3>Servicii și acoperire</h3>
+        {% if service_draft %}
+          <strong>{{ service_draft.get_review_state_display }}</strong>
+          <p>Revizia {{ service_draft.revision }} a declarației private.</p>
+        {% else %}
+          <strong>Necompletat</strong>
+          <p>Furnizorul nu a salvat încă servicii sau localități deservite.</p>
+        {% endif %}
+      </section>
+      <section>
+        <h3>Publicare</h3>
+        {% if publication_scope %}
+          <strong>{{ publication_scope.get_visibility_display }}</strong>
+          <p>{% if current_submission %}Versiunea {{ current_submission.version }} · {{ current_submission.get_decision_display }}{% else %}Nu există o versiune curentă trimisă.{% endif %}</p>
+        {% else %}
+          <strong>Nepublicat</strong>
+          <p>Nu există un mecanism de vizibilitate creat pentru acest profil.</p>
+        {% endif %}
+      </section>
+      <section>
+        <h3>Abonament</h3>
+        <strong>{{ subscription_state.label }}</strong>
+        <p>{% if subscription_state.period_ends_at %}Până la {{ subscription_state.period_ends_at|date:"d.m.Y, H:i" }}{% else %}Fără perioadă activă.{% endif %}</p>
+        <dl>
+          <div><dt>Revizie</dt><dd>{{ subscription_state.revision }}</dd></div>
+          <div><dt>Plată înregistrată</dt><dd>Nu</dd></div>
+        </dl>
+      </section>
+    </div>
+
+    <section class="admin-subscription-panel" aria-labelledby="admin-subscription-title">
+      <div>
+        <h2 id="admin-subscription-title">Abonament de test</h2>
+        <p>Activează manual câte 30 de zile pentru verificarea mecanismului. Această etapă nu procesează și nu înregistrează plăți.</p>
+      </div>
+      {% if can_manage_subscription %}
+        <form method="post" novalidate>
+          {% csrf_token %}
+          <input type="hidden" name="workflow_action" value="subscription">
+          {{ subscription_form.expected_revision }}
+          {% if subscription_form.non_field_errors %}<div class="form-alert">{{ subscription_form.non_field_errors }}</div>{% endif %}
+          <fieldset>
+            <legend>{{ subscription_form.action.label }}</legend>
+            {{ subscription_form.action }}
+            {% for error in subscription_form.action.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}
+          </fieldset>
+          <div class="provider-field">
+            <label for="{{ subscription_form.internal_note.id_for_label }}">{{ subscription_form.internal_note.label }}</label>
+            {{ subscription_form.internal_note }}
+            <p class="provider-help">{{ subscription_form.internal_note.help_text }}</p>
+            {% for error in subscription_form.internal_note.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}
+          </div>
+          <div class="provider-consent">
+            {{ subscription_form.acknowledgement }}
+            <label for="{{ subscription_form.acknowledgement.id_for_label }}">{{ subscription_form.acknowledgement.label }}</label>
+            {% for error in subscription_form.acknowledgement.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}
+          </div>
+          <button class="provider-submit" type="submit">Aplică decizia</button>
+        </form>
+      {% else %}
+        <p class="admin-preview-empty">Contul tău poate vedea starea, dar nu are permisiunea separată de administrare a abonamentelor.</p>
+      {% endif %}
+    </section>
+
+    <div class="public-provider-sheet admin-preview-sheet">
+      <section class="public-provider-about" aria-labelledby="admin-about-title">
+        <h2 id="admin-about-title">Conținutul profilului</h2>
+        {% if profile.description %}
+          <p>{{ profile.description }}</p>
+        {% else %}
+          <p class="admin-preview-empty">Furnizorul nu a adăugat încă o descriere.</p>
+        {% endif %}
+        <h3>Servicii declarate</h3>
+        {% if service_labels %}
+          <ul class="company-category-list">{% for label in service_labels %}<li>{{ label }}</li>{% endfor %}</ul>
+        {% else %}
+          <p class="admin-preview-empty">Niciun serviciu declarat.</p>
+        {% endif %}
+      </section>
+
+      <aside class="public-provider-contact" aria-labelledby="admin-contact-title">
+        <h2 id="admin-contact-title">Contact și acoperire</h2>
+        <dl>
+          <div><dt>Disponibilitate propusă</dt><dd>{{ profile.get_availability_display }}</dd></div>
+          <div><dt>Contact preferat</dt><dd>{{ profile.get_contact_preference_display }}</dd></div>
+          <div><dt>Adresă profesională publică propusă</dt><dd>{{ profile.public_address|default:"—" }}</dd></div>
+          <div><dt>Telefon public propus</dt><dd>{{ profile.public_phone|default:"—" }}</dd></div>
+          <div><dt>E-mail public propus</dt><dd>{{ profile.public_email|default:"—" }}</dd></div>
+          <div><dt>Website propus</dt><dd>{{ profile.website|default:"—" }}</dd></div>
+        </dl>
+        <h3>Localități declarate</h3>
+        {% if coverage_labels %}
+          <ul>{% for label in coverage_labels %}<li>{{ label }}</li>{% endfor %}</ul>
+        {% else %}
+          <p class="admin-preview-empty">Nicio localitate declarată.</p>
+        {% endif %}
+        <p><strong>Limită:</strong> disponibilitatea este declarată și poate varia. Această previzualizare arată datele curente din ciornă, nu o versiune aprobată sau publicată.</p>
+      </aside>
+    </div>
+
+    <section class="public-provider-portfolio admin-preview-portfolio" aria-labelledby="admin-portfolio-title">
+      <div>
+        <h2 id="admin-portfolio-title">Portofoliu încărcat</h2>
+        <p>Imagini procesate și păstrate privat până la aprobarea și activarea unei versiuni complete.</p>
+      </div>
+      {% if portfolio_items %}
+        <div class="public-portfolio-grid">
+          {% for item in portfolio_items %}
+            <figure>
+              <img src="{% url 'services:provider_portfolio_image' item.asset.opaque_id %}" alt="{{ item.caption|default:'Lucrare din portofoliul furnizorului' }}" width="{{ item.asset.width }}" height="{{ item.asset.height }}">
+              <figcaption>{{ item.caption|default:"Fără descriere" }}</figcaption>
+            </figure>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="admin-preview-portfolio-empty">
+          <strong>Portofoliul este gol.</strong>
+          <p>Furnizorul nu a încărcat încă lucrări.</p>
+        </div>
+      {% endif %}
+    </section>
+  </div>
+{% endblock %}

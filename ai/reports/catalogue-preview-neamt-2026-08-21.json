@@ -1,0 +1,57 @@
+{
+  "report_schema_version": 1,
+  "activated_at": "2026-08-21",
+  "provider": "ONRC",
+  "county": "Neamț",
+  "run_id": 4,
+  "superseded_audit_run_id": 3,
+  "scope_key": "bc13effd1447d0e0c44b665a478735b228c09e2fb13bb4c6458cc045ddea0b3d",
+  "locality_rules_sha256": "0dc69cc7bab9c9a15be51b2d1901b1bec0df7cc431a268b59d0e6347b07a8574",
+  "visibility": "internal_preview",
+  "production_debug_default": false,
+  "publication_approval_count": 0,
+  "registered_office_acknowledgement": "REGISTERED_OFFICE_NOT_SERVICE_COVERAGE",
+  "activation_audit": {
+    "candidate_coherent_firms": 6791,
+    "candidate_conflicting_firms": 0,
+    "staged_businesses": 4229,
+    "staged_statuses": 4229,
+    "staged_caen": 23323,
+    "staged_categories": 6284,
+    "quarantine_records": 0,
+    "scratch_database_bytes": 847245312
+  },
+  "categories": {"constructii": 3691, "instalatii": 2593},
+  "reviewed_central_localities": [
+    {"siruta_code": "120735", "name": "Piatra-Neamț", "businesses": 1062},
+    {"siruta_code": "121064", "name": "Târgu Neamț", "businesses": 202},
+    {"siruta_code": "120977", "name": "Bicaz", "businesses": 52},
+    {"siruta_code": "124126", "name": "Roznov", "businesses": 101}
+  ],
+  "locality_rule_review": {
+    "report": "ai/reports/onrc-locality-rules-neamt-2026-08-21.json",
+    "candidate_uplift_reviewed": 29968,
+    "satellite_candidate_firms_rejected": 155,
+    "wrong_parent_assignments_observed_in_staging": 0
+  },
+  "idempotent_reimport": {"changed": false, "counters_unchanged": true},
+  "reader": {
+    "page_size": 20,
+    "order": ["legal_name", "id"],
+    "piatra_neamt_pages": 54,
+    "category_links_preserve_county_and_locality": true,
+    "unsupported_category_is_fail_closed": true,
+    "horizontal_overflow": false
+  },
+  "validation": {
+    "sqlite_tests": "51 total: 49 passed, 2 PostgreSQL-only skipped",
+    "postgresql_activation_and_staging_tests": "22 passed including concurrency and approval rotation",
+    "locality_javascript_test": "1 passed",
+    "django_check": "passed",
+    "migration_drift": "none",
+    "browser_pagination": "passed",
+    "browser_unsupported_category": "passed"
+  },
+  "public_activation": false,
+  "public_blocker": "A documented, versioned, revocable legal/privacy PublicationApproval for this exact run does not exist."
+}

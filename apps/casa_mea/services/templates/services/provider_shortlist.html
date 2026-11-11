@@ -1,0 +1,103 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{% translate 'Firmele pe care le-ai salvat pentru a le compara mai ușor.' %}">
+  <title>{% translate "Firme salvate" %} — ServiciiAproape</title>
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260916-3">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body class="provider-shortlist-body">
+  <a class="skip-link" href="#firme-salvate">{% translate "Sari la firmele salvate" %}</a>
+  <header class="site-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    <nav aria-label="{% translate 'Navigație principală' %}">
+      <a href="{% url 'services:home' %}#cautare">{% translate "Caută firme" %}</a>
+      <a class="nav-saved" href="{% url 'services:provider_shortlist' %}" aria-current="page">{% translate "Firme salvate" %}{% if saved_provider_count %}<span>{{ saved_provider_count }}</span>{% endif %}</a>
+    </nav>
+    {% include "services/partials/language_switcher.html" %}
+  </header>
+
+  <main id="firme-salvate" class="provider-shortlist">
+    <header class="provider-shortlist-heading">
+      <div>
+        <span>{% translate "Lista ta scurtă" %}</span>
+        <h1>{% translate "Firme salvate" %}<span class="accent-period">.</span></h1>
+      </div>
+      <p>{% translate "Păstrează într-un singur loc fișele publice și profilurile complete pe care vrei să le revezi." %}</p>
+    </header>
+
+    {% if saved_providers or saved_companies %}
+      {% if saved_companies %}
+      <section class="provider-shortlist-grid" aria-label="{% translate 'Fișe publice salvate' %}">
+        {% for saved in saved_companies %}
+          <article>
+            <div class="provider-shortlist-monogram" aria-hidden="true">{{ saved.company.initials }}</div>
+            <div class="provider-shortlist-copy">
+              <span>{% translate "Fișă publică ONRC" %} · {{ saved.locality_label }}, {{ saved.county }}</span>
+              <h2>{{ saved.company.legal_name }}</h2>
+              <p>{% translate "Date despre sediul social și activitatea raportată; nu confirmă aria deservită sau disponibilitatea." %}</p>
+              <ul>{% for label in saved.company.category_labels %}<li>{{ label }}</li>{% endfor %}</ul>
+            </div>
+            <div class="provider-shortlist-actions">
+              <a href="{{ saved.detail_url }}">{% translate "Vezi fișa firmei" %}<svg class="ui-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"/></svg></a>
+              <form method="post" action="{{ saved.save_url }}">
+                {% csrf_token %}
+                <input type="hidden" name="return_to" value="shortlist">
+                <button class="provider-save-button" type="submit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg>{% translate "Elimină" %}</button>
+              </form>
+            </div>
+          </article>
+        {% endfor %}
+      </section>
+      {% endif %}
+      {% if saved_providers %}
+      <section class="provider-shortlist-grid" aria-label="{% translate 'Profiluri salvate' %}">
+        {% for saved in saved_providers %}
+          <article>
+            <div class="provider-shortlist-monogram" aria-hidden="true">{{ saved.profile.initials }}</div>
+            <div class="provider-shortlist-copy">
+              <span>{{ saved.profile.searched_locality_label }}</span>
+              <h2>{{ saved.profile.display_name }}</h2>
+              <p>{{ saved.profile.description|truncatechars:160 }}</p>
+              <ul>
+                {% for label in saved.profile.category_labels %}<li>{{ label }}</li>{% endfor %}
+              </ul>
+            </div>
+            <div class="provider-shortlist-actions">
+              <a href="{{ saved.profile_url }}">{% translate "Vezi profilul" %}<svg class="ui-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"/></svg></a>
+              <form method="post" action="{{ saved.toggle_url }}">
+                {% csrf_token %}
+                <input type="hidden" name="return_to" value="shortlist">
+                <button class="provider-save-button" type="submit">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg>
+                  {% translate "Elimină" %}
+                </button>
+              </form>
+            </div>
+          </article>
+        {% endfor %}
+      </section>
+      {% endif %}
+    {% else %}
+      <section class="provider-shortlist-empty">
+        <div class="provider-shortlist-empty-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h12v17l-6-4-6 4V4Z"/></svg></div>
+        <div>
+          <h2>{% translate "Lista este pregătită pentru prima firmă." %}</h2>
+          <p>{% translate "Caută după județ, apoi apasă «Salvează firma» pe o fișă publică sau pe un profil complet care îți atrage atenția." %}</p>
+        </div>
+        <a href="{% url 'services:home' %}#cautare">{% translate "Începe o căutare" %}<svg class="ui-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"/></svg></a>
+      </section>
+    {% endif %}
+  </main>
+
+  {% include "services/partials/site_footer.html" %}
+</body>
+</html>

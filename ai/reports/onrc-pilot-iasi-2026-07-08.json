@@ -1,0 +1,88 @@
+{
+  "report_schema_version": 1,
+  "reported_at": "2026-08-21",
+  "source_snapshot_date": "2026-07-08",
+  "source_manifest_sha256": "c8510f383565c04124a2c182e4c1be9e5b248b7b4a547606a5c19bdce078429f",
+  "scope": {
+    "county": "Iași",
+    "categories": ["constructii", "instalatii"],
+    "caen_mapping_version": "1",
+    "caen_mapping_sha256": "dc2bdd8dd446bb8f15f9aa6b4f964a59842c045e05a943f0683066affafddcf3",
+    "status_policy_version": "1"
+  },
+  "exact_only_audit_run": {
+    "run_id": 1,
+    "scope_key": "d2611c7c9dcdbd0934be1a0629ef1db6f9841e6c4c84e5f19fe3fe3005a83794",
+    "state": "succeeded",
+    "attempt_count": 1,
+    "locality_policy": "exact_only",
+    "staged_businesses": 0,
+    "finding": "ONRC locality values in Iași use administrative forms rather than baseline exact SIRUTA locality names."
+  },
+  "hierarchy_alias_run": {
+    "run_id": 2,
+    "scope_key": "cc9dd638dde8fba4611c9ab9bc0fd07da9e7098ad33d19c606235eb301aaa5a1",
+    "state": "succeeded",
+    "attempt_count": 1,
+    "claim_released": true,
+    "locality_policy": "exact_plus_approved_hierarchy_aliases",
+    "locality_rules_sha256": "7fb9fa34fb2a944528bd670ecec0a7b30b3890a187aa71663f52cdc5b0dd182e",
+    "siruta_hierarchy_sha256": "dc2eba53d0ea516b8c7a8dfc73ba1d1ca0b40c1e00caecd69d00e04fb762059c",
+    "elapsed_seconds": 163.12,
+    "counters": {
+      "source_firm_rows": 4202257,
+      "source_activity_rows": 19287520,
+      "source_status_rows": 4637408,
+      "invalid_firm_rows": 65,
+      "invalid_activity_rows": 35,
+      "unknown_caen_rows": 133,
+      "invalid_status_rows": 3,
+      "target_hierarchy_alias_firm_rows": 142587,
+      "candidate_coherent_firms": 16078,
+      "candidate_conflicting_firms": 1,
+      "status_eligible_function_only": 9895,
+      "status_excluded_radiated": 4761,
+      "status_needs_review_mixed_function": 876,
+      "status_quarantined_without_function": 546,
+      "staged_businesses": 9895,
+      "staged_statuses": 9895,
+      "staged_caen": 64720,
+      "staged_categories": 15550,
+      "quarantine_records": 1,
+      "scratch_database_bytes": 861720576
+    },
+    "category_unique_businesses": {
+      "constructii": 8519,
+      "instalatii": 7031
+    },
+    "top_registered_office_localities": [
+      {"siruta": "95079", "name": "Iași", "businesses": 4806},
+      {"siruta": "95284", "name": "Valea Lupului", "businesses": 370},
+      {"siruta": "98024", "name": "Valea Adâncă", "businesses": 318},
+      {"siruta": "95408", "name": "Pașcani", "businesses": 285},
+      {"siruta": "96307", "name": "Lunca Cetățuii", "businesses": 232}
+    ],
+    "reconciliations": {
+      "status_decisions_equal_coherent_candidates": true,
+      "eligible_equals_staged_businesses": true,
+      "staged_statuses_equal_staged_businesses": true,
+      "all_staged_statuses_are_1048": true,
+      "every_staged_business_has_caen": true,
+      "every_staged_business_has_category": true,
+      "quarantine_equals_conflicting_candidates": true
+    },
+    "idempotent_rerun": {
+      "changed": false,
+      "counters_unchanged": true
+    }
+  },
+  "postgresql_verification": {
+    "database_bytes": 26875571,
+    "public_schema_table_total_bytes": 18620416,
+    "staging_queryset_count": 9895,
+    "sqlite_test_suite": "37 tests total: 36 passed, 1 PostgreSQL-only test skipped",
+    "postgresql_staging_suite": "10 passed, including concurrent claim"
+  },
+  "publication_active": false,
+  "publication_note": "Registered office is not service coverage. This run is internal staging and is not connected to public search."
+}

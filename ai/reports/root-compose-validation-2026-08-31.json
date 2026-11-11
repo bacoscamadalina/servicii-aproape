@@ -1,0 +1,25 @@
+{
+  "scope": "Repository-root Docker Compose discovery fix; no application behavior changes",
+  "result": "PASS",
+  "root_and_app_service_configurations": "identical after normalizing Dockerfile default",
+  "build_context": "apps/casa_mea",
+  "target": "preview",
+  "root_compose_build_and_startup": "PASS",
+  "container_health": "healthy",
+  "businesses": 72881,
+  "counties": 42,
+  "browser": {
+    "search_and_company_detail": "PASS",
+    "romanian_and_english": "PASS",
+    "desktop_and_mobile_overflow": false,
+    "console_errors": 0
+  },
+  "http_checks": {
+    "searches": 84,
+    "requests": 141,
+    "median_ms": 24.1,
+    "maximum_ms": 85.9,
+    "result": "PASS"
+  },
+  "private_cloud_verification": "Unavailable; cloud must receive the new root file through a subsequent push"
+}

@@ -1,0 +1,37 @@
+{
+  "milestone": "private_provider_representation_evidence",
+  "validated_at": "2026-09-04",
+  "checks": {
+    "django_system_check": "passed",
+    "migration_drift": "none",
+    "local_postgresql_migration": "0032 applied; no pending operations",
+    "docker_build": "preview target passed",
+    "sqlite_container_suite": {
+      "tests": 305,
+      "passed": 295,
+      "skipped": 10,
+      "duration_seconds": 76.282
+    },
+    "postgresql_container_suite": {
+      "tests": 305,
+      "passed": 305,
+      "skipped": 0,
+      "duration_seconds": 86.353
+    },
+    "browser": {
+      "romanian_form": "passed",
+      "english_form": "passed",
+      "mobile_effective_viewport": "291x672",
+      "mobile_horizontal_overflow": false,
+      "console_errors": 0
+    }
+  },
+  "security_contract": {
+    "accepted_types": ["PDF", "JPEG", "PNG"],
+    "maximum_bytes": 5242880,
+    "content_signature_validation": true,
+    "sha256_revalidated_at_approval": true,
+    "public_projection": false,
+    "admin_delivery": "authorized forced attachment with no-store and nosniff"
+  }
+}

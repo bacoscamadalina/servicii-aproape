@@ -1,0 +1,13 @@
+.env*
+*.sqlite3*
+private_media/
+staticfiles/
+deploy/backups/
+**/__pycache__/
+**/*.pyc
+**/raw/
+.impeccable/
+.venv/
+node_modules/
+*.dump
+*.tar.gz

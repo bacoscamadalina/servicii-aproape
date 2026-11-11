@@ -1,0 +1,89 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{% blocktranslate with provider_name=provider.display_name %}Trimite o solicitare de ofertă firmei {{ provider_name }}.{% endblocktranslate %}">
+  <meta name="robots" content="noindex">
+  <title>{% translate "Solicită o ofertă" %} — {{ provider.display_name }}</title>
+  <link rel="icon" href="{% static 'services/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'services/site.css' %}?v=20260918-2">
+  <link rel="stylesheet" href="{% static 'services/editorial-system.css' %}?v=20260922-sitewide">
+</head>
+<body class="provider-lead-body">
+  <a class="skip-link" href="#solicitare">{% translate "Sari la formular" %}</a>
+  <header class="site-header">
+    <a class="brand" href="{% url 'services:home' %}" aria-label="{% translate 'ServiciiAproape, pagina principală' %}">
+      {% include "services/partials/editorial_brand_mark.html" %}
+      <span>Servicii<span>Aproape</span></span>
+    </a>
+    {% include "services/partials/language_switcher.html" %}
+  </header>
+
+  <main id="solicitare" class="provider-lead-page">
+    <a class="detail-back" href="{{ profile_url }}">
+      <svg class="ui-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M17 10H4M9 5l-5 5 5 5"/></svg>
+      {% translate "Înapoi la profil" %}
+    </a>
+
+    {% if lead_sent %}
+      <section class="provider-lead-success" aria-labelledby="lead-success-title">
+        <svg class="section-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg>
+        <div>
+          <h1 id="lead-success-title">{% translate "Solicitarea a fost trimisă" %}</h1>
+          <p>{% blocktranslate with provider_name=provider.display_name %}{{ provider_name }} poate vedea acum detaliile în panoul firmei și îți poate trimite o ofertă.{% endblocktranslate %}</p>
+          {% if customer_portal_available %}
+            <p>{% translate "Solicitarea este deja în contul tău. Poți reveni oricând pentru ofertă și conversație." %} <a href="{% url 'services:customer_dashboard' %}">{% translate "Vezi proiectele mele" %}</a></p>
+          {% elif customer_notified %}
+            <p>{% translate "Ți-am trimis prin e-mail linkul privat pentru ofertă și conversație. Păstrează-l: doar prin acel link poți reveni la solicitare." %}</p>
+          {% elif customer_access_path %}
+            <div class="provider-lead-recovery" role="status">
+              <p>{% translate "E-mailul nu a putut fi trimis. Deschide acum solicitarea privată și salvează adresa în browser; acest link este afișat doar aici. Nu îl distribui." %}</p>
+              <p>{% translate "Dacă primești ulterior un link nou prin e-mail, folosește-l pe cel nou." %}</p>
+              <a class="provider-lead-recovery-action" href="{{ customer_access_path }}">{% translate "Deschide solicitarea privată" %}</a>
+            </div>
+          {% endif %}
+          <a href="{{ profile_url }}">{% translate "Înapoi la profilul firmei" %}</a>
+        </div>
+      </section>
+    {% else %}
+      <header class="provider-lead-heading">
+        <div>
+          <h1>{% translate "Descrie lucrarea. Firma îți răspunde direct." %}</h1>
+          <p>{% blocktranslate with provider_name=provider.display_name locality=locality county=county %}Solicitarea ajunge la {{ provider_name }} pentru o lucrare în {{ locality }}, județul {{ county }}.{% endblocktranslate %}</p>
+        </div>
+        <dl>
+          <div><dt>{% translate "Firmă" %}</dt><dd>{{ provider.display_name }}</dd></div>
+          <div><dt>{% translate "Localitate" %}</dt><dd>{{ locality }}, {{ county }}</dd></div>
+        </dl>
+      </header>
+
+      <form class="provider-lead-form" method="post" data-submit-guard novalidate>
+        {% csrf_token %}
+        <input type="hidden" name="submission_token" value="{{ submission_token }}">
+        {% if lead_form.non_field_errors %}<div class="form-alert">{{ lead_form.non_field_errors }}</div>{% endif %}
+        <div class="provider-lead-fields">
+          {% for field in lead_form %}
+            {% if not field.is_hidden %}
+              <div class="provider-field{% if field.name == 'description' or field.name == 'consent' %} provider-lead-field-wide{% endif %}{% if field.name == 'consent' %} provider-consent{% endif %}">
+                {% if field.name == "consent" %}{{ field }}{% endif %}
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {% if field.name != "consent" %}{{ field }}{% endif %}
+                {% if field.help_text %}<p class="provider-help">{{ field.help_text }}</p>{% endif %}
+                {% for error in field.errors %}<span class="provider-error">{{ error }}</span>{% endfor %}
+              </div>
+            {% else %}{{ field }}{% endif %}
+          {% endfor %}
+        </div>
+        <p class="provider-lead-privacy">{% translate "Datele sunt vizibile numai firmei selectate și administratorilor autorizați. Nu sunt publicate în profil." %} <a href="{% url 'services:privacy' %}">{% translate "Confidențialitate" %}</a></p>
+        <button class="provider-submit" type="submit" data-submitting-label="{% translate 'Se trimite solicitarea…' %}">{% translate "Trimite solicitarea" %}</button>
+        <span class="visually-hidden" data-submit-status role="status" aria-live="polite"></span>
+      </form>
+    {% endif %}
+  </main>
+  {% include "services/partials/site_footer.html" %}
+  <script src="{% static 'services/lead_submit.js' %}?v=20260918-2" defer></script>
+</body>
+</html>

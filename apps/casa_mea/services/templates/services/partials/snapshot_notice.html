@@ -1,0 +1,7 @@
+{% load i18n %}
+{% if read_only_preview %}
+<p class="snapshot-notice">
+  <strong>{% translate "Copie de dezvoltare · doar consultare" %}</strong>
+  {% blocktranslate with captured_date=preview_captured_at|date:"DATE_FORMAT" %}Catalog capturat la {{ captured_date }}. Firmele și dovezile sunt păstrate ca la acea dată; această copie nu primește actualizări și nu permite conturi sau revendicări.{% endblocktranslate %}
+</p>
+{% endif %}

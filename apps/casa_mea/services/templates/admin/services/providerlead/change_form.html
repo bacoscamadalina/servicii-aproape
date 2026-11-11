@@ -1,0 +1,11 @@
+{% extends "admin/change_form.html" %}
+
+{% block object-tools-items %}
+  {% if original.batch_id == None and original.customer_account_id == None and original.customer_notification_failed_at and not original.customer_notified_at and not original.retention_applied_at and perms.services.retry_customer_access_notification %}
+    <li><a href="{% url 'admin:services_providerlead_retry_customer_access' original.pk %}">Reemite linkul clientului</a></li>
+  {% endif %}
+  {% if original.notification_state == "failed" and not original.retention_applied_at and perms.services.retry_provider_lead_notification %}
+    <li><a href="{% url 'admin:services_providerlead_retry_notification' original.pk %}">Retrimite notificarea</a></li>
+  {% endif %}
+  {{ block.super }}
+{% endblock %}

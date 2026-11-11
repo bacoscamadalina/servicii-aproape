@@ -1,0 +1,21 @@
+{
+  "result": "PASS_LOCAL",
+  "reported_cloud_failure": "Validating Compose: service web uses unsupported field cap_drop",
+  "default_host_options_present": [],
+  "optional_local_override": "apps/casa_mea/deploy/compose.local-hardening.yml",
+  "root_and_app_resolved_services": "identical",
+  "optional_override_restores_original_host_options": true,
+  "build_and_runtime_health": "PASS",
+  "image_boundary": {
+    "web_uid": 10001,
+    "catalogue_owner_uid": 0,
+    "catalogue_manifest_and_directory_writable_by_web": false,
+    "businesses": 72881,
+    "counties": 42
+  },
+  "regression_tests": {"tests": 25, "skipped": 0, "seconds": 3.399, "result": "PASS"},
+  "http": {"searches": 84, "requests": 141, "median_ms": 24.2, "maximum_ms": 80.6, "result": "PASS"},
+  "browser": {"desktop_and_mobile_ro_en": "PASS", "overflow": false, "console_errors": 0},
+  "private_cloud_validator": "Not accessible; only cap_drop is confirmed unsupported. Other host options moved to the opt-in local override without assuming cloud support.",
+  "deployment_status": "Local changes only; requires push and a new cloud deployment."
+}

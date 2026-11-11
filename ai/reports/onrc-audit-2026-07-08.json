@@ -1,0 +1,122 @@
+{
+  "dataset_url": "https://data.gov.ro/dataset/firme-08-07-2026",
+  "importer_version": "2",
+  "license": "CC BY 4.0",
+  "report_schema_version": 2,
+  "results": {
+    "activities": {
+      "caen_versions": {
+        "1998": 52448,
+        "2003": 781613,
+        "2008": 11874080,
+        "2025": 6579211
+      },
+      "exact_siruta_unique_firms_per_category": {
+        "constructii": 58092,
+        "curatenie": 19011,
+        "gradinarit": 7382,
+        "instalatii": 49223,
+        "reparatii": 4254,
+        "tamplarie": 32123
+      },
+      "mapped_activity_rows": {
+        "constructii": 1751824,
+        "curatenie": 183228,
+        "gradinarit": 46983,
+        "instalatii": 663373,
+        "reparatii": 30116,
+        "tamplarie": 219953
+      },
+      "orphan_rows": 0,
+      "rejections": {
+        "invalid_structure": 35,
+        "unknown_caen": 133,
+        "unmapped_supported_activity": 15557814,
+        "unsupported_mapping_version": 834061
+      },
+      "rows": 19287520,
+      "unique_coherent_firms_per_category": {
+        "constructii": 364234,
+        "curatenie": 92380,
+        "gradinarit": 46889,
+        "instalatii": 270536,
+        "reparatii": 21598,
+        "tamplarie": 212751
+      }
+    },
+    "firms": {
+      "coherent_unique_firms": 4193915,
+      "conflicting_duplicate_registration_numbers": 3558,
+      "duplicate_extra_rows": 4719,
+      "identical_duplicate_registration_numbers": 1161,
+      "invalid_rows": 65,
+      "registered_office_siruta_match_unique_firms": {
+        "ambiguous": 248,
+        "exact": 773651,
+        "missing": 162,
+        "unmatched": 3419854
+      },
+      "rows": 4202257,
+      "unique_registration_numbers": 4197473
+    },
+    "nomenclatures": {
+      "caen_class_keys": 2343,
+      "caen_versions": {
+        "0": "1998",
+        "1": "2003",
+        "2": "2008",
+        "3": "2025"
+      },
+      "status_codes": 197
+    },
+    "scratch_database_bytes": 2017665024,
+    "statuses": {
+      "firms_with_function_status": 1778321,
+      "firms_with_radiated_status": 2170374,
+      "orphan_rows": 0,
+      "rejections": {
+        "invalid_structure": 3
+      },
+      "rows": 4637408
+    }
+  },
+  "runtime": {
+    "available_scratch_before_bytes": 15365586944,
+    "elapsed_seconds": 229.56,
+    "input_bytes": 1207476340,
+    "maximum_resident_memory_kib": 67656,
+    "minimum_scratch_bytes": 2414952680
+  },
+  "snapshot_date": "2026-07-08",
+  "verified_sources": {
+    "activities": {
+      "sha256": "bd9ed5da7743026b3f68ae63546611ac9d97e5fa726bc5a7c667db2d0663e117",
+      "size_bytes": 425473922
+    },
+    "caen_dictionary": {
+      "sha256": "45f207eb6634eea667c8450e20ac8197743ba7ec2371d19a269b20e24f07b34f",
+      "size_bytes": 276396
+    },
+    "caen_versions": {
+      "sha256": "3e4f61cf2c3696bc281997a44d5072acfbfe51b5c5a5ce74d3aaba5cdd499ef7",
+      "size_bytes": 90
+    },
+    "firms": {
+      "sha256": "bb4168ab2facee519d567fb0381a890ece5901bdc4cf22452d1dd17c41c27c0b",
+      "size_bytes": 690469553
+    },
+    "siruta_catalogue": {
+      "sha256": "a5c5170ce2c00616fa170442c7fe7316d56186c96f75cbf9b00cc5d65993a4ef",
+      "size_bytes": 492698,
+      "source_date": "2025-01-01"
+    },
+    "status_dictionary": {
+      "sha256": "c3b4af92691fe6bb47e924e13070b80c605672225c399e1f48ef5b578beadf9b",
+      "size_bytes": 12740
+    },
+    "statuses": {
+      "sha256": "affcf9819b782718a66b55feb5e56924816c49c4ad1d0f9408b5f4268b9cbddf",
+      "size_bytes": 91243639
+    }
+  }
+}

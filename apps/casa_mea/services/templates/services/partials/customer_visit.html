@@ -1,0 +1,29 @@
+{% load i18n %}
+{% if visit %}
+<section class="customer-visit" aria-label="{% translate 'Vizită' %}">
+  <div>
+    <h3>{% if visit.status == "proposed" %}{% translate "Firma propune o vizită" %}{% elif visit.status == "accepted" %}{% translate "Vizita confirmată" %}{% else %}{% translate "Vizita discutată" %}{% endif %}</h3>
+    <p><time datetime="{{ visit.starts_at|date:'c' }}">{{ visit.starts_at|date:"SHORT_DATETIME_FORMAT" }}</time> · {{ visit.get_status_display }}</p>
+    {% if visit.note %}<p>{{ visit.note }}</p>{% endif %}
+    {% if visit.status == "cancelled" %}<p>{% blocktranslate with actor=visit.get_cancelled_by_display %}Anulată de: {{ actor }}{% endblocktranslate %}</p>{% endif %}
+  </div>
+  {% if visit.status == "proposed" and lead.status == "declined" or visit.status == "proposed" and lead.status == "completed" %}
+    <p>{% translate "Solicitarea este închisă; vizita nu mai poate fi confirmată." %}</p>
+  {% elif visit.status == "proposed" and visit.starts_at > now %}
+    <form method="post" class="customer-visit-actions">
+      {% csrf_token %}<input type="hidden" name="proposal_id" value="{{ visit.pk }}">
+      {% if lead_id %}<input type="hidden" name="lead_id" value="{{ lead_id }}">{% endif %}
+      <button class="provider-submit" type="submit" name="action" value="visit_accepted">{% translate "Confirmă vizita" %}</button>
+      <button class="secondary-action" type="submit" name="action" value="visit_declined">{% translate "Refuză data" %}</button>
+    </form>
+  {% elif visit.status == "proposed" %}
+    <p>{% translate "Ora propusă a trecut. Cere firmei o altă dată în conversație." %}</p>
+  {% elif visit.status == "accepted" and lead.status != "declined" and lead.status != "completed" %}
+    <form method="post" class="customer-visit-actions">
+      {% csrf_token %}<input type="hidden" name="proposal_id" value="{{ visit.pk }}">
+      {% if lead_id %}<input type="hidden" name="lead_id" value="{{ lead_id }}">{% endif %}
+      <button class="secondary-action" type="submit" name="action" value="visit_cancel">{% translate "Anulează vizita" %}</button>
+    </form>
+  {% endif %}
+</section>
+{% endif %}

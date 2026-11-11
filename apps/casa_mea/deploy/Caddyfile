@@ -1,0 +1,5 @@
+{$CASAMEA_DOMAIN} {
+    encode zstd gzip
+    reverse_proxy web:8000
+    # Private media remains behind Django authorization; never add file_server.
+}

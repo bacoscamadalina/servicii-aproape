@@ -1,0 +1,8 @@
+{% extends "admin/change_list.html" %}
+
+{% block object-tools-items %}
+  {% if perms.services.manage_service_category_policy %}
+    <li><a href="{% url 'admin:services_servicecategorypolicy_manage' %}">Configurează disponibilitatea</a></li>
+  {% endif %}
+  {{ block.super }}
+{% endblock %}
